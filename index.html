@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<!-- saved from url=(0086)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/oil-scenario-dashboard-v3_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hormuz Crisis — Oil Supply Impact Scenarios Q2–Q3 2026 | Data Verified Apr 23</title>
+<style>
+  .port-list-item { padding:9px 14px; border-bottom:1px solid rgba(37,40,48,0.6); cursor:pointer; transition:background 0.15s; }
+  .port-list-item:hover { background:rgba(255,255,255,0.04); }
+  .port-list-item.active { background:rgba(76,201,240,0.08); }
+  .port-list-name { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; color:#f0f2f5; }
+  .port-list-country { font-family:'DM Mono',monospace; font-size:9px; color:#6b7280; margin-top:1px; }
+  .port-list-status { font-family:'DM Mono',monospace; font-size:9px; padding:2px 7px; border-radius:2px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; float:right; margin-top:1px; }
+  .st-open    { background:rgba(42,157,143,0.2); color:#2a9d8f; border:1px solid rgba(42,157,143,0.4); }
+  .st-partial { background:rgba(233,196,106,0.2); color:#e9c46a; border:1px solid rgba(233,196,106,0.4); }
+  .st-limited { background:rgba(244,162,97,0.2);  color:#f4a261; border:1px solid rgba(244,162,97,0.4); }
+  .st-closed  { background:rgba(230,57,70,0.2);   color:#e63946; border:1px solid rgba(230,57,70,0.4); }
+  #map-svg { cursor:default; display:block; width:100%; height:100%; }
+  .map-dot { cursor:pointer; transition:r 0.15s; }
+  .map-dot:hover { filter: brightness(1.4); }
+  #port-detail {
+    padding:14px;
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    color:#d4d8e0;
+    border-top:1px solid var(--border);
+    background:#F0F2F5;
+    min-height:120px;
+  }
+  .pd-name { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; color:#f0f2f5; margin-bottom:2px; }
+  .pd-country { font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
+  .pd-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:8px; }
+  .pd-cell { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:6px 8px; }
+  .pd-cell-label { font-size:8px; color:#6b7280; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+  .pd-cell-val { font-size:11px; font-weight:600; }
+  .pd-notes { font-size:10px; color:#9ca3af; line-height:1.55; }
+</style>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    /* Bloomberg-inspired corporate premium palette */
+    --bg:        #F5F6F8;      /* page background — warm light grey */
+    --surface:   #FFFFFF;      /* card/panel surface */
+    --surface2:  #F0F2F5;      /* alternate row / inner panels */
+    --border:    #DDE1E7;      /* subtle 1px borders */
+    --border2:   #C8CDD6;      /* slightly stronger dividers */
+
+    /* Typography */
+    --ink:       #111827;      /* primary text — near black */
+    --ink2:      #374151;      /* secondary text */
+    --muted:     #6B7280;      /* tertiary / labels */
+    --faint:     #9CA3AF;      /* placeholders */
+
+    /* Accent — Bloomberg blue */
+    --blue:      #0055A5;      /* primary blue — Bloomberg terminal blue */
+    --blue-l:    #E8F0FA;      /* blue tint for Q2 highlight */
+    --blue-m:    #3B82F6;      /* chart / interactive blue */
+
+    /* Signals */
+    --red:       #C8102E;      /* critical / negative — Bloomberg red */
+    --red-l:     #FEF2F2;      /* red tint */
+    --green:     #007A33;      /* positive / open — Bloomberg green */
+    --green-l:   #F0FAF4;      /* green tint */
+    --amber:     #B45309;      /* warning — warm amber (not orange) */
+    --amber-l:   #FFFBEB;      /* amber tint */
+    --slate:     #475569;      /* moderate / neutral */
+    --slate-l:   #F1F5F9;      /* slate tint */
+
+    /* Chart colours */
+    --chart-red:    #C8102E;
+    --chart-blue:   #0055A5;
+    --chart-green:  #007A33;
+    --chart-now:    #B45309;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #0D1B2E;
+    border-bottom: 3px solid var(--blue);
+    padding: 16px 32px 14px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #FFFFFF;
+    line-height: 1.2;
+  }
+  .header-title span { color: #4BA3F5; }
+  .header-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #94A3B8;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+  }
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-left: auto;
+  }
+  .badge-live {
+    background: rgba(200,16,46,0.15);
+    border: 1px solid var(--red);
+    color: #FF6B6B;
+    animation: pulse-badge 2s infinite;
+  }
+  @keyframes pulse-badge {
+    0%,100% { opacity:1; } 50% { opacity:0.6; }
+  }
+
+  /* ── SCENARIO BAR ── */
+  .scenario-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .scenario-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-right: 6px;
+  }
+  .scenario-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 6px 14px;
+    border-radius: 3px;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .scenario-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-l); }
+  .scenario-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 600; box-shadow: 0 2px 6px rgba(0,85,165,0.25); }
+  .scenario-btn.active-base { background: var(--blue); color:#fff; border-color:var(--blue); }
+  .scenario-btn.active-bear { background: var(--red); color:#fff; border-color:var(--red); box-shadow: 0 2px 6px rgba(200,16,46,0.25); }
+  .scenario-btn.active-bull { background: var(--green); color:#fff; border-color:var(--green); box-shadow: 0 2px 6px rgba(0,122,51,0.25); }
+
+  /* ── LAYOUT ── */
+  .main { padding: 20px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .full { grid-column: 1 / -1; }
+  .half { grid-column: span 2; }
+
+  /* ── PANELS ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .panel-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+  }
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .panel-body { padding: 16px; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--muted);
+    padding: 18px 32px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+  }
+
+  /* ── KPI TILES ── Bloomberg-style data tiles */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px 12px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+  }
+  .kpi:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 4px 4px 0 0;
+  }
+  .kpi-red::before   { background: var(--red); }
+  .kpi-green::before { background: var(--green); }
+  .kpi-blue::before  { background: var(--blue); }
+  .kpi-amber::before { background: var(--amber); }
+  .kpi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-bottom: 7px;
+    margin-top: 2px;
+  }
+  .kpi-value {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    margin-top: 5px;
+    color: var(--muted);
+  }
+  .kpi-red   .kpi-value { color: var(--red); }
+  .kpi-green .kpi-value { color: var(--green); }
+  .kpi-blue  .kpi-value { color: var(--blue); }
+  .kpi-amber .kpi-value { color: var(--amber); }
+  .kpi-red   .kpi-sub   { color: var(--red); }
+  .kpi-green .kpi-sub   { color: var(--green); }
+  .kpi-blue  .kpi-sub   { color: var(--blue-m); }
+  .kpi-amber .kpi-sub   { color: var(--amber); }
+
+  /* ── PHASE CARDS ── */
+  .phase-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 14px; }
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .phase-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    border-radius: 4px 4px 0 0;
+  }
+  .phase-card.p1::before { background: var(--red); }
+  .phase-card.p2::before { background: var(--blue); }
+  .phase-card.p3::before { background: var(--amber); }
+  .phase-card.p4::before { background: var(--green); }
+  .phase-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0.05;
+    position: absolute;
+    right: 6px;
+    bottom: 0;
+    color: var(--ink);
+  }
+  .phase-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .phase-date {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+  .phase-desc { font-size: 11px; color: var(--ink2); line-height: 1.55; }
+
+  /* ── TIMELINE TABLE ── */
+  .tl-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .tl-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--border2);
+    text-align: center;
+    font-weight: 500;
+    background: var(--surface2);
+  }
+  .tl-table th.col-country { text-align: left; width: 170px; padding-left: 16px; }
+  .tl-table th.col-prewar  { width: 88px; }
+  .tl-table th.q2-col { background: var(--blue-l); color: var(--blue); border-bottom-color: var(--blue); }
+  .tl-table th.q3-col { background: var(--green-l); color: var(--green); border-bottom-color: var(--green); }
+  .tl-table td {
+    padding: 7px 5px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    text-align: center;
+  }
+  .tl-table td.col-country { text-align:left; padding-left:16px; white-space:nowrap; }
+  .tl-table td.col-prewar  { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); }
+  .tl-table td.q2-col { background: rgba(0,85,165,0.03); }
+  .tl-table td.q3-col { background: rgba(0,122,51,0.03); }
+  .tl-table tr:hover td { background: var(--surface2) !important; }
+  .tl-country-name { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:var(--ink); }
+  .tl-country-sub  { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); margin-top:1px; }
+
+  /* ── TIMELINE CHIPS ── crisp Bloomberg-style data cells */
+  .tl-chip {
+    display: inline-flex; flex-direction:column; align-items:center; justify-content:center;
+    width:100%; padding:5px 3px; border-radius:3px;
+    font-family:'DM Mono',monospace; font-size:9px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.4px; line-height:1.3;
+    transition: all 0.25s;
+  }
+  .tl-chip-bpd { font-size:10px; font-weight:700; letter-spacing:0; margin-bottom:2px; }
+  .tl-chip-lbl { font-size:8px; opacity:0.8; letter-spacing:0.3px; }
+
+  .bar-none     { background:#F8F9FA;   color:var(--muted);  border:1px solid var(--border); }
+  .bar-war      { background:var(--red);color:#FFF;          border:1px solid var(--red); }
+  .bar-critical { background:var(--red-l); color:var(--red); border:1px solid rgba(200,16,46,0.3); }
+  .bar-severe   { background:#FFF7ED;   color:#92400E;       border:1px solid rgba(180,83,9,0.3); }
+  .bar-moderate { background:var(--amber-l); color:var(--amber); border:1px solid rgba(180,83,9,0.2); }
+  .bar-recovery { background:var(--green-l); color:var(--green); border:1px solid rgba(0,122,51,0.3); }
+  .bar-normal   { background:#DCFCE7;   color:#166534;       border:1px solid rgba(0,122,51,0.4); }
+
+  /* ── COUNTRY TABLE ── */
+  .ctable { width:100%; border-collapse:collapse; }
+  .ctable th {
+    font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase;
+    letter-spacing:0.8px; color:var(--muted); text-align:left;
+    padding:8px 10px; border-bottom:2px solid var(--border2);
+    background: var(--surface2); font-weight:500;
+  }
+  .ctable td {
+    padding:9px 10px; border-bottom:1px solid var(--border);
+    font-family:'DM Mono',monospace; font-size:11px; vertical-align:middle; color:var(--ink2);
+  }
+  .ctable tr:hover td { background: var(--surface2); }
+  .country-flag { font-size:16px; margin-right:6px; }
+  .status-pill {
+    display:inline-block; font-size:9px; padding:2px 9px; border-radius:3px;
+    text-transform:uppercase; letter-spacing:0.8px; font-weight:600;
+    font-family:'DM Mono',monospace;
+  }
+  .pill-critical   { background:var(--red-l);   color:var(--red);   border:1px solid rgba(200,16,46,0.3); }
+  .pill-severe     { background:#FFF7ED;         color:#92400E;      border:1px solid rgba(180,83,9,0.3); }
+  .pill-moderate   { background:var(--amber-l);  color:var(--amber); border:1px solid rgba(180,83,9,0.2); }
+  .pill-beneficiary{ background:var(--green-l);  color:var(--green); border:1px solid rgba(0,122,51,0.3); }
+  .pill-partial    { background:var(--blue-l);   color:var(--blue);  border:1px solid rgba(0,85,165,0.3); }
+
+  /* ── PROGRESS BARS ── */
+  .progress-row { display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+  .progress-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); width:82px; flex-shrink:0; }
+  .progress-track { flex:1; height:5px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill  { height:100%; border-radius:2px; transition:width 0.5s ease; }
+  .progress-val   { font-family:'DM Mono',monospace; font-size:10px; width:42px; text-align:right; flex-shrink:0; font-weight:600; }
+
+  /* ── DAMAGE TABLE ── */
+  .dtable { width:100%; border-collapse:collapse; }
+  .dtable th {
+    font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.8px;
+    color:var(--muted); text-align:left; padding:7px 10px;
+    border-bottom:2px solid var(--border2); background:var(--surface2); font-weight:500;
+  }
+  .dtable td {
+    padding:9px 10px; border-bottom:1px solid var(--border);
+    font-family:'DM Mono',monospace; font-size:11px; color:var(--ink2); vertical-align:top;
+  }
+  .dtable tr:hover td { background:var(--surface2); }
+  .rec-bar  { height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden; }
+  .rec-fill { height:100%; border-radius:2px; }
+  .fill-red    { background:var(--red); }
+  .fill-orange { background:var(--amber); }
+  .fill-yellow { background:var(--amber); }
+  .fill-green  { background:var(--green); }
+
+  /* ── PORT MAP ── */
+  .st-open    { background:rgba(0,122,51,0.12);  color:var(--green); border:1px solid rgba(0,122,51,0.35); }
+  .st-partial { background:rgba(180,83,9,0.1);   color:var(--amber); border:1px solid rgba(180,83,9,0.3); }
+  .st-limited { background:rgba(200,16,46,0.08); color:var(--red);   border:1px solid rgba(200,16,46,0.25); }
+  .st-closed  { background:var(--red-l);          color:var(--red);   border:1px solid rgba(200,16,46,0.4); }
+  #map-svg { cursor:default; display:block; width:100%; height:100%; }
+  .map-dot { cursor:pointer; }
+  .map-dot:hover circle, .map-dot:hover rect { filter: brightness(1.2); }
+  #port-detail {
+    padding:14px; font-family:'DM Mono',monospace; font-size:11px;
+    color:var(--ink2); border-top:1px solid var(--border);
+    background:var(--surface2); min-height:130px;
+  }
+  .port-list-item {
+    padding:9px 14px; border-bottom:1px solid var(--border);
+    cursor:pointer; transition:background 0.12s;
+  }
+  .port-list-item:hover  { background:var(--surface2); }
+  .port-list-item.active { background:var(--blue-l); border-left:3px solid var(--blue); }
+  .port-list-name    { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; color:var(--ink); }
+  .port-list-country { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); margin-top:1px; }
+  .port-list-status  {
+    font-family:'DM Mono',monospace; font-size:9px; padding:2px 7px; border-radius:3px;
+    font-weight:600; text-transform:uppercase; letter-spacing:0.5px; float:right; margin-top:1px;
+  }
+  .pd-name   { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; color:var(--ink); margin-bottom:2px; }
+  .pd-country{ font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px; font-family:'DM Mono',monospace; }
+  .pd-grid   { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:9px; }
+  .pd-cell   { background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:7px 9px; }
+  .pd-cell-label { font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:2px; font-family:'DM Mono',monospace; }
+  .pd-cell-val   { font-size:11px; font-weight:600; font-family:'DM Mono',monospace; }
+  .pd-notes  { font-size:10px; color:var(--ink2); line-height:1.55; font-family:'DM Sans',sans-serif; }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    font-family:'DM Mono',monospace; font-size:9px; color:var(--muted);
+    padding:12px 32px 24px; line-height:1.7;
+    border-top:1px solid var(--border); margin-top:6px;
+    background:var(--surface);
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { height:4px; width:4px; }
+  ::-webkit-scrollbar-track { background:var(--surface2); }
+  ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+
+  @media (max-width:900px) {
+    .main { grid-template-columns:1fr; }
+    .half { grid-column:1; }
+    .kpi-grid { grid-template-columns:1fr 1fr; }
+    .phase-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">HORMUZ CRISIS — <span>IMPACT SCENARIOS</span></div>
+    <div class="header-sub">Q2–Q3 2026 · Oil Supply Recovery Tracker · Data Verified Apr 23, 2026 · EIA STEO · IEA OMR · IMF WEO · Goldman Sachs</div>
+  </div>
+  <div class="badge badge-live">● Live Scenario</div>
+</div>
+
+<!-- SCENARIO SELECTOR -->
+<div class="scenario-bar">
+  <div class="scenario-label">Scenario</div>
+  <button class="scenario-btn active-base active" id="btn-base" onclick="setScenario(&#39;base&#39;)">Base Case — Gradual Recovery</button>
+  <button class="scenario-btn" id="btn-bull" onclick="setScenario(&#39;bull&#39;)">Bull — Fast Recovery</button>
+  <button class="scenario-btn" id="btn-bear" onclick="setScenario(&#39;bear&#39;)">Bear — Prolonged Crisis</button>
+  <span style="margin-left:auto; font-family:&#39;DM Mono&#39;,monospace; font-size:10px; color:var(--muted)">
+    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent Live: $101.55</span> · Data verified Apr 23, 2026
+  </span>
+</div>
+
+<!-- KPIs -->
+<div class="main" style="padding-bottom:0">
+  <div class="full">
+    <div class="kpi-grid" id="kpi-grid" style="grid-template-columns: repeat(8, 1fr);">
+    <div class="kpi">
+      <div class="kpi-label">Brent Today (Apr 23)</div>
+      <div class="kpi-value kpi-red">$101.55</div>
+      <div class="kpi-sub kpi-red">Live · Reuters · up $3.53 on day</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Brent Q2 Avg (EIA Base)</div>
+      <div class="kpi-value kpi-red">$115</div>
+      <div class="kpi-sub kpi-red">EIA STEO Apr 2026 peak</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Brent Q4 Forecast (EIA)</div>
+      <div class="kpi-value kpi-blue">&lt;$90</div>
+      <div class="kpi-sub kpi-blue">EIA: falls below $90 in Q4</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Prod. Shut-ins Apr '26</div>
+      <div class="kpi-value kpi-red">9.1M bpd</div>
+      <div class="kpi-sub kpi-red">EIA STEO peak estimate</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Global Supply Drop Mar</div>
+      <div class="kpi-value kpi-red">−10.1M</div>
+      <div class="kpi-sub kpi-red">bpd m-o-m · IEA OMR · largest ever</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Hormuz Flow (End Q2)</div>
+      <div class="kpi-value kpi-blue">~55%</div>
+      <div class="kpi-sub kpi-blue">of 20M bpd pre-war · Base case</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">GDP Growth 2026</div>
+      <div class="kpi-value kpi-blue">3.1%</div>
+      <div class="kpi-sub kpi-blue">IMF WEO Apr 14 · down from 3.4%</div>
+    </div>
+  
+    <div class="kpi">
+      <div class="kpi-label">Global Inflation 2026</div>
+      <div class="kpi-value kpi-blue">+4.4%</div>
+      <div class="kpi-sub kpi-blue">IMF WEO · +0.6pp from Jan forecast</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- PHASES -->
+<div class="section-title" style="padding-top:20px">Recovery Phase Model</div>
+<div class="main" style="padding-top:12px; padding-bottom:0">
+  <div class="full">
+    <div class="phase-grid" id="phase-grid">
+    <div class="phase-card p1">
+      <div class="phase-num">1</div>
+      <div class="phase-title" style="color:var(--red)">War &amp; Closure</div>
+      <div class="phase-date">Feb 28 – Apr 8</div>
+      <div class="phase-desc">Strait closed. 20M bpd halted. Brent peaks ~$128 Apr 2 (physical ~$150). Global supply drops 10.1M bpd. 80+ facilities struck. EIA: 7.5M bpd shut-in in March.</div>
+    </div>
+  
+    <div class="phase-card p2">
+      <div class="phase-num">2</div>
+      <div class="phase-title" style="color:var(--blue)">Ceasefire &amp; Tension</div>
+      <div class="phase-date">Apr 8 – May</div>
+      <div class="phase-desc">Ceasefire Apr 8 &amp; 17. Both collapsed within hours. US naval blockade remains. Iran fired on tankers Apr 19. Brent today: $101.55 (Apr 23). EIA shut-ins peak at 9.1M bpd in April.</div>
+    </div>
+  
+    <div class="phase-card p3">
+      <div class="phase-num">3</div>
+      <div class="phase-title" style="color:var(--yellow)">Gradual Resumption</div>
+      <div class="phase-date">May – Jul</div>
+      <div class="phase-desc">IEA base: partial Hormuz flows resume from May. Tanker backlog clears over ~50 days. Saudi/UAE pipelines at max. Iraq/Kuwait ramp cautiously. EIA: Brent averages $115 in Q2.</div>
+    </div>
+  
+    <div class="phase-card p4">
+      <div class="phase-num">4</div>
+      <div class="phase-title" style="color:var(--green)">Partial Recovery</div>
+      <div class="phase-date">Aug – Sep</div>
+      <div class="phase-desc">Output approaching 70–75% of pre-war. EIA: Brent falls below $90 in Q4. Infrastructure repairs ongoing. Morgan Stanley: full export restoration not before Oct 2026.</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section-title" style="padding-top:20px">Country-Level Production Timeline — Feb to Sep 2026</div>
+<div class="main" style="padding-top:12px; padding-bottom:0">
+  <div class="full panel">
+    <div class="panel-header">
+      <div class="panel-title">Production Status by Country · Monthly Snapshot</div>
+      <div style="display:flex;gap:12px;">
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--red);">■ Critical</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--orange);">■ Severe</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--yellow);">■ Moderate</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--green);">■ Recovery</span>
+      </div>
+    </div>
+    <div class="panel-body" style="padding:0">
+      <div id="timeline-grid"><table class="tl-table"><thead><tr><th class="col-country">Country</th><th class="col-prewar">Pre-War</th><th class="">Feb</th><th class="">Mar</th><th class="">Apr</th><th class="q2-col">May <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q2-col">Jun <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q2-col">Jul <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q3-col">Aug <span style="color:var(--green);font-size:8px">Q3</span></th><th class="q3-col">Sep <span style="color:var(--green);font-size:8px">Q3</span></th></tr></thead><tbody><tr><td class="col-country">
+      <div class="tl-country-name">🇮🇷 Iran</div>
+      <div class="tl-country-sub">No bypass · US naval blockade</div>
+    </td><td class="col-prewar">~3.3M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~3.3M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~0M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~0M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~0.05M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-critical">
+          <div class="tl-chip-bpd">~0.1M</div>
+          <div class="tl-chip-lbl">Critical</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~0.2M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~0.25M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~0.3M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇮🇶 Iraq</div>
+      <div class="tl-country-sub">Basra terminal · No bypass</div>
+    </td><td class="col-prewar">4.52M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">4.52M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~1.7M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-critical">
+          <div class="tl-chip-bpd">~1.8M</div>
+          <div class="tl-chip-lbl">Critical</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~2.2M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~2.5M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~2.8M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇸🇦 Saudi Arabia</div>
+      <div class="tl-country-sub">Petroline bypass → Yanbu</div>
+    </td><td class="col-prewar">10.88M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">10.88M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~8.0M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~8.0M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~8.3M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~8.5M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~8.8M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-recovery">
+          <div class="tl-chip-bpd">~9.2M</div>
+          <div class="tl-chip-lbl">Recovery</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-recovery">
+          <div class="tl-chip-bpd">~9.5M</div>
+          <div class="tl-chip-lbl">Recovery</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇰🇼 Kuwait</div>
+      <div class="tl-country-sub">Al-Ahmadi · No bypass</div>
+    </td><td class="col-prewar">2.75M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">2.75M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~2.25M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~2.25M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-critical">
+          <div class="tl-chip-bpd">~1.4M</div>
+          <div class="tl-chip-lbl">Critical</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~1.5M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~1.8M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-recovery">
+          <div class="tl-chip-bpd">~1.9M</div>
+          <div class="tl-chip-lbl">Recovery</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇦🇪 UAE</div>
+      <div class="tl-country-sub">ADCOP → Fujairah bypass</div>
+    </td><td class="col-prewar">4.02M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">4.02M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~3.3M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~3.3M</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~2.8M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~3.0M</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~3.2M</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-recovery">
+          <div class="tl-chip-bpd">~3.4M</div>
+          <div class="tl-chip-lbl">Recovery</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-recovery">
+          <div class="tl-chip-bpd">~3.5M</div>
+          <div class="tl-chip-lbl">Recovery</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇶🇦 Qatar (LNG)</div>
+      <div class="tl-country-sub">Ras Laffan struck Mar 2</div>
+    </td><td class="col-prewar">77 Mtpa LNG</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">77Mt</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~0Mt</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~0Mt</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-war">
+          <div class="tl-chip-bpd">~5Mt</div>
+          <div class="tl-chip-lbl">CONFLICT</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-critical">
+          <div class="tl-chip-bpd">~10Mt</div>
+          <div class="tl-chip-lbl">Critical</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~15Mt</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-severe">
+          <div class="tl-chip-bpd">~20Mt</div>
+          <div class="tl-chip-lbl">Severe</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-moderate">
+          <div class="tl-chip-bpd">~25Mt</div>
+          <div class="tl-chip-lbl">Moderate</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇷🇺 Russia</div>
+      <div class="tl-country-sub">Non-Hormuz · Beneficiary</div>
+    </td><td class="col-prewar">~9.2M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.2M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.2M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.2M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.3M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.4M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.4M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.5M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~9.5M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td></tr><tr><td class="col-country">
+      <div class="tl-country-name">🇳🇬 Nigeria</div>
+      <div class="tl-country-sub">Atlantic basin · Beneficiary</div>
+    </td><td class="col-prewar">~1.5M bpd</td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.5M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.5M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q2-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td><td class="q3-col">
+        <div class="tl-chip bar-normal">
+          <div class="tl-chip-bpd">~1.6M</div>
+          <div class="tl-chip-lbl">Normal</div>
+        </div>
+      </td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTION LEVELS + DAMAGE TABLE -->
+<div class="main" style="padding-top:16px;padding-bottom:0">
+
+  <!-- COUNTRY TABLE -->
+  <div class="half panel">
+    <div class="panel-header">
+      <div class="panel-title">Production Recovery — Q2 vs Pre-War Capacity</div>
+    </div>
+    <div class="panel-body" style="padding:0">
+      <table class="ctable" id="ctable"><thead><tr>
+    <th>Country</th><th>Pre-War</th><th>Q2 2026</th><th>Q3 2026</th><th>Status</th>
+  </tr></thead><tbody>
+    <tr>
+      <td><span class="country-flag">🇮🇷</span>Iran</td>
+      <td style="color:var(--muted)">~3.3M bpd</td>
+      <td style="color:var(--orange)">~0.1M</td>
+      <td style="color:var(--yellow)">~0.3M</td>
+      <td><span class="status-pill pill-critical">Closed</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇮🇶</span>Iraq</td>
+      <td style="color:var(--muted)">4.52M bpd</td>
+      <td style="color:var(--orange)">~1.8M</td>
+      <td style="color:var(--yellow)">~2.8M</td>
+      <td><span class="status-pill pill-severe">Severe</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇸🇦</span>Saudi Arabia</td>
+      <td style="color:var(--muted)">10.88M bpd</td>
+      <td style="color:var(--orange)">~8.5M</td>
+      <td style="color:var(--yellow)">~9.5M</td>
+      <td><span class="status-pill pill-moderate">Moderate</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇰🇼</span>Kuwait</td>
+      <td style="color:var(--muted)">2.75M bpd</td>
+      <td style="color:var(--orange)">~1.5M</td>
+      <td style="color:var(--yellow)">~1.9M</td>
+      <td><span class="status-pill pill-severe">Severe</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇦🇪</span>UAE</td>
+      <td style="color:var(--muted)">4.02M bpd</td>
+      <td style="color:var(--orange)">~3.0M</td>
+      <td style="color:var(--yellow)">~3.5M</td>
+      <td><span class="status-pill pill-moderate">Moderate</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇶🇦</span>Qatar (LNG)</td>
+      <td style="color:var(--muted)">77Mtpa bpd</td>
+      <td style="color:var(--orange)">~10Mtpa</td>
+      <td style="color:var(--yellow)">~25Mtpa</td>
+      <td><span class="status-pill pill-critical">Critical</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇷🇺</span>Russia</td>
+      <td style="color:var(--muted)">~9.2M bpd</td>
+      <td style="color:var(--orange)">~9.4M</td>
+      <td style="color:var(--yellow)">~9.5M</td>
+      <td><span class="status-pill pill-beneficiary">Beneficiary</span></td>
+    </tr>
+  
+    <tr>
+      <td><span class="country-flag">🇳🇬</span>Nigeria</td>
+      <td style="color:var(--muted)">~1.5M bpd</td>
+      <td style="color:var(--orange)">~1.6M</td>
+      <td style="color:var(--yellow)">~1.6M</td>
+      <td><span class="status-pill pill-beneficiary">Beneficiary</span></td>
+    </tr>
+  </tbody></table>
+    </div>
+  </div>
+
+  <!-- RECOVERY FORECAST -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">% Return to Pre-War Output</div>
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted)">by end Q3 2026</div>
+    </div>
+    <div class="panel-body" id="recovery-bars">
+    <div class="progress-row">
+      <div class="progress-label">Iran</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:10%;background:#C8102E"></div>
+      </div>
+      <div class="progress-val" style="color:#C8102E">10%</div>
+    </div>
+  
+    <div class="progress-row">
+      <div class="progress-label">Iraq</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:35%;background:#B45309"></div>
+      </div>
+      <div class="progress-val" style="color:#B45309">35%</div>
+    </div>
+  
+    <div class="progress-row">
+      <div class="progress-label">Saudi</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:75%;background:#0055A5"></div>
+      </div>
+      <div class="progress-val" style="color:#0055A5">75%</div>
+    </div>
+  
+    <div class="progress-row">
+      <div class="progress-label">Kuwait</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:65%;background:#B45309"></div>
+      </div>
+      <div class="progress-val" style="color:#B45309">65%</div>
+    </div>
+  
+    <div class="progress-row">
+      <div class="progress-label">UAE</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:80%;background:#007A33"></div>
+      </div>
+      <div class="progress-val" style="color:#007A33">80%</div>
+    </div>
+  
+    <div class="progress-row">
+      <div class="progress-label">Qatar LNG</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:25%;background:#C8102E"></div>
+      </div>
+      <div class="progress-val" style="color:#C8102E">25%</div>
+    </div>
+  <div style="margin-top:12px;font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);line-height:1.6">
+    % of pre-war production volume expected by end Q3 2026. Iran and Qatar face longest recovery due to direct facility strikes. Saudi/UAE benefit from partial pipeline bypass capacity.
+  </div></div>
+  </div>
+</div>
+
+<!-- WAR DAMAGE TABLE -->
+<div class="section-title" style="padding-top:20px">War Damage Assessment — Infrastructure &amp; Recovery Timeline</div>
+<div class="main" style="padding-top:12px; padding-bottom:0">
+  <div class="full panel">
+    <div class="panel-header">
+      <div class="panel-title">Damaged Facilities · Estimated Recovery Duration</div>
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted)">IEA: "more than 80 energy facilities damaged · recovery could take up to 2 years"</div>
+    </div>
+    <div class="panel-body" style="padding:0">
+      <table class="dtable">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Facility / Asset</th>
+            <th>Type of Damage</th>
+            <th>Impact</th>
+            <th>Est. Recovery</th>
+            <th>Recovery Progress</th>
+          </tr>
+        </thead>
+        <tbody id="damage-table">
+  <tr>
+    <td>🇮🇷 Iran</td>
+    <td style="color:var(--white)">Tehran Oil Storage / Mobarakeh Steel</td>
+    <td style="color:var(--muted)">Direct Strike</td>
+    <td style="color:var(--orange)">Power + storage capacity destroyed</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">18–24 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">5% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-red" style="width:5%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇮🇷 Iran</td>
+    <td style="color:var(--white)">Ras Bahregan Terminal</td>
+    <td style="color:var(--muted)">Naval Attack</td>
+    <td style="color:var(--orange)">Crude export terminal offline</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">12–18 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">8% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-red" style="width:8%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇶🇦 Qatar</td>
+    <td style="color:var(--white)">Ras Laffan LNG (world's largest)</td>
+    <td style="color:var(--muted)">Missile Strike Mar 2</td>
+    <td style="color:var(--orange)">Offline since March 2 — 77Mtpa capacity</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">6–12 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">15% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-red" style="width:15%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇸🇦 Saudi Arabia</td>
+    <td style="color:var(--white)">Yanbu / Jizan Refineries</td>
+    <td style="color:var(--muted)">Drone + Missile</td>
+    <td style="color:var(--orange)">~2M bpd refining capacity offline</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">3–6 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">35% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:35%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇦🇪 UAE</td>
+    <td style="color:var(--white)">Emirates Global Aluminum</td>
+    <td style="color:var(--muted)">Missile Strike Mar 28</td>
+    <td style="color:var(--orange)">Aluminum production disrupted</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">2–4 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">55% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:55%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇦🇪 UAE</td>
+    <td style="color:var(--white)">Fujairah Marine Terminal</td>
+    <td style="color:var(--muted)">Indirect Disruption</td>
+    <td style="color:var(--orange)">Tanker throughput restricted</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">1–3 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">70% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-yellow" style="width:70%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇮🇶 Iraq</td>
+    <td style="color:var(--white)">Basra Oil Terminal</td>
+    <td style="color:var(--muted)">No-go zone / mine risk</td>
+    <td style="color:var(--orange)">Cannot load tankers through Hormuz</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">Post-clearance: 2–3 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">30% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:30%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🇰🇼 Kuwait</td>
+    <td style="color:var(--white)">Al-Ahmadi Export Terminal</td>
+    <td style="color:var(--muted)">Hormuz blockade</td>
+    <td style="color:var(--orange)">All exports blocked, no bypass</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">Post-clearance: 1–2 months</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">40% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:40%"></div></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>🌐 Gulf-Wide</td>
+    <td style="color:var(--white)">Seabed / Shipping Lanes</td>
+    <td style="color:var(--muted)">Sea Mines (IRGC)</td>
+    <td style="color:var(--orange)">50-day mine clearance lag minimum</td>
+    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">4–8 weeks post-ceasefire</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">50% repaired</div>
+      <div class="rec-bar"><div class="rec-fill fill-yellow" style="width:50%"></div></div>
+    </td>
+  </tr>
+</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BRENT PRICE CHART -->
+<div class="section-title" style="padding-top:20px">Brent Crude Price Scenario — Feb to Sep 2026</div>
+<div class="main" style="padding-top:12px;">
+  <div class="full panel">
+    <div class="panel-header">
+      <div class="panel-title">Brent Crude (USD/bbl) · Scenario Comparison</div>
+    </div>
+    <div class="panel-body">
+      <svg id="price-svg" width="100%" height="200" viewBox="0 0 900 200"><line x1="50" y1="161.1764705882353" x2="880" y2="161.1764705882353" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="165.1764705882353" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$60</text><line x1="50" y1="125.88235294117646" x2="880" y2="125.88235294117646" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="129.88235294117646" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$80</text><line x1="50" y1="90.58823529411765" x2="880" y2="90.58823529411765" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="94.58823529411765" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$100</text><line x1="50" y1="55.294117647058826" x2="880" y2="55.294117647058826" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="59.294117647058826" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$120</text><line x1="50" y1="20" x2="880" y2="20" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="24" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$140</text><text x="50" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Feb</text><text x="168.57142857142856" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mar</text><line x1="168.57142857142856" y1="20" x2="168.57142857142856" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="287.1428571428571" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Apr</text><line x1="287.1428571428571" y1="20" x2="287.1428571428571" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="405.7142857142857" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">May</text><line x1="405.7142857142857" y1="20" x2="405.7142857142857" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="524.2857142857142" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Jun</text><line x1="524.2857142857142" y1="20" x2="524.2857142857142" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="642.8571428571429" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Jul</text><line x1="642.8571428571429" y1="20" x2="642.8571428571429" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="761.4285714285714" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Aug</text><line x1="761.4285714285714" y1="20" x2="761.4285714285714" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="880" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Sep</text><line x1="880" y1="20" x2="880" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><rect x="405.7142857142857" y="20" width="237.14285714285717" height="150" fill="rgba(0,85,165,0.04)"></rect><text x="524.2857142857143" y="32" fill="rgba(0,85,165,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q2 2026</text><rect x="642.8571428571429" y="20" width="237.1428571428571" height="150" fill="rgba(0,122,51,0.04)"></rect><text x="761.4285714285714" y="32" fill="rgba(0,122,51,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q3 2026</text><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,41.176470588235304 L405.7142857142857,46.47058823529413 L524.2857142857142,51.76470588235294 L642.8571428571429,55.294117647058826 L761.4285714285714,58.823529411764696 L880,69.41176470588236" fill="none" stroke="#C8102E" stroke-width="1" opacity="0.3"></path><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,41.176470588235304 L405.7142857142857,64.11764705882352 L524.2857142857142,76.47058823529412 L642.8571428571429,90.58823529411765 L761.4285714285714,102.94117647058823 L880,113.52941176470588" fill="none" stroke="#0055A5" stroke-width="2.5" opacity="1"></path><circle cx="880" cy="113.52941176470588" r="4" fill="#0055A5"></circle><text x="886" y="117.52941176470588" fill="#0055A5" font-size="9" font-family="DM Mono,monospace">$87</text><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,55.294117647058826 L405.7142857142857,108.23529411764707 L524.2857142857142,122.3529411764706 L642.8571428571429,132.94117647058823 L761.4285714285714,140 L880,147.05882352941177" fill="none" stroke="#007A33" stroke-width="1" opacity="0.3"></path><line x1="376.07142857142856" y1="20" x2="376.07142857142856" y2="170" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.8"></line><text x="376.07142857142856" y="14" fill="#B45309" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">TODAY · $101.55</text></svg>
+      <div style="display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;">
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--green);">— Bull: Goldman base / fast recovery → ~$68 end Q3</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--blue);">— Base: EIA STEO → Q2 avg $115, end Q3 ~$87</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--red);">— Bear: Goldman $120+ upside / prolonged closure → $112 end Q3</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--cyan);">◆ Live Apr 23: $101.55 (Reuters)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORT LOGISTICS MAP -->
+<div class="section-title" style="padding-top:20px">Port &amp; Logistics Status Map — Import / Export Operability</div>
+<div class="main" style="padding-top:12px; padding-bottom:0">
+  <div class="full panel">
+    <div class="panel-header">
+      <div class="panel-title">Port Operability · Bypass Routes · Strait of Hormuz Chokepoint · Click any port</div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2a9d8f"></span>Open</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e9c46a"></span>Partial</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f4a261"></span>Limited</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e63946"></span>Closed</span>
+        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:5px;height:10px;border-radius:1px;background:#4cc9f0"></span>Pipeline Bypass</span>
+      </div>
+    </div>
+
+    <!-- MAP + SIDEBAR -->
+    <div style="display:grid;grid-template-columns:1fr 320px;min-height:480px">
+
+      <!-- SVG MAP AREA -->
+      <div style="position:relative;background:#EBF2FA;border-right:1px solid #DDE1E7;overflow:hidden">
+        <svg id="map-svg" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet" style="width:100%;height:480px;display:block">
+
+          <!-- Ocean background — Bloomberg light -->
+          <rect width="900" height="520" fill="#EBF2FA"></rect>
+
+          <!-- ── LAND MASSES ── -->
+          <polygon points="380,120 420,100 470,95 520,100 560,110 590,130 610,160 620,200 610,240 590,270 570,290 540,300 510,310 480,320 450,330 430,350 400,370 375,360 360,340 350,310 345,280 350,250 360,220 370,180 375,150" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="530,60 570,50 620,55 660,65 690,80 710,100 720,120 710,140 690,150 660,155 630,150 600,140 575,130 555,115 535,100 520,85" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="430,70 470,60 510,65 530,80 535,100 520,120 500,135 475,140 450,135 430,120 420,100 420,80" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="450,135 475,140 480,155 465,165 448,158 445,145" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="610,160 640,155 670,165 690,185 700,210 695,240 680,265 660,280 640,285 620,275 605,255 600,230 600,200 605,175" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="560,340 600,330 640,340 660,360 650,390 620,400 580,395 555,375 550,355" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="540,190 550,180 560,185 558,200 548,205 538,200" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <circle cx="510" cy="178" r="5" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></circle>
+          <polygon points="180,30 250,25 310,30 350,45 360,65 330,75 290,72 240,65 190,58 170,45" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="375,300 410,290 450,285 490,295 520,310 530,335 510,355 475,360 440,355 405,345 380,330 365,315" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="710,120 760,115 800,125 830,140 840,165 820,170 780,165 740,155 710,140" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="800,140 850,150 880,175 885,210 870,240 840,250 810,240 790,215 785,185 790,160" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="0,200 30,195 60,205 80,230 75,270 55,300 25,310 0,300" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="50,250 90,240 120,255 130,285 110,310 80,320 55,305 45,280" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+
+          <!-- ── WATER LABELS ── -->
+          <text x="200" y="200" fill="#8AAAC4" font-size="10" font-family="DM Mono,monospace" opacity="0.9" transform="rotate(-15,200,200)">RED SEA</text>
+          <text x="310" y="280" fill="#8AAAC4" font-size="9" font-family="DM Mono,monospace" opacity="0.9">GULF OF ADEN</text>
+          <text x="480" y="430" fill="#8AAAC4" font-size="10" font-family="DM Mono,monospace" opacity="0.9">ARABIAN SEA</text>
+          <text x="460" y="222" fill="#8AAAC4" font-size="9" font-family="DM Mono,monospace" opacity="0.9">ARABIAN GULF</text>
+          <text x="618" y="202" fill="#8AAAC4" font-size="8" font-family="DM Mono,monospace" opacity="0.9">GULF OF OMAN</text>
+          <text x="95" y="120" fill="#8AAAC4" font-size="9" font-family="DM Mono,monospace" opacity="0.9">MEDITERRANEAN</text>
+
+          <!-- ── PIPELINE ROUTES ── -->
+          <line x1="510" y1="170" x2="260" y2="195" stroke="#0055A5" stroke-width="2" stroke-dasharray="7,5" opacity="0.6"></line>
+          <text x="362" y="174" fill="#0055A5" font-size="8" font-family="DM Mono,monospace" opacity="0.8" transform="rotate(-3,362,174)">Saudi Petroline → Yanbu</text>
+          <line x1="590" y1="220" x2="650" y2="192" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.6"></line>
+          <text x="600" y="209" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" opacity="0.8">ADCOP</text>
+          <polyline points="490,100 420,75 320,58" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" fill="none" opacity="0.6"></polyline>
+          <text x="388" y="68" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" opacity="0.8">Kirkuk→Ceyhan</text>
+
+          <!-- ── HORMUZ DANGER ZONE ── -->
+          <ellipse cx="635" cy="182" rx="42" ry="22" fill="rgba(200,16,46,0.08)" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5,3"></ellipse>
+          <text x="614" y="170" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" font-weight="bold">⚠ HORMUZ</text>
+          <text x="614" y="180" fill="#C8102E" font-size="7" font-family="DM Mono,monospace">CLOSED</text>
+
+          <!-- ── PORT DOTS ── -->
+          <!-- 0: Strait of Hormuz -->
+          <g class="map-dot" data-idx="0" onclick="selectPort(0)">
+            <rect x="626" y="158" width="12" height="12" rx="2" fill="#C8102E" stroke="#8B0000" stroke-width="1" opacity="0.95" style="opacity: 1; filter: drop-shadow(rgb(200, 16, 46) 0px 0px 8px);"></rect>
+          </g>
+          <!-- 1: Bandar Abbas -->
+          <g class="map-dot" data-idx="1" onclick="selectPort(1)">
+            <circle cx="658" cy="165" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="662" y="162" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Bandar Abbas</text>
+          <!-- 2: Kharg Island -->
+          <g class="map-dot" data-idx="2" onclick="selectPort(2)">
+            <circle cx="535" cy="148" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="539" y="145" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Kharg Is.</text>
+          <!-- 3: Basra -->
+          <g class="map-dot" data-idx="3" onclick="selectPort(3)">
+            <circle cx="486" cy="152" r="7" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="490" y="149" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Basra</text>
+          <!-- 4: Kuwait Mina Al Ahmadi -->
+          <g class="map-dot" data-idx="4" onclick="selectPort(4)">
+            <circle cx="468" cy="160" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="446" y="154" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Kuwait</text>
+          <!-- 5: Ras Tanura -->
+          <g class="map-dot" data-idx="5" onclick="selectPort(5)">
+            <circle cx="516" cy="172" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="518" y="169" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Ras Tanura</text>
+          <!-- 6: Al Jubail -->
+          <g class="map-dot" data-idx="6" onclick="selectPort(6)">
+            <circle cx="510" cy="183" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="512" y="180" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Jubail</text>
+          <!-- 7: Yanbu BYPASS -->
+          <g class="map-dot" data-idx="7" onclick="selectPort(7)">
+            <circle cx="260" cy="196" r="8" fill="#007A33" stroke="#005524" stroke-width="1.5" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="264" y="208" fill="#007A33" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Yanbu ✓</text>
+          <!-- 8: Jeddah -->
+          <g class="map-dot" data-idx="8" onclick="selectPort(8)">
+            <circle cx="248" cy="220" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="252" y="232" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Jeddah ✓</text>
+          <!-- 9: Fujairah BYPASS -->
+          <g class="map-dot" data-idx="9" onclick="selectPort(9)">
+            <circle cx="654" cy="190" r="8" fill="#0055A5" stroke="#003D7A" stroke-width="1.5" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="658" y="202" fill="#0055A5" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Fujairah →</text>
+          <!-- 10: Khor Fakkan -->
+          <g class="map-dot" data-idx="10" onclick="selectPort(10)">
+            <circle cx="660" cy="204" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="664" y="202" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Khor Fakkan</text>
+          <!-- 11: Jebel Ali -->
+          <g class="map-dot" data-idx="11" onclick="selectPort(11)">
+            <circle cx="598" cy="207" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="578" y="217" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Jebel Ali</text>
+          <!-- 12: Ras Laffan -->
+          <g class="map-dot" data-idx="12" onclick="selectPort(12)">
+            <circle cx="553" cy="196" r="7" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="554" y="209" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Ras Laffan</text>
+          <!-- 19: Hamad Port Qatar (NEW) -->
+          <g class="map-dot" data-idx="19" onclick="selectPort(19)">
+            <circle cx="542" cy="212" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="526" y="224" fill="#C8102E" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Hamad Port</text>
+          <!-- 13: Bahrain -->
+          <g class="map-dot" data-idx="13" onclick="selectPort(13)">
+            <circle cx="510" cy="194" r="5" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="496" y="204" fill="#C8102E" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Bahrain</text>
+          <!-- 14: Muscat -->
+          <g class="map-dot" data-idx="14" onclick="selectPort(14)">
+            <circle cx="682" cy="230" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="685" y="243" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Muscat ✓</text>
+          <!-- 15: Sohar -->
+          <g class="map-dot" data-idx="15" onclick="selectPort(15)">
+            <circle cx="668" cy="218" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="671" y="216" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Sohar</text>
+          <!-- 16: Salalah -->
+          <g class="map-dot" data-idx="16" onclick="selectPort(16)">
+            <circle cx="600" cy="378" r="7" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="604" y="390" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Salalah ✓</text>
+          <!-- 17: Duqm -->
+          <g class="map-dot" data-idx="17" onclick="selectPort(17)">
+            <circle cx="650" cy="310" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="654" y="308" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Duqm</text>
+          <!-- 18: Ceyhan BYPASS -->
+          <g class="map-dot" data-idx="18" onclick="selectPort(18)">
+            <circle cx="320" cy="58" r="7" fill="#007A33" stroke="#005524" stroke-width="1.5" style="opacity: 0.35;"></circle>
+          </g>
+          <text x="324" y="70" fill="#007A33" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Ceyhan ✓</text>
+
+          <!-- Stranded tankers label -->
+          <rect x="682" y="252" width="178" height="32" rx="3" fill="rgba(200,16,46,0.07)" stroke="#DDE1E7" stroke-width="0.8"></rect>
+          <text x="692" y="264" fill="#C8102E" font-size="8" font-family="DM Mono,monospace">~400 tankers stranded</text>
+          <text x="692" y="276" fill="#C8102E" font-size="8" font-family="DM Mono,monospace">in Gulf of Oman</text>
+
+          <text x="16" y="500" fill="#94A3B8" font-size="8" font-family="DM Mono,monospace">SVG Map · Indicative only · Not to precise scale</text>
+        </svg>
+
+      </div>
+
+      <!-- SIDEBAR: Port List + Detail -->
+      <div style="display:flex;flex-direction:column;height:480px">
+        <div style="flex:1;overflow-y:auto;" id="port-list">
+  <div class="port-list-item active" id="pli-0" onclick="selectPort(0)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Strait of Hormuz</div>
+    <div class="port-list-country">Iran / Oman · CHOKEPOINT</div>
+  </div>
+
+  <div class="port-list-item" id="pli-1" onclick="selectPort(1)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Bandar Abbas Terminal</div>
+    <div class="port-list-country">Iran · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-2" onclick="selectPort(2)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Kharg Island Terminal</div>
+    <div class="port-list-country">Iran · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-3" onclick="selectPort(3)">
+    <span class="port-list-status st-limited">LIMITED</span>
+    <div class="port-list-name">Basra Oil Terminal (ABOT/KAAOT)</div>
+    <div class="port-list-country">Iraq · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-4" onclick="selectPort(4)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Mina Al Ahmadi</div>
+    <div class="port-list-country">Kuwait · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-5" onclick="selectPort(5)">
+    <span class="port-list-status st-limited">LIMITED</span>
+    <div class="port-list-name">Ras Tanura</div>
+    <div class="port-list-country">Saudi Arabia · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-6" onclick="selectPort(6)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Al Jubail</div>
+    <div class="port-list-country">Saudi Arabia · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-7" onclick="selectPort(7)">
+    <span class="port-list-status st-open">OPEN</span>
+    <div class="port-list-name">Yanbu Port</div>
+    <div class="port-list-country">Saudi Arabia · BYPASS ✓</div>
+  </div>
+
+  <div class="port-list-item" id="pli-8" onclick="selectPort(8)">
+    <span class="port-list-status st-open">OPEN</span>
+    <div class="port-list-name">Jeddah Islamic Port</div>
+    <div class="port-list-country">Saudi Arabia · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-9" onclick="selectPort(9)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Fujairah Oil Terminal (FOTT)</div>
+    <div class="port-list-country">UAE · BYPASS →</div>
+  </div>
+
+  <div class="port-list-item" id="pli-10" onclick="selectPort(10)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Khor Fakkan Port</div>
+    <div class="port-list-country">UAE · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-11" onclick="selectPort(11)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Jebel Ali (DP World)</div>
+    <div class="port-list-country">UAE · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-12" onclick="selectPort(12)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Ras Laffan Industrial City</div>
+    <div class="port-list-country">Qatar · LNG</div>
+  </div>
+
+  <div class="port-list-item" id="pli-13" onclick="selectPort(13)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Khalifa Bin Salman Port</div>
+    <div class="port-list-country">Bahrain · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-14" onclick="selectPort(14)">
+    <span class="port-list-status st-open">OPEN</span>
+    <div class="port-list-name">Mina Al Fahal (Muscat)</div>
+    <div class="port-list-country">Oman · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-15" onclick="selectPort(15)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Sohar Port</div>
+    <div class="port-list-country">Oman · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-16" onclick="selectPort(16)">
+    <span class="port-list-status st-open">OPEN</span>
+    <div class="port-list-name">Salalah Port</div>
+    <div class="port-list-country">Oman · GENERAL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-17" onclick="selectPort(17)">
+    <span class="port-list-status st-partial">PARTIAL</span>
+    <div class="port-list-name">Duqm Port</div>
+    <div class="port-list-country">Oman · OIL</div>
+  </div>
+
+  <div class="port-list-item" id="pli-18" onclick="selectPort(18)">
+    <span class="port-list-status st-open">OPEN</span>
+    <div class="port-list-name">Ceyhan Oil Terminal</div>
+    <div class="port-list-country">Turkey · BYPASS ✓</div>
+  </div>
+
+  <div class="port-list-item" id="pli-19" onclick="selectPort(19)">
+    <span class="port-list-status st-closed">CLOSED</span>
+    <div class="port-list-name">Hamad Port (New Doha Port)</div>
+    <div class="port-list-country">Qatar · GENERAL</div>
+  </div>
+</div>
+        <div id="port-detail">
+    <div class="pd-name">Strait of Hormuz</div>
+    <div class="pd-country">Iran / Oman &nbsp;·&nbsp; <span style="color:#C8102E;font-weight:700">CLOSED</span> &nbsp;·&nbsp; CHOKEPOINT</div>
+    <div class="pd-grid">
+      <div class="pd-cell"><div class="pd-cell-label">Export</div><div class="pd-cell-val" style="color:#C8102E">BLOCKED</div></div>
+      <div class="pd-cell"><div class="pd-cell-label">Import</div><div class="pd-cell-val">BLOCKED</div></div>
+      <div class="pd-cell"><div class="pd-cell-label">Capacity</div><div class="pd-cell-val" style="color:#4cc9f0;font-size:9px">20M bpd pre-war</div></div>
+    </div>
+    <div class="pd-notes">Effectively closed since Feb 28. Mines laid by IRGC. Apr 17 ceasefire opening lasted hours before Iran re-closed. US naval blockade of Iranian ports remains in force. ~400 tankers stranded in Gulf of Oman.</div>
+  </div>
+      </div>
+    </div>
+
+    <!-- BYPASS ROUTES BAR -->
+    <div style="border-top:1px solid var(--border);padding:12px 16px;background:#F5F6F8">
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:10px">Alternative Pipeline &amp; Bypass Routes · Capacity vs 20M bpd pre-war Hormuz throughput</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px">
+        <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇸🇦 Saudi East-West Pipeline (Petroline)</div>
+          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">5.0M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~4.4M bpd · Abqaiq → Yanbu</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇦🇪 UAE ADCOP Pipeline (Habshan–Fujairah)</div>
+          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.8M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~1.62M bpd · Habshan → Fujairah</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇮🇶 Iraq Kirkuk–Ceyhan Pipeline (Turkey)</div>
+          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.6M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~200K bpd · Kirkuk → Ceyhan, Turkey</div>
+        </div>
+      </div>
+      <!-- Capacity utilisation bar -->
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#6b7280;margin-bottom:5px">Combined bypass actual utilisation vs pre-war Hormuz (20M bpd = 100%)</div>
+      <div style="background:#DDE1E7;height:8px;border-radius:2px;overflow:hidden;margin-bottom:5px">
+        <div style="width:31%;height:100%;background:#0055A5"></div>
+      </div>
+      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#6B7280">
+        ~6.2M bpd actual · <span style="color:#C8102E">31% of pre-war Hormuz</span> · Theoretical max 8.4M bpd (42%) but constrained by infrastructure damage &amp; port congestion
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  DATA VERIFIED: Apr 23, 2026 · SOURCES: EIA Short-Term Energy Outlook (Apr 2026) · IEA Oil Market Report (Apr 14, 2026) · IMF World Economic Outlook (Apr 14, 2026) · Goldman Sachs Commodity Research (Apr 23, 2026) · Morgan Stanley Research (Apr 13, 2026) · Reuters / Trading Economics (live Brent $101.55 Apr 23) · Bloomberg / IDN Financials (country production cuts) · Wikipedia: 2026 Strait of Hormuz Crisis · GAC Hot Port News · Inchcape Shipping Services Advisory · Al Jazeera · S&amp;P Global · Energy News Beat.
+  KEY VERIFIED FIGURES: Brent peak ~$128 futures (Apr 2, IEA); physical crude ~$150 (IEA OMR); live $101.55 (Apr 23); EIA STEO Q2 avg $115, falls below $90 in Q4; production shut-ins peaked 9.1M bpd Apr (EIA), 7.5M bpd Mar; global supply drop −10.1M bpd Mar (IEA OMR); inventory draw 5.1M bpd Q2 (EIA); IMF GDP 3.1% (from 3.4%), inflation 4.4%, adverse scenario: 2.5% GDP / 5.4% CPI; bypass actual 31% (~6.2M bpd) of 20M bpd pre-war Hormuz; pre-war outputs: Saudi 10.88M, UAE 4.02M, Iraq 4.52M, Kuwait 2.75M (EIA/IEA 2024). Morgan Stanley: full export restoration not before Oct 2026.
+  This dashboard is for analytical and informational purposes only.
+</div>
+
+<script>
+const SCENARIOS = {
+  base: {
+    label: "Base Case",
+    kpis: [
+      { label:"Brent Today (Apr 23)", value:"$101.55", sub:"Live · Reuters · up $3.53 on day", cls:"kpi-red" },
+      { label:"Brent Q2 Avg (EIA Base)", value:"$115", sub:"EIA STEO Apr 2026 peak", cls:"kpi-red" },
+      { label:"Brent Q4 Forecast (EIA)", value:"<$90", sub:"EIA: falls below $90 in Q4", cls:"kpi-blue" },
+      { label:"Prod. Shut-ins Apr '26", value:"9.1M bpd", sub:"EIA STEO peak estimate", cls:"kpi-red" },
+      { label:"Global Supply Drop Mar", value:"−10.1M", sub:"bpd m-o-m · IEA OMR · largest ever", cls:"kpi-red" },
+      { label:"Hormuz Flow (End Q2)", value:"~55%", sub:"of 20M bpd pre-war · Base case", cls:"kpi-blue" },
+      { label:"GDP Growth 2026", value:"3.1%", sub:"IMF WEO Apr 14 · down from 3.4%", cls:"kpi-blue" },
+      { label:"Global Inflation 2026", value:"+4.4%", sub:"IMF WEO · +0.6pp from Jan forecast", cls:"kpi-blue" },
+    ],
+    phases: [
+      { cls:"p1", num:"1", title:"War & Closure", date:"Feb 28 – Apr 8", desc:"Strait closed. 20M bpd halted. Brent peaks ~$128 Apr 2 (physical ~$150). Global supply drops 10.1M bpd. 80+ facilities struck. EIA: 7.5M bpd shut-in in March.", col:"var(--red)" },
+      { cls:"p2", num:"2", title:"Ceasefire & Tension", date:"Apr 8 – May", desc:"Ceasefire Apr 8 & 17. Both collapsed within hours. US naval blockade remains. Iran fired on tankers Apr 19. Brent today: $101.55 (Apr 23). EIA shut-ins peak at 9.1M bpd in April.", col:"var(--blue)" },
+      { cls:"p3", num:"3", title:"Gradual Resumption", date:"May – Jul", desc:"IEA base: partial Hormuz flows resume from May. Tanker backlog clears over ~50 days. Saudi/UAE pipelines at max. Iraq/Kuwait ramp cautiously. EIA: Brent averages $115 in Q2.", col:"var(--yellow)" },
+      { cls:"p4", num:"4", title:"Partial Recovery", date:"Aug – Sep", desc:"Output approaching 70–75% of pre-war. EIA: Brent falls below $90 in Q4. Infrastructure repairs ongoing. Morgan Stanley: full export restoration not before Oct 2026.", col:"var(--green)" },
+    ],
+    timeline: {
+      // 0=normal, 1=war, 2=critical, 3=severe, 4=moderate, 5=recovery, 6=partial_normal
+      iran:    [0,1,1,1,2,3,3,4],
+      iraq:    [0,1,1,1,2,3,4,4],
+      saudi:   [0,1,1,3,3,4,5,5],
+      kuwait:  [0,1,1,2,3,3,4,5],
+      uae:     [0,1,1,3,3,4,5,5],
+      qatar:   [0,1,1,1,2,3,3,4],
+      russia:  [0,0,0,0,0,0,0,0],
+      nigeria: [0,0,0,0,0,0,0,0],
+    },
+    recovery: {
+      iran:10, iraq:35, saudi:75, kuwait:65, uae:80, qatar:25
+    },
+    ctable: [
+      { flag:"🇮🇷", country:"Iran", prewar:"~3.3M", q2:"~0.1M", q3:"~0.3M", status:"critical", statusLabel:"Closed" },
+      { flag:"🇮🇶", country:"Iraq", prewar:"4.52M", q2:"~1.8M", q3:"~2.8M", status:"severe", statusLabel:"Severe" },
+      { flag:"🇸🇦", country:"Saudi Arabia", prewar:"10.88M", q2:"~8.5M", q3:"~9.5M", status:"moderate", statusLabel:"Moderate" },
+      { flag:"🇰🇼", country:"Kuwait", prewar:"2.75M", q2:"~1.5M", q3:"~1.9M", status:"severe", statusLabel:"Severe" },
+      { flag:"🇦🇪", country:"UAE", prewar:"4.02M", q2:"~3.0M", q3:"~3.5M", status:"moderate", statusLabel:"Moderate" },
+      { flag:"🇶🇦", country:"Qatar (LNG)", prewar:"77Mtpa", q2:"~10Mtpa", q3:"~25Mtpa", status:"critical", statusLabel:"Critical" },
+      { flag:"🇷🇺", country:"Russia", prewar:"~9.2M", q2:"~9.4M", q3:"~9.5M", status:"beneficiary", statusLabel:"Beneficiary" },
+      { flag:"🇳🇬", country:"Nigeria", prewar:"~1.5M", q2:"~1.6M", q3:"~1.6M", status:"beneficiary", statusLabel:"Beneficiary" },
+    ]
+  },
+  bull: {
+    label: "Bull — Fast Recovery",
+    kpis: [
+      { label:"Brent Today (Apr 23)", value:"$101.55", sub:"Falling on ceasefire extension", cls:"kpi-green" },
+      { label:"Brent Q2 (Goldman base)", value:"$90", sub:"Goldman Sachs Apr 23 base", cls:"kpi-green" },
+      { label:"Brent End Q3 (Bull)", value:"~$68", sub:"Near pre-conflict levels", cls:"kpi-green" },
+      { label:"Prod. Shut-ins Q2", value:"~4.0M", sub:"bpd — fast ramp-back", cls:"kpi-green" },
+      { label:"GDP Growth 2026", value:"~3.3%", sub:"Near pre-conflict forecast", cls:"kpi-green" },
+      { label:"Global CPI 2026", value:"~3.8%", sub:"Limited inflation overshoot", cls:"kpi-green" },
+      { label:"Tanker Return Lag", value:"~30d", sub:"Accelerated movement", cls:"kpi-green" },
+      { label:"Full Recovery", value:"Aug–Sep '26", sub:"Optimistic · Goldman base", cls:"kpi-green" },
+    ],
+    phases: [
+      { cls:"p1", num:"1", title:"War & Closure", date:"Feb 28 – Apr 8", desc:"Strait closed. 20M bpd halted. Brent spikes to $130. OPEC+ output collapses. 80+ facilities struck.", col:"var(--red)" },
+      { cls:"p2", num:"2", title:"Credible Ceasefire", date:"Apr 8 – May", desc:"Ceasefire holds. US blockade eased. Insurance normalizes quickly. Mines cleared. Tankers return fast.", col:"var(--orange)" },
+      { cls:"p3", num:"3", title:"Rapid Resumption", date:"May – Jul", desc:"Hormuz flows recover to 80%+ rapidly. Saudi/Iraq production ramps. Ras Laffan partial restart.", col:"var(--yellow)" },
+      { cls:"p4", num:"4", title:"Near Normal", date:"Aug – Sep", desc:"85–90% pre-war volumes achieved. Prices normalise near $68. Permanent deal signed.", col:"var(--green)" },
+    ],
+    timeline: {
+      iran:    [0,1,1,1,3,4,5,5],
+      iraq:    [0,1,1,1,3,4,5,6],
+      saudi:   [0,1,1,3,4,5,6,6],
+      kuwait:  [0,1,1,3,4,5,5,6],
+      uae:     [0,1,1,3,4,5,6,6],
+      qatar:   [0,1,1,1,3,4,4,5],
+      russia:  [0,0,0,0,0,0,0,0],
+      nigeria: [0,0,0,0,0,0,0,0],
+    },
+    recovery: {
+      iran:20, iraq:70, saudi:92, kuwait:85, uae:93, qatar:55
+    },
+    ctable: [
+      { flag:"🇮🇷", country:"Iran", prewar:"~3.3M", q2:"~0.4M", q3:"~0.8M", status:"critical", statusLabel:"Partial" },
+      { flag:"🇮🇶", country:"Iraq", prewar:"4.52M", q2:"~3.0M", q3:"~3.8M", status:"moderate", statusLabel:"Moderate" },
+      { flag:"🇸🇦", country:"Saudi Arabia", prewar:"10.88M", q2:"~9.5M", q3:"~10.5M", status:"partial", statusLabel:"Near Normal" },
+      { flag:"🇰🇼", country:"Kuwait", prewar:"2.75M", q2:"~2.0M", q3:"~2.4M", status:"moderate", statusLabel:"Moderate" },
+      { flag:"🇦🇪", country:"UAE", prewar:"4.02M", q2:"~3.6M", q3:"~3.9M", status:"partial", statusLabel:"Near Normal" },
+      { flag:"🇶🇦", country:"Qatar (LNG)", prewar:"77Mtpa", q2:"~25Mtpa", q3:"~45Mtpa", status:"severe", statusLabel:"Severe" },
+      { flag:"🇷🇺", country:"Russia", prewar:"~9.2M", q2:"~9.3M", q3:"~9.3M", status:"beneficiary", statusLabel:"Beneficiary" },
+      { flag:"🇳🇬", country:"Nigeria", prewar:"~1.5M", q2:"~1.7M", q3:"~1.6M", status:"beneficiary", statusLabel:"Beneficiary" },
+    ]
+  },
+  bear: {
+    label: "Bear — Prolonged Crisis",
+    kpis: [
+      { label:"Brent Today (Apr 23)", value:"$101.55", sub:"Risk premium remains embedded", cls:"kpi-red" },
+      { label:"Brent Q2 (Goldman bear)", value:"$120+", sub:"Goldman Sachs upside scenario", cls:"kpi-red" },
+      { label:"Brent Q3 (Bear)", value:"$110–120", sub:"Extended closure premium", cls:"kpi-red" },
+      { label:"Prod. Shut-ins Q2", value:"9.1M bpd", sub:"EIA STEO April peak · persists", cls:"kpi-red" },
+      { label:"GDP Growth 2026", value:"~2.5%", sub:"IMF adverse scenario", cls:"kpi-red" },
+      { label:"Global CPI 2026", value:">5.4%", sub:"IMF adverse · severe: >6%", cls:"kpi-red" },
+      { label:"Tanker Return Lag", value:">90d", sub:"War risk / mine threat persists", cls:"kpi-red" },
+      { label:"Full Recovery", value:"2027+", sub:"Infrastructure 2yr rebuild", cls:"kpi-red" },
+    ],
+    phases: [
+      { cls:"p1", num:"1", title:"War & Closure", date:"Feb 28 – Apr 8", desc:"Strait closed. 20M bpd halted. Brent spikes to $130. OPEC+ output collapses. 80+ facilities struck.", col:"var(--red)" },
+      { cls:"p2", num:"2", title:"Ceasefire Collapses", date:"Apr 8 – May", desc:"April 21 ceasefire expiry not renewed. Iran gunboats resume attacks. US blockade intensifies. Strait re-closes.", col:"var(--red)" },
+      { cls:"p3", num:"3", title:"Extended Blockade", date:"May – Jul", desc:"Hormuz flows remain at 15–25%. Strategic reserves severely depleted. Global recession signals emerge. Fuel rationing widespread.", col:"var(--red)" },
+      { cls:"p4", num:"4", title:"Structural Damage", date:"Aug – Sep", desc:"No recovery. Infrastructure rebuild 2-year horizon. Energy transition accelerates. Some demand destruction permanent.", col:"var(--orange)" },
+    ],
+    timeline: {
+      iran:    [0,1,1,1,1,1,2,2],
+      iraq:    [0,1,1,1,1,2,2,3],
+      saudi:   [0,1,1,1,2,2,3,3],
+      kuwait:  [0,1,1,1,1,2,2,3],
+      uae:     [0,1,1,1,2,2,3,3],
+      qatar:   [0,1,1,1,1,1,1,2],
+      russia:  [0,0,0,0,0,0,0,0],
+      nigeria: [0,0,0,0,0,0,0,0],
+    },
+    recovery: {
+      iran:5, iraq:15, saudi:40, kuwait:30, uae:45, qatar:8
+    },
+    ctable: [
+      { flag:"🇮🇷", country:"Iran", prewar:"~3.3M", q2:"~0M", q3:"~0.1M", status:"critical", statusLabel:"Zero" },
+      { flag:"🇮🇶", country:"Iraq", prewar:"4.52M", q2:"~0.8M", q3:"~1.2M", status:"critical", statusLabel:"Critical" },
+      { flag:"🇸🇦", country:"Saudi Arabia", prewar:"10.88M", q2:"~5.5M", q3:"~6.5M", status:"severe", statusLabel:"Severe" },
+      { flag:"🇰🇼", country:"Kuwait", prewar:"2.75M", q2:"~0.7M", q3:"~1.0M", status:"critical", statusLabel:"Critical" },
+      { flag:"🇦🇪", country:"UAE", prewar:"4.02M", q2:"~2.0M", q3:"~2.5M", status:"severe", statusLabel:"Severe" },
+      { flag:"🇶🇦", country:"Qatar (LNG)", prewar:"77Mtpa", q2:"~3Mtpa", q3:"~10Mtpa", status:"critical", statusLabel:"Critical" },
+      { flag:"🇷🇺", country:"Russia", prewar:"~9.2M", q2:"~9.4M", q3:"~9.5M", status:"beneficiary", statusLabel:"Beneficiary" },
+      { flag:"🇳🇬", country:"Nigeria", prewar:"~1.5M", q2:"~1.7M", q3:"~1.7M", status:"beneficiary", statusLabel:"Beneficiary" },
+    ]
+  }
+};
+
+const MONTHS = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
+const IS_Q2 = [false,false,false,true,true,true,false,false];
+const COUNTRIES = [
+  { key:"iran", label:"🇮🇷 Iran" },
+  { key:"iraq", label:"🇮🇶 Iraq" },
+  { key:"saudi", label:"🇸🇦 Saudi Arabia" },
+  { key:"kuwait", label:"🇰🇼 Kuwait" },
+  { key:"uae", label:"🇦🇪 UAE" },
+  { key:"qatar", label:"🇶🇦 Qatar (LNG)" },
+  { key:"russia", label:"🇷🇺 Russia" },
+  { key:"nigeria", label:"🇳🇬 Nigeria" },
+];
+
+const STATE_MAP = [
+  { cls:"bar-normal",   label:"Normal" },
+  { cls:"bar-war",      label:"CONFLICT" },
+  { cls:"bar-critical", label:"Critical" },
+  { cls:"bar-severe",   label:"Severe" },
+  { cls:"bar-moderate", label:"Moderate" },
+  { cls:"bar-recovery", label:"Recovery" },
+  { cls:"bar-normal",   label:"Near Normal" },
+];
+
+const DAMAGE_DATA = [
+  { country:"🇮🇷 Iran", facility:"Tehran Oil Storage / Mobarakeh Steel", type:"Direct Strike", impact:"Power + storage capacity destroyed", recovery:"18–24 months", pct:5, cls:"fill-red" },
+  { country:"🇮🇷 Iran", facility:"Ras Bahregan Terminal", type:"Naval Attack", impact:"Crude export terminal offline", recovery:"12–18 months", pct:8, cls:"fill-red" },
+  { country:"🇶🇦 Qatar", facility:"Ras Laffan LNG (world's largest)", type:"Missile Strike Mar 2", impact:"Offline since March 2 — 77Mtpa capacity", recovery:"6–12 months", pct:15, cls:"fill-red" },
+  { country:"🇸🇦 Saudi Arabia", facility:"Yanbu / Jizan Refineries", type:"Drone + Missile", impact:"~2M bpd refining capacity offline", recovery:"3–6 months", pct:35, cls:"fill-orange" },
+  { country:"🇦🇪 UAE", facility:"Emirates Global Aluminum", type:"Missile Strike Mar 28", impact:"Aluminum production disrupted", recovery:"2–4 months", pct:55, cls:"fill-orange" },
+  { country:"🇦🇪 UAE", facility:"Fujairah Marine Terminal", type:"Indirect Disruption", impact:"Tanker throughput restricted", recovery:"1–3 months", pct:70, cls:"fill-yellow" },
+  { country:"🇮🇶 Iraq", facility:"Basra Oil Terminal", type:"No-go zone / mine risk", impact:"Cannot load tankers through Hormuz", recovery:"Post-clearance: 2–3 months", pct:30, cls:"fill-orange" },
+  { country:"🇰🇼 Kuwait", facility:"Al-Ahmadi Export Terminal", type:"Hormuz blockade", impact:"All exports blocked, no bypass", recovery:"Post-clearance: 1–2 months", pct:40, cls:"fill-orange" },
+  { country:"🌐 Gulf-Wide", facility:"Seabed / Shipping Lanes", type:"Sea Mines (IRGC)", impact:"50-day mine clearance lag minimum", recovery:"4–8 weeks post-ceasefire", pct:50, cls:"fill-yellow" },
+];
+
+// PRICE DATA per scenario — verified Apr 23 2026
+// EIA STEO Apr 2026: Brent averaged $103 in Mar, peaks Q2 at $115, falls below $90 in Q4
+// Goldman Sachs Apr 23: Q2 base $90, bear upside $120+
+// IEA OMR Apr 14: peak ~$128 futures (Apr 2), physical ~$150
+// Live Apr 23: $101.55 (Reuters)
+const PRICE_DATA = {
+  base:  [82, 103, 128, 115, 108, 100, 93, 87],   // EIA STEO base — peaks Q2, eases to ~$87 end Q3
+  bull:  [82, 103, 120,  90,  82,  76, 72, 68],   // Goldman base / fast recovery
+  bear:  [82, 103, 128, 125, 122, 120,118,112],   // Goldman $120+ upside / prolonged closure
+};
+
+let currentScenario = 'base';
+
+function setScenario(s) {
+  currentScenario = s;
+  ['base','bull','bear'].forEach(x => {
+    const b = document.getElementById('btn-'+x);
+    b.className = 'scenario-btn';
+    if(x===s) b.classList.add('active', x==='bull'?'active-bull':x==='bear'?'active-bear':'active-base');
+  });
+  renderAll(s);
+}
+
+function renderAll(s) {
+  const sc = SCENARIOS[s];
+  renderKPIs(sc);
+  renderPhases(sc);
+  renderTimeline(sc);
+  renderCTable(sc);
+  renderRecoveryBars(sc);
+  renderPriceChart(s);
+}
+
+function renderKPIs(sc) {
+  const el = document.getElementById('kpi-grid');
+  el.style.gridTemplateColumns = `repeat(${sc.kpis.length},1fr)`;
+  el.innerHTML = sc.kpis.map(k => `
+    <div class="kpi">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value ${k.cls}">${k.value}</div>
+      <div class="kpi-sub ${k.cls}">${k.sub}</div>
+    </div>
+  `).join('');
+}
+
+function renderPhases(sc) {
+  document.getElementById('phase-grid').innerHTML = sc.phases.map(p => `
+    <div class="phase-card ${p.cls}">
+      <div class="phase-num">${p.num}</div>
+      <div class="phase-title" style="color:${p.col}">${p.title}</div>
+      <div class="phase-date">${p.date}</div>
+      <div class="phase-desc">${p.desc}</div>
+    </div>
+  `).join('');
+}
+
+// Production bpd/mtpa estimates per country per month per scenario
+const PROD_DATA = {
+  base: {
+    iran:    ["~3.3M","~0M","~0M","~0.05M","~0.1M","~0.2M","~0.25M","~0.3M"],
+    iraq:    ["4.52M","~1.6M","~1.6M","~1.7M","~1.8M","~2.2M","~2.5M","~2.8M"],
+    saudi:   ["10.88M","~8.0M","~8.0M","~8.3M","~8.5M","~8.8M","~9.2M","~9.5M"],
+    kuwait:  ["2.75M","~2.25M","~2.25M","~1.4M","~1.5M","~1.6M","~1.8M","~1.9M"],
+    uae:     ["4.02M","~3.3M","~3.3M","~2.8M","~3.0M","~3.2M","~3.4M","~3.5M"],
+    qatar:   ["77Mt","~0Mt","~0Mt","~5Mt","~10Mt","~15Mt","~20Mt","~25Mt"],
+    russia:  ["~9.2M","~9.2M","~9.2M","~9.3M","~9.4M","~9.4M","~9.5M","~9.5M"],
+    nigeria: ["~1.5M","~1.5M","~1.6M","~1.6M","~1.6M","~1.6M","~1.6M","~1.6M"],
+  },
+  bull: {
+    iran:    ["~3.3M","~0M","~0M","~0.2M","~0.4M","~0.6M","~0.7M","~0.8M"],
+    iraq:    ["4.52M","~1.6M","~1.6M","~2.5M","~3.0M","~3.4M","~3.7M","~3.8M"],
+    saudi:   ["10.88M","~8.0M","~8.0M","~9.0M","~9.5M","~10.0M","~10.3M","~10.5M"],
+    kuwait:  ["2.75M","~2.25M","~2.25M","~1.8M","~2.0M","~2.2M","~2.3M","~2.4M"],
+    uae:     ["4.02M","~3.3M","~3.3M","~3.4M","~3.6M","~3.8M","~3.9M","~3.9M"],
+    qatar:   ["77Mt","~0Mt","~0Mt","~15Mt","~25Mt","~35Mt","~40Mt","~45Mt"],
+    russia:  ["~9.2M","~9.2M","~9.2M","~9.3M","~9.3M","~9.3M","~9.3M","~9.3M"],
+    nigeria: ["~1.5M","~1.5M","~1.6M","~1.7M","~1.7M","~1.7M","~1.6M","~1.6M"],
+  },
+  bear: {
+    iran:    ["~3.3M","~0M","~0M","~0M","~0M","~0M","~0.05M","~0.1M"],
+    iraq:    ["4.52M","~1.6M","~1.6M","~0.8M","~0.8M","~0.9M","~1.1M","~1.2M"],
+    saudi:   ["10.88M","~8.0M","~8.0M","~5.5M","~5.5M","~5.8M","~6.2M","~6.5M"],
+    kuwait:  ["2.75M","~2.25M","~2.25M","~0.7M","~0.7M","~0.8M","~0.9M","~1.0M"],
+    uae:     ["4.02M","~3.3M","~3.3M","~2.0M","~2.0M","~2.2M","~2.3M","~2.5M"],
+    qatar:   ["77Mt","~0Mt","~0Mt","~2Mt","~3Mt","~5Mt","~8Mt","~10Mt"],
+    russia:  ["~9.2M","~9.2M","~9.2M","~9.3M","~9.4M","~9.5M","~9.5M","~9.5M"],
+    nigeria: ["~1.5M","~1.5M","~1.6M","~1.7M","~1.7M","~1.7M","~1.7M","~1.7M"],
+  }
+};
+
+const COUNTRY_META = {
+  iran:    { sub:"No bypass · US naval blockade",  prewar:"~3.3M bpd" },
+  iraq:    { sub:"Basra terminal · No bypass",      prewar:"4.52M bpd" },
+  saudi:   { sub:"Petroline bypass → Yanbu",        prewar:"10.88M bpd" },
+  kuwait:  { sub:"Al-Ahmadi · No bypass",           prewar:"2.75M bpd" },
+  uae:     { sub:"ADCOP → Fujairah bypass",         prewar:"4.02M bpd" },
+  qatar:   { sub:"Ras Laffan struck Mar 2",         prewar:"77 Mtpa LNG" },
+  russia:  { sub:"Non-Hormuz · Beneficiary",        prewar:"~9.2M bpd" },
+  nigeria: { sub:"Atlantic basin · Beneficiary",    prewar:"~1.5M bpd" },
+};
+
+function renderTimeline(sc) {
+  const tl = sc.timeline;
+  const pd = PROD_DATA[currentScenario] || PROD_DATA.base;
+
+  let html = '<table class="tl-table"><thead><tr>';
+  html += '<th class="col-country">Country</th>';
+  html += '<th class="col-prewar">Pre-War</th>';
+  MONTHS.forEach((m, i) => {
+    const q2 = IS_Q2[i];
+    const q3 = i >= 6;
+    let cls = q2 ? 'q2-col' : q3 ? 'q3-col' : '';
+    const tag = q2 ? ' <span style="color:var(--blue);font-size:8px">Q2</span>'
+               : q3 ? ' <span style="color:var(--green);font-size:8px">Q3</span>' : '';
+    html += `<th class="${cls}">${m}${tag}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  COUNTRIES.forEach(c => {
+    const states = tl[c.key] || [0,0,0,0,0,0,0,0];
+    const vals   = pd[c.key]  || ["","","","","","","",""];
+    const meta   = COUNTRY_META[c.key] || { sub:"", prewar:"" };
+
+    html += '<tr>';
+    html += `<td class="col-country">
+      <div class="tl-country-name">${c.label}</div>
+      <div class="tl-country-sub">${meta.sub}</div>
+    </td>`;
+    html += `<td class="col-prewar">${meta.prewar}</td>`;
+
+    states.forEach((st, i) => {
+      const s = STATE_MAP[st];
+      const q2 = IS_Q2[i];
+      const q3 = i >= 6;
+      const tdCls = q2 ? 'q2-col' : q3 ? 'q3-col' : '';
+      html += `<td class="${tdCls}">
+        <div class="tl-chip ${s.cls}">
+          <div class="tl-chip-bpd">${vals[i]}</div>
+          <div class="tl-chip-lbl">${s.label}</div>
+        </div>
+      </td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('timeline-grid').innerHTML = html;
+}
+
+const PILL_MAP = {
+  critical: 'pill-critical', severe:'pill-severe', moderate:'pill-moderate',
+  beneficiary:'pill-beneficiary', partial:'pill-partial'
+};
+function renderCTable(sc) {
+  const el = document.getElementById('ctable');
+  el.innerHTML = `<thead><tr>
+    <th>Country</th><th>Pre-War</th><th>Q2 2026</th><th>Q3 2026</th><th>Status</th>
+  </tr></thead><tbody>` + sc.ctable.map(r => `
+    <tr>
+      <td><span class="country-flag">${r.flag}</span>${r.country}</td>
+      <td style="color:var(--muted)">${r.prewar} bpd</td>
+      <td style="color:var(--orange)">${r.q2}</td>
+      <td style="color:var(--yellow)">${r.q3}</td>
+      <td><span class="status-pill ${PILL_MAP[r.status]||'pill-partial'}">${r.statusLabel}</span></td>
+    </tr>
+  `).join('') + '</tbody>';
+}
+
+function renderRecoveryBars(sc) {
+  const r = sc.recovery;
+  const entries = [
+    { label:"Iran", val:r.iran, col:"#C8102E" },
+    { label:"Iraq", val:r.iraq, col:"#B45309" },
+    { label:"Saudi", val:r.saudi, col:"#0055A5" },
+    { label:"Kuwait", val:r.kuwait, col:"#B45309" },
+    { label:"UAE", val:r.uae, col:"#007A33" },
+    { label:"Qatar LNG", val:r.qatar, col:"#C8102E" },
+  ];
+  document.getElementById('recovery-bars').innerHTML = entries.map(e => `
+    <div class="progress-row">
+      <div class="progress-label">${e.label}</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${e.val}%;background:${e.col}"></div>
+      </div>
+      <div class="progress-val" style="color:${e.col}">${e.val}%</div>
+    </div>
+  `).join('') + `<div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);line-height:1.6">
+    % of pre-war production volume expected by end Q3 2026. Iran and Qatar face longest recovery due to direct facility strikes. Saudi/UAE benefit from partial pipeline bypass capacity.
+  </div>`;
+}
+
+function renderPriceChart(s) {
+  const svg = document.getElementById('price-svg');
+  const W = 900, H = 200, PAD = { t:20, b:30, l:50, r:20 };
+  const cw = W - PAD.l - PAD.r;
+  const ch = H - PAD.t - PAD.b;
+  const months = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
+  const N = months.length;
+  const allVals = [...PRICE_DATA.base, ...PRICE_DATA.bull, ...PRICE_DATA.bear];
+  const minV = 55, maxV = 140;
+  const xScale = i => PAD.l + (i/(N-1))*cw;
+  const yScale = v => PAD.t + ch - ((v-minV)/(maxV-minV))*ch;
+
+  const paths = {
+    bear: { data: PRICE_DATA.bear, col: "#C8102E" },
+    base: { data: PRICE_DATA.base, col: "#0055A5" },
+    bull: { data: PRICE_DATA.bull, col: "#007A33" },
+  };
+
+  let out = '';
+  // Grid lines
+  [60,80,100,120,140].forEach(v => {
+    const y = yScale(v);
+    out += `<line x1="${PAD.l}" y1="${y}" x2="${W-PAD.r}" y2="${y}" stroke="#DDE1E7" stroke-width="0.8"/>`;
+    out += `<text x="${PAD.l-6}" y="${y+4}" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$${v}</text>`;
+  });
+  // Month labels
+  months.forEach((m,i) => {
+    const x = xScale(i);
+    out += `<text x="${x}" y="${H-6}" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
+    if(i>0) out += `<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${H-PAD.b}" stroke="#DDE1E7" stroke-width="0.5"/>`;
+  });
+  // Q2 shading
+  const q2start = xScale(3), q2end = xScale(5);
+  out += `<rect x="${q2start}" y="${PAD.t}" width="${q2end-q2start}" height="${ch}" fill="rgba(0,85,165,0.04)"/>`;
+  out += `<text x="${(q2start+q2end)/2}" y="${PAD.t+12}" fill="rgba(0,85,165,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q2 2026</text>`;
+  // Q3 shading
+  const q3start = xScale(5), q3end = xScale(7);
+  out += `<rect x="${q3start}" y="${PAD.t}" width="${q3end-q3start}" height="${ch}" fill="rgba(0,122,51,0.04)"/>`;
+  out += `<text x="${(q3start+q3end)/2}" y="${PAD.t+12}" fill="rgba(0,122,51,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q3 2026</text>`;
+
+  // Draw all scenario lines
+  Object.entries(paths).forEach(([key, p]) => {
+    const isActive = key === s;
+    const d = p.data.map((v,i) => `${i===0?'M':'L'}${xScale(i)},${yScale(v)}`).join(' ');
+    out += `<path d="${d}" fill="none" stroke="${p.col}" stroke-width="${isActive?2.5:1}" opacity="${isActive?1:0.3}"/>`;
+    // End label
+    const lastX = xScale(N-1), lastY = yScale(p.data[N-1]);
+    if(isActive) {
+      out += `<circle cx="${lastX}" cy="${lastY}" r="4" fill="${p.col}"/>`;
+      out += `<text x="${lastX+6}" y="${lastY+4}" fill="${p.col}" font-size="9" font-family="DM Mono,monospace">$${p.data[N-1]}</text>`;
+    }
+  });
+
+  // NOW line — April 23 (between Apr and May, ~60% across Apr column)
+  const nowX = xScale(2) + (xScale(3)-xScale(2)) * 0.75;
+  out += `<line x1="${nowX}" y1="${PAD.t}" x2="${nowX}" y2="${H-PAD.b}" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.8"/>`;
+  out += `<text x="${nowX}" y="${PAD.t-6}" fill="#B45309" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">TODAY · $101.55</text>`;
+
+  svg.innerHTML = out;
+}
+
+// DAMAGE TABLE (static)
+document.getElementById('damage-table').innerHTML = DAMAGE_DATA.map(d => `
+  <tr>
+    <td>${d.country}</td>
+    <td style="color:var(--white)">${d.facility}</td>
+    <td style="color:var(--muted)">${d.type}</td>
+    <td style="color:var(--orange)">${d.impact}</td>
+    <td><span style="font-family:'DM Mono',monospace;color:var(--yellow)">${d.recovery}</span></td>
+    <td style="min-width:100px">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:3px">${d.pct}% repaired</div>
+      <div class="rec-bar"><div class="rec-fill ${d.cls}" style="width:${d.pct}%"></div></div>
+    </td>
+  </tr>
+`).join('');
+
+renderAll('base');
+
+// ─── PORT MAP DATA & INTERACTION ─────────────────────────────────────────────
+const PORTS = [
+  { name:"Strait of Hormuz", country:"Iran / Oman", status:"closed", type:"CHOKEPOINT",
+    export:"BLOCKED", import:"BLOCKED", capacity:"20M bpd pre-war",
+    notes:"Effectively closed since Feb 28. Mines laid by IRGC. Apr 17 ceasefire opening lasted hours before Iran re-closed. US naval blockade of Iranian ports remains in force. ~400 tankers stranded in Gulf of Oman." },
+  { name:"Bandar Abbas Terminal", country:"Iran", status:"closed", type:"OIL",
+    export:"ZERO", import:"ZERO", capacity:"Primary Iranian export hub",
+    notes:"Main Iranian oil export terminal. US naval blockade fully in effect. All tanker movements blocked. Iran oil exports near zero. Infrastructure bombed in US-Israeli strikes." },
+  { name:"Kharg Island Terminal", country:"Iran", status:"closed", type:"OIL",
+    export:"ZERO", import:"ZERO", capacity:"5M bpd pre-war",
+    notes:"Iran's largest crude export facility. Struck in US-Israeli airstrikes. Storage and loading infrastructure severely damaged. Naval blockade adds a second layer of closure." },
+  { name:"Basra Oil Terminal (ABOT/KAAOT)", country:"Iraq", status:"limited", type:"OIL",
+    export:"<10% of capacity", import:"SUSPENDED", capacity:"1.8M bpd pre-war",
+    notes:"Two tankers attacked by Iranian drone boats Mar 11, killing one crew member. Mine risk in approaches. Storage tanks at capacity — Iraqi fields forced to curtail production. Iraqi ports suspended entry permits for foreign vessels." },
+  { name:"Mina Al Ahmadi", country:"Kuwait", status:"partial", type:"OIL",
+    export:"~50%", import:"Limited", capacity:"1.8M bpd",
+    notes:"ISPS Security Level 2. Oil terminal operations continuing at Mina Al Ahmadi and Mina Al Zour. General Cargo Terminal suspended. Container Terminal suspended. No Hormuz bypass route available." },
+  { name:"Ras Tanura", country:"Saudi Arabia", status:"limited", type:"OIL",
+    export:"Temporarily closed", import:"SUSPENDED", capacity:"6.5M bpd",
+    notes:"Temporarily closed per GAC advisory. World's largest offshore oil-loading facility. Hormuz blockade prevents tanker access. Saudi pivoting all exports through East-West pipeline to Yanbu." },
+  { name:"Al Jubail", country:"Saudi Arabia", status:"partial", type:"OIL",
+    export:"Partial", import:"Partial", capacity:"Industrial + oil port",
+    notes:"Operating normally per Inchcape advisory. Some exports redirected via East-West pipeline. Dammam airport operating on limited basis — international/freighter flights cancelled." },
+  { name:"Yanbu Port", country:"Saudi Arabia", status:"open", type:"BYPASS ✓",
+    export:"OPEN — KEY BYPASS", import:"Open", capacity:"5M bpd via Petroline",
+    notes:"PRIMARY BYPASS. Terminus of Saudi East-West Pipeline (Petroline, 1,200km from Abqaiq). Handling ~4.4M bpd rerouted from eastern Gulf fields. Red Sea access unaffected by Hormuz. Jeddah & Riyadh airports fully operational." },
+  { name:"Jeddah Islamic Port", country:"Saudi Arabia", status:"open", type:"GENERAL",
+    export:"OPEN", import:"Open", capacity:"Container + general cargo",
+    notes:"Fully operational Red Sea import hub. Key entry for goods rerouted to Gulf via land transport. Oil shipments from Saudi Arabia diverted through Red Sea via Yanbu-Jeddah corridor." },
+  { name:"Fujairah Oil Terminal (FOTT)", country:"UAE", status:"partial", type:"BYPASS →",
+    export:"OPEN — BYPASS", import:"Partial", capacity:"1.8M bpd ADCOP + bunkering",
+    notes:"KEY BYPASS: Terminus of UAE ADCOP pipeline (Habshan–Fujairah, 248 miles). Exports rose to 1.62M bpd in March vs 1.17M in Feb. Berth 6 offline. GPS spoofing reported offshore. Vopak & ADNOC SPM terminals operational." },
+  { name:"Khor Fakkan Port", country:"UAE", status:"partial", type:"GENERAL",
+    export:"Operational", import:"Operational", capacity:"Container transhipment hub",
+    notes:"Container and general cargo proceeding normally. Alternative for Jebel Ali cargo. Temporary customs measure allows direct road transport to Jebel Ali and Abu Dhabi — eliminating traditional clearance requirements." },
+  { name:"Jebel Ali (DP World)", country:"UAE", status:"partial", type:"GENERAL",
+    export:"Partial", import:"Partial", capacity:"World's largest man-made harbour",
+    notes:"Inside Gulf — limited by Hormuz closure for deep-sea international shipping. Being resupplied via Fujairah and Khor Fakkan via road transport. Some feeder vessel operations ongoing within Gulf." },
+  { name:"Ras Laffan Industrial City", country:"Qatar", status:"closed", type:"LNG",
+    export:"OFFLINE", import:"SUSPENDED", capacity:"77 Mtpa LNG — world's largest",
+    notes:"STRUCK March 2. World's largest LNG liquefaction facility offline. QatarEnergy declared Force Majeure on all LNG contracts. Restart takes weeks even after security restored. 93% of Qatar LNG transits Hormuz — no bypass exists." },
+  { name:"Khalifa Bin Salman Port", country:"Bahrain", status:"closed", type:"GENERAL",
+    export:"SUSPENDED", import:"SUSPENDED", capacity:"Container + general cargo",
+    notes:"Operations fully suspended per APM Terminals urgent advisory. US-flagged Stena Imperative struck twice at port — port worker killed. Suspension aligned with government and regulatory authority guidance." },
+  { name:"Mina Al Fahal (Muscat)", country:"Oman", status:"open", type:"OIL",
+    export:"OPEN", import:"Open", capacity:"Crude oil loading terminal",
+    notes:"Operations normal. ISPS Level 1. Outside Hormuz strait — directly accessible from Gulf of Oman. Vessels must have functioning Doppler log due to GPS interference. Key escape port for tankers bypassing the strait." },
+  { name:"Sohar Port", country:"Oman", status:"partial", type:"GENERAL",
+    export:"Normal", import:"Normal", capacity:"Industrial + container port",
+    notes:"Normal operations but included in London insurance market Joint War Committee high-risk area — raising insurance/charter costs significantly. Outside Hormuz strait, accessible from Gulf of Oman." },
+  { name:"Salalah Port", country:"Oman", status:"open", type:"GENERAL",
+    export:"OPEN", import:"Open", capacity:"Major deep-water container hub",
+    notes:"Container Terminal fully operational. General Cargo Terminal resumed. ISPS Level 1. Deep-water port outside Hormuz — key diversion hub for goods destined for Gulf via truck/feeder vessel. Qalhat LNG terminal at Sur raised to ISPS Level 2." },
+  { name:"Duqm Port", country:"Oman", status:"partial", type:"OIL",
+    export:"Partial", import:"Partial", capacity:"Oil refinery + deep-water port",
+    notes:"Drone strikes hit fuel storage tank in March 2026 — some damage. Operations continuing but within London insurance JWC high-risk maritime area. Located outside Hormuz strait on Arabian Sea." },
+  { name:"Ceyhan Oil Terminal", country:"Turkey", status:"open", type:"BYPASS ✓",
+    export:"OPEN — BYPASS", import:"Open", capacity:"1.6M bpd via Iraq pipeline",
+    notes:"Mediterranean terminus of Iraq Kirkuk–Ceyhan pipeline. Currently carrying only ~200K bpd vs 1.6M bpd capacity — Iraq unable to ramp because Basra southern fields are shut in. Key strategic escape route for northern Iraqi crude." },
+  { name:"Hamad Port (New Doha Port)", country:"Qatar", status:"closed", type:"GENERAL",
+    export:"SUSPENDED", import:"LIMITED", capacity:"7.5M TEU — world's largest greenfield port",
+    notes:"Qatar's primary container and general cargo port, opened 2017. Vessels cannot exit the Gulf due to Hormuz closure. Limited humanitarian cargo entering under special Iranian permits. Ras Laffan LNG (77 Mtpa, separate facility) struck Mar 2 and offline — QatarEnergy declared Force Majeure on all LNG contracts. Qatar stores 90%+ of its food imports — supply chain stress acute." },
+];
+
+const STATUS_COLORS = { open:'#007A33', partial:'#B45309', limited:'#B45309', closed:'#C8102E' };
+const STATUS_CLASSES = { open:'st-open', partial:'st-partial', limited:'st-limited', closed:'st-closed' };
+
+// Build sidebar list
+document.getElementById('port-list').innerHTML = PORTS.map((p, i) => `
+  <div class="port-list-item" id="pli-${i}" onclick="selectPort(${i})">
+    <span class="port-list-status ${STATUS_CLASSES[p.status]}">${p.status.toUpperCase()}</span>
+    <div class="port-list-name">${p.name}</div>
+    <div class="port-list-country">${p.country} · ${p.type}</div>
+  </div>
+`).join('');
+
+function selectPort(i) {
+  const p = PORTS[i];
+  const col = STATUS_COLORS[p.status];
+  // Sidebar highlight
+  document.querySelectorAll('.port-list-item').forEach((el,j) => el.classList.toggle('active', j===i));
+  document.getElementById('pli-'+i).scrollIntoView({ block:'nearest', behavior:'smooth' });
+  // SVG dot highlight
+  document.querySelectorAll('#map-svg .map-dot circle, #map-svg .map-dot rect').forEach(el => {
+    el.style.opacity = '0.35'; el.style.filter = '';
+  });
+  const dot = document.querySelector(`#map-svg .map-dot[data-idx="${i}"] circle, #map-svg .map-dot[data-idx="${i}"] rect`);
+  if (dot) { dot.style.opacity = '1'; dot.style.filter = `drop-shadow(0 0 8px ${col})`; }
+  // Detail panel
+  document.getElementById('port-detail').innerHTML = `
+    <div class="pd-name">${p.name}</div>
+    <div class="pd-country">${p.country} &nbsp;·&nbsp; <span style="color:${col};font-weight:700">${p.status.toUpperCase()}</span> &nbsp;·&nbsp; ${p.type}</div>
+    <div class="pd-grid">
+      <div class="pd-cell"><div class="pd-cell-label">Export</div><div class="pd-cell-val" style="color:${col}">${p.export}</div></div>
+      <div class="pd-cell"><div class="pd-cell-label">Import</div><div class="pd-cell-val">${p.import}</div></div>
+      <div class="pd-cell"><div class="pd-cell-label">Capacity</div><div class="pd-cell-val" style="color:#4cc9f0;font-size:9px">${p.capacity}</div></div>
+    </div>
+    <div class="pd-notes">${p.notes}</div>
+  `;
+}
+
+// Auto-select Strait of Hormuz on load
+selectPort(0);
+</script>
+
+
+</body></html>
