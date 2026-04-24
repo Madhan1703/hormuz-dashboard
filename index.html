@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<!-- saved from url=(0086)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/oil-scenario-dashboard-v3_2.html -->
+<!-- saved from url=(0084)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/oil-scenario-dashboard-v4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hormuz Crisis — Oil Supply Impact Scenarios Q2–Q3 2026 | Data Verified Apr 23</title>
+<title>Hormuz Crisis — Oil Supply Impact Scenarios Q2–Q3 2026 | Live Data</title>
+<style>
+  /* ── PRINT / PDF ── */
+  @media print {
+    .scenario-bar, .header .badge, #pdf-btn, #last-updated-bar { display: none !important; }
+    .panel, .kpi, .phase-card { box-shadow: none !important; break-inside: avoid; }
+    body { background: #fff !important; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .main { padding: 10px 16px; gap: 10px; }
+  }
+</style>
 <style>
   .port-list-item { padding:9px 14px; border-bottom:1px solid rgba(37,40,48,0.6); cursor:pointer; transition:background 0.15s; }
   .port-list-item:hover { background:rgba(255,255,255,0.04); }
@@ -470,6 +480,34 @@
 </head>
 <body>
 
+<!-- LIVE STATUS BAR -->
+<div id="last-updated-bar" style="background:#0D1B2E;border-bottom:1px solid #1E3A6E;padding:6px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
+      BRENT CRUDE (LIVE)&nbsp;
+      <span id="live-price" style="color:#C8102E;font-weight:700;font-size:13px;">$103.40</span>
+      <span id="live-change" style="font-size: 10px; margin-left: 6px; color: rgb(200, 16, 46);">▲ 4.77 (4.8%)</span>
+    </span>
+    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#64748B;">|</span>
+    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
+      EIA STEO Q2 AVG&nbsp;<span style="color:#0055A5;font-weight:600;">$115</span>
+    </span>
+    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#64748B;">|</span>
+    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
+      LAST UPDATED&nbsp;<span id="last-updated-ts" style="color:#94A3B8;font-weight:500;">24 Apr 2026, 10:03 GST</span>
+    </span>
+    <span id="eia-status" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 9px; padding: 2px 8px; border-radius: 2px; background: rgba(0, 122, 51, 0.15); color: rgb(74, 222, 128); border: 1px solid rgba(0, 122, 51, 0.4);">● LIVE · EIA API</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button id="pdf-btn" onclick="downloadPDF()" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 10px; padding: 5px 14px; border-radius: 3px; border: 1px solid rgb(51, 65, 85); background: rgb(30, 41, 59); color: rgb(148, 163, 184); cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.borderColor=&#39;#0055A5&#39;;this.style.color=&#39;#4BA3F5&#39;" onmouseout="this.style.borderColor=&#39;#334155&#39;;this.style.color=&#39;#94A3B8&#39;">
+      ⬇ Download PDF
+    </button>
+    <button onclick="refreshEIA()" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 10px; padding: 5px 14px; border-radius: 3px; border: 1px solid rgb(51, 65, 85); background: rgb(30, 41, 59); color: rgb(148, 163, 184); cursor: pointer; transition: 0.2s; letter-spacing: 0.5px;" onmouseover="this.style.borderColor=&#39;#007A33&#39;;this.style.color=&#39;#4ADE80&#39;" onmouseout="this.style.borderColor=&#39;#334155&#39;;this.style.color=&#39;#94A3B8&#39;">
+      ↻ Refresh
+    </button>
+  </div>
+</div>
+
 <div class="header">
   <div>
     <div class="header-title">HORMUZ CRISIS — <span>IMPACT SCENARIOS</span></div>
@@ -485,7 +523,7 @@
   <button class="scenario-btn" id="btn-bull" onclick="setScenario(&#39;bull&#39;)">Bull — Fast Recovery</button>
   <button class="scenario-btn" id="btn-bear" onclick="setScenario(&#39;bear&#39;)">Bear — Prolonged Crisis</button>
   <span style="margin-left:auto; font-family:&#39;DM Mono&#39;,monospace; font-size:10px; color:var(--muted)">
-    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent Live: $101.55</span> · Data verified Apr 23, 2026
+    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent: <span id="bar-live-price">$103.40</span></span> · <span id="bar-updated">Updated 24 Apr 2026, 10:03 GST</span>
   </span>
 </div>
 
@@ -495,8 +533,8 @@
     <div class="kpi-grid" id="kpi-grid" style="grid-template-columns: repeat(8, 1fr);">
     <div class="kpi">
       <div class="kpi-label">Brent Today (Apr 23)</div>
-      <div class="kpi-value kpi-red">$101.55</div>
-      <div class="kpi-sub kpi-red">Live · Reuters · up $3.53 on day</div>
+      <div class="kpi-value kpi-red">$103.40</div>
+      <div class="kpi-sub kpi-red">Live · EIA API · 2026-04-20</div>
     </div>
   
     <div class="kpi">
@@ -2120,6 +2158,206 @@ function selectPort(i) {
 
 // Auto-select Strait of Hormuz on load
 selectPort(0);
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LIVE EIA BRENT PRICE FETCH
+// ═══════════════════════════════════════════════════════════════════════════
+// EIA Open Data API — free, no auth required for this endpoint.
+// Series: PET.RBRTE.D — Brent crude spot price daily (USD/bbl)
+// Docs: https://api.eia.gov/v2/petroleum/pri/spt/data/
+//
+// NOTE: Replace EIA_KEY with your own free key from eia.gov/opendata
+// Without a key the request still works via the open endpoint below.
+// With a key you get higher rate limits and access to more series.
+// ─────────────────────────────────────────────────────────────────────────
+const EIA_KEY = 'DEMO_KEY'; // ← Replace with your key from eia.gov/opendata
+
+// We use two approaches:
+//  1. EIA Open API v2 (primary) — official, structured JSON
+//  2. Yahoo Finance proxy (fallback) — if EIA is rate-limited
+let liveBrentPrice = null;
+let liveBrentChange = null;
+let liveBrentDate = null;
+
+async function fetchEIABrent() {
+  const statusEl  = document.getElementById('eia-status');
+  const priceEl   = document.getElementById('live-price');
+  const changeEl  = document.getElementById('live-change');
+  const barPriceEl = document.getElementById('bar-live-price');
+
+  try {
+    // EIA v2 API — Brent spot price, last 2 data points
+    const url = `https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key=${EIA_KEY}&frequency=daily&data[0]=value&facets[product][]=EPCBRENT&sort[0][column]=period&sort[0][direction]=desc&length=2&offset=0`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+
+    if (!res.ok) throw new Error(`EIA status ${res.status}`);
+    const json = await res.json();
+    const rows = json?.response?.data;
+    if (!rows || rows.length === 0) throw new Error('No data rows');
+
+    const latest   = rows[0];
+    const previous = rows[1];
+    const price    = parseFloat(latest.value);
+    const prev     = previous ? parseFloat(previous.value) : null;
+    const change   = prev ? (price - prev) : null;
+    const changePct= prev ? ((price - prev) / prev * 100) : null;
+    liveBrentPrice  = price;
+    liveBrentDate   = latest.period;
+    liveBrentChange = change;
+
+    const priceStr  = `$${price.toFixed(2)}`;
+    const arrow     = change >= 0 ? '▲' : '▼';
+    const col       = change >= 0 ? '#C8102E' : '#007A33';
+    const changeStr = change !== null ? `${arrow} ${Math.abs(change).toFixed(2)} (${Math.abs(changePct).toFixed(1)}%)` : '';
+
+    priceEl.textContent  = priceStr;
+    priceEl.style.color  = '#C8102E';
+    changeEl.textContent = changeStr;
+    changeEl.style.color = col;
+    barPriceEl.textContent = priceStr;
+
+    // Update the first KPI tile (Brent Today) if it's visible
+    updateBrentKPI(priceStr, `Live · EIA API · ${latest.period}`, change);
+
+    statusEl.textContent = '● LIVE · EIA API';
+    statusEl.style.background = 'rgba(0,122,51,0.15)';
+    statusEl.style.color = '#4ADE80';
+    statusEl.style.borderColor = 'rgba(0,122,51,0.4)';
+
+  } catch (err) {
+    console.warn('EIA primary fetch failed:', err.message, '— trying fallback');
+    await fetchFallbackPrice(statusEl, priceEl, changeEl, barPriceEl);
+  }
+}
+
+async function fetchFallbackPrice(statusEl, priceEl, changeEl, barPriceEl) {
+  // Fallback: Open proxy for Yahoo Finance BZ=F (Brent futures)
+  // This is a public CORS proxy — suitable for demo/internal use
+  try {
+    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/BZ=F?interval=1d&range=5d';
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error(`Yahoo status ${res.status}`);
+    const json = await res.json();
+    const meta = json?.chart?.result?.[0]?.meta;
+    if (!meta) throw new Error('No meta');
+
+    const price    = meta.regularMarketPrice;
+    const prev     = meta.previousClose;
+    const change   = price - prev;
+    const changePct= (change / prev) * 100;
+    liveBrentPrice = price;
+
+    const priceStr  = `$${price.toFixed(2)}`;
+    const arrow     = change >= 0 ? '▲' : '▼';
+    const col       = change >= 0 ? '#C8102E' : '#007A33';
+    const changeStr = `${arrow} ${Math.abs(change).toFixed(2)} (${Math.abs(changePct).toFixed(1)}%)`;
+
+    priceEl.textContent  = priceStr;
+    priceEl.style.color  = '#C8102E';
+    changeEl.textContent = changeStr;
+    changeEl.style.color = col;
+    barPriceEl.textContent = priceStr;
+
+    updateBrentKPI(priceStr, `Live · Yahoo Finance (BZ=F)`, change);
+
+    statusEl.textContent = '● LIVE · FALLBACK';
+    statusEl.style.background = 'rgba(180,83,9,0.15)';
+    statusEl.style.color = '#FCD34D';
+    statusEl.style.borderColor = 'rgba(180,83,9,0.4)';
+
+  } catch (err2) {
+    console.warn('Fallback also failed:', err2.message);
+    // Show last known static price
+    priceEl.textContent = '$101.55';
+    priceEl.style.color = '#C8102E';
+    changeEl.textContent = '(cached Apr 23)';
+    changeEl.style.color = '#6B7280';
+    barPriceEl.textContent = '$101.55 (cached)';
+    statusEl.textContent = '● OFFLINE · CACHED';
+    statusEl.style.background = 'rgba(100,116,139,0.15)';
+    statusEl.style.color = '#94A3B8';
+    statusEl.style.borderColor = 'rgba(100,116,139,0.3)';
+  }
+}
+
+function updateBrentKPI(priceStr, subText, change) {
+  // Find and update the "Brent Today" KPI tile in the rendered grid
+  const grid = document.getElementById('kpi-grid');
+  if (!grid) return;
+  const tiles = grid.querySelectorAll('.kpi');
+  tiles.forEach(tile => {
+    const label = tile.querySelector('.kpi-label');
+    if (label && label.textContent.toLowerCase().includes('today')) {
+      const valEl = tile.querySelector('.kpi-value');
+      const subEl = tile.querySelector('.kpi-sub');
+      if (valEl) valEl.textContent = priceStr;
+      if (subEl) subEl.textContent = subText;
+    }
+  });
+}
+
+function refreshEIA() {
+  document.getElementById('eia-status').textContent = '● LOADING';
+  document.getElementById('eia-status').style.background = 'rgba(200,16,46,0.15)';
+  document.getElementById('eia-status').style.color = '#FF6B6B';
+  document.getElementById('live-price').textContent = '—';
+  fetchEIABrent();
+  updateTimestamp();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LAST UPDATED TIMESTAMP
+// ═══════════════════════════════════════════════════════════════════════════
+function updateTimestamp() {
+  const now = new Date();
+  const opts = { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', timeZoneName:'short' };
+  const ts = now.toLocaleString('en-GB', opts);
+  document.getElementById('last-updated-ts').textContent = ts;
+  document.getElementById('bar-updated').textContent = `Updated ${ts}`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PDF / PRINT DOWNLOAD
+// ═══════════════════════════════════════════════════════════════════════════
+function downloadPDF() {
+  // Add a print-time banner with the live price snapshot
+  const price = liveBrentPrice ? `$${liveBrentPrice.toFixed(2)}` : '$101.55 (cached)';
+  const snapEl = document.createElement('div');
+  snapEl.id = 'print-snapshot';
+  snapEl.style.cssText = `
+    display:none;
+    font-family:'DM Mono',monospace;font-size:9px;color:#6B7280;
+    text-align:center;padding:4px;border-top:1px solid #DDE1E7;
+    position:fixed;bottom:0;left:0;right:0;background:#fff;z-index:9999;
+  `;
+  const ts = new Date().toLocaleString('en-GB', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+  snapEl.textContent = `Hormuz Crisis Dashboard · Brent at print: ${price} · Generated ${ts} · Blue Star IBG · Confidential`;
+  document.body.appendChild(snapEl);
+
+  // Show snapshot banner during print, hide after
+  const style = document.createElement('style');
+  style.id = 'print-style-temp';
+  style.textContent = `@media print { #print-snapshot { display:block !important; } }`;
+  document.head.appendChild(style);
+
+  window.print();
+
+  // Cleanup after print dialog closes
+  setTimeout(() => {
+    snapEl.remove();
+    style.remove();
+  }, 3000);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT — run on page load
+// ═══════════════════════════════════════════════════════════════════════════
+(async function init() {
+  updateTimestamp();
+  await fetchEIABrent();
+  // Auto-refresh price every 5 minutes while page is open
+  setInterval(fetchEIABrent, 5 * 60 * 1000);
+})();
 </script>
 
 
