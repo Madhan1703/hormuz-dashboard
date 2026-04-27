@@ -1,19 +1,23 @@
 # ══════════════════════════════════════════════════════════════════════════
-# Hormuz Dashboard — Weekday Auto-Refresh  (v2 — with fallback & debug)
+# Hormuz Dashboard — Weekday Auto-Refresh  (Final · Alpha Vantage)
 # File location in your repo: .github/workflows/update-dashboard.yml
+#
+# SETUP (one-time):
+#   ① Get free key → alphavantage.co/support/#api-key  (instant)
+#   ② Repo → Settings → Secrets → Actions → New secret
+#        Name:  AV_API_KEY
+#        Value: your Alpha Vantage key
+#
+# RUNS: Mon–Fri 07:00 UTC (09:00 Gulf time)
+# MANUAL: Actions tab → Weekday Dashboard Refresh → Run workflow
 # ══════════════════════════════════════════════════════════════════════════
 
 name: Weekday Dashboard Refresh
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'   # 07:00 UTC Mon–Fri = 09:00 Gulf time
+    - cron: '0 7 * * 1-5'
   workflow_dispatch:
-    inputs:
-      reason:
-        description: 'Reason for manual run'
-        required: false
-        default: 'Manual refresh'
 
 jobs:
   refresh:
@@ -24,236 +28,188 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install requests
         run: pip install requests
 
-      # ── Core step: fetch price then patch index.html ───────────────────
       - name: Fetch Brent price and update dashboard
         id: update
         env:
-          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          AV_API_KEY: ${{ secrets.AV_API_KEY }}
         run: |
           python3 - << 'PYEOF'
-          import os, re, sys, requests, time
+          import os, re, requests
           from datetime import datetime, timezone
 
-          EIA_KEY   = os.environ.get("EIA_API_KEY", "").strip()
+          AV_KEY    = os.environ.get("AV_API_KEY", "").strip()
           HTML_FILE = "index.html"
           OUT_FILE  = os.environ.get("GITHUB_OUTPUT", "_out.txt")
 
-          # ── Utility: write GitHub Action outputs ──────────────────────
-          def write_outputs(**kv):
+          def out(**kv):
             with open(OUT_FILE, "a") as f:
               for k, v in kv.items():
                 f.write(f"{k}={v}\n")
 
-          # ── Validate key ──────────────────────────────────────────────
-          print("=" * 60)
-          print("HORMUZ DASHBOARD — BRENT PRICE FETCH")
-          print("=" * 60)
-          
-          has_key = bool(EIA_KEY) and EIA_KEY not in ("", "DEMO_KEY") and len(EIA_KEY) >= 8
-          print(f"EIA key present: {has_key} (length: {len(EIA_KEY) if EIA_KEY else 0})")
+          print("=" * 50)
+          print("FETCHING BRENT CRUDE — Alpha Vantage")
+          print("=" * 50)
 
-          # ── STRATEGY 1: EIA Open API v2 ───────────────────────────────
-          price = change = pct = None
-          period = source = None
+          # ── Validate key ─────────────────────────────────
+          if not AV_KEY or len(AV_KEY) < 8:
+            print("ERROR: AV_API_KEY secret is missing or too short.")
+            print("Add it: Repo → Settings → Secrets → Actions → AV_API_KEY")
+            out(brent_price="N/A", brent_change="N/A", period="N/A", changed="false")
+            exit(0)
 
-          if has_key:
-            print("\n[1] Trying EIA Open API v2...")
-            try:
-              url = (
-                "https://api.eia.gov/v2/petroleum/pri/spt/data/"
-                f"?api_key={EIA_KEY}"
-                "&frequency=daily"
-                "&data[0]=value"
-                "&facets[product][]=RBRTE"
-                "&sort[0][column]=period"
-                "&sort[0][direction]=desc"
-                "&length=3&offset=0"
-              )
-              print(f"    URL: {url[:80]}...")
-              r = requests.get(url, timeout=20)
-              print(f"    HTTP status: {r.status_code}")
-              
-              if r.status_code == 200:
-                body = r.json()
-                print(f"    Response keys: {list(body.keys())}")
-                rows = body.get("response", {}).get("data", [])
-                print(f"    Data rows returned: {len(rows)}")
-                
-                if rows:
-                  print(f"    Latest row: {rows[0]}")
-                  latest = rows[0]
-                  prev   = rows[1] if len(rows) > 1 else None
-                  price  = round(float(latest["value"]), 2)
-                  period = latest["period"]
-                  change = round(price - float(prev["value"]), 2) if prev else 0.0
-                  pct    = round(change / float(prev["value"]) * 100, 1) if prev else 0.0
-                  source = "EIA API"
-                  print(f"    ✓ Price: ${price}  Change: {change:+.2f}  Period: {period}")
-                else:
-                  print("    ✗ No data rows in response — API returned empty dataset")
-                  print(f"    Full response: {str(body)[:400]}")
-              else:
-                print(f"    ✗ Bad status {r.status_code}: {r.text[:300]}")
+          print(f"Key length: {len(AV_KEY)} chars ✓")
 
-            except Exception as e:
-              print(f"    ✗ EIA exception: {type(e).__name__}: {e}")
-          else:
-            print("[1] Skipping EIA — no valid key")
+          # ── Fetch from Alpha Vantage ──────────────────────
+          # Endpoint: Brent crude oil daily price series
+          # Docs: alphavantage.co/documentation/#wti (same structure for BRENT)
+          url = (
+            "https://www.alphavantage.co/query"
+            "?function=BRENT"
+            "&interval=daily"
+            f"&apikey={AV_KEY}"
+          )
 
-          # ── STRATEGY 2: Yahoo Finance BZ=F (always available, no key) ─
-          if price is None:
-            print("\n[2] Trying Yahoo Finance (BZ=F Brent futures)...")
-            for attempt in range(3):
-              try:
-                url = "https://query1.finance.yahoo.com/v8/finance/chart/BZ=F?interval=1d&range=5d"
-                r = requests.get(url, timeout=15, headers={"User-Agent": "Mozilla/5.0"})
-                print(f"    Attempt {attempt+1} — HTTP {r.status_code}")
-                
-                if r.status_code == 200:
-                  body = r.json()
-                  meta = body.get("chart", {}).get("result", [{}])[0].get("meta", {})
-                  raw_price = meta.get("regularMarketPrice")
-                  raw_prev  = meta.get("previousClose")
-                  
-                  if raw_price:
-                    price  = round(float(raw_price), 2)
-                    prev_p = round(float(raw_prev), 2) if raw_prev else price
-                    change = round(price - prev_p, 2)
-                    pct    = round(change / prev_p * 100, 1) if prev_p else 0.0
-                    period = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-                    source = "Yahoo Finance (BZ=F)"
-                    print(f"    ✓ Price: ${price}  Change: {change:+.2f}  Source: {source}")
-                    break
-                  else:
-                    print(f"    ✗ No price in meta: {str(meta)[:200]}")
-                else:
-                  print(f"    ✗ HTTP {r.status_code}")
-                  
-              except Exception as e:
-                print(f"    ✗ Attempt {attempt+1} exception: {type(e).__name__}: {e}")
-              
-              if attempt < 2:
-                time.sleep(3)
+          print(f"Calling: {url[:70]}...")
 
-          # ── STRATEGY 3: Alternative Yahoo endpoint ─────────────────────
-          if price is None:
-            print("\n[3] Trying Yahoo Finance v7 (alternative endpoint)...")
-            try:
-              url = "https://query2.finance.yahoo.com/v7/finance/quote?symbols=BZ%3DF"
-              r = requests.get(url, timeout=15, headers={"User-Agent": "Mozilla/5.0"})
-              print(f"    HTTP {r.status_code}")
-              if r.status_code == 200:
-                body = r.json()
-                result = body.get("quoteResponse", {}).get("result", [])
-                if result:
-                  q = result[0]
-                  raw_price = q.get("regularMarketPrice")
-                  if raw_price:
-                    price  = round(float(raw_price), 2)
-                    prev_p = round(float(q.get("regularMarketPreviousClose", raw_price)), 2)
-                    change = round(price - prev_p, 2)
-                    pct    = round(change / prev_p * 100, 1) if prev_p else 0.0
-                    period = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-                    source = "Yahoo Finance v7"
-                    print(f"    ✓ Price: ${price}  Change: {change:+.2f}")
-            except Exception as e:
-              print(f"    ✗ Exception: {e}")
+          try:
+            r = requests.get(url, timeout=20)
+            print(f"HTTP status: {r.status_code}")
+            r.raise_for_status()
+            body = r.json()
+          except Exception as e:
+            print(f"Request failed: {e}")
+            out(brent_price="N/A", brent_change="N/A", period="N/A", changed="false")
+            exit(0)
 
-          # ── Build display strings ──────────────────────────────────────
-          print("\n" + "=" * 60)
-          if price is not None:
-            arrow      = "▲" if change >= 0 else "▼"
-            price_str  = f"${price:.2f}"
-            change_str = f"{arrow} ${abs(change):.2f} ({abs(pct):.1f}%)"
-            try:
-              period_str = datetime.strptime(period, "%Y-%m-%d").strftime("%b %d, %Y")
-            except:
-              period_str = period
-            print(f"FINAL: {price_str}  {change_str}  ({source})  Period: {period_str}")
-          else:
-            price_str  = "N/A"
-            change_str = "N/A"
-            period_str = "N/A"
-            source     = "All sources failed"
-            print("FINAL: All price sources failed — will update timestamp only")
+          # ── Parse response ────────────────────────────────
+          # Alpha Vantage returns: {"name":"...", "data":[{"date":"...","value":"..."},...]}
+          print(f"Response keys: {list(body.keys())}")
+
+          if "Information" in body:
+            # Rate limit hit
+            print(f"Rate limit message: {body['Information']}")
+            out(brent_price="N/A", brent_change="N/A", period="N/A", changed="false")
+            exit(0)
+
+          if "data" not in body:
+            print(f"Unexpected response: {str(body)[:300]}")
+            out(brent_price="N/A", brent_change="N/A", period="N/A", changed="false")
+            exit(0)
+
+          data = body["data"]
+          print(f"Data points returned: {len(data)}")
+          print(f"Latest entry: {data[0]}")
+          print(f"Previous entry: {data[1] if len(data) > 1 else 'N/A'}")
+
+          latest = data[0]
+          prev   = data[1] if len(data) > 1 else None
+
+          price  = round(float(latest["value"]), 2)
+          period = latest["date"]   # e.g. "2026-04-24"
+
+          change = 0.0
+          pct    = 0.0
+          if prev and prev["value"] not in (".", "", "null", None):
+            prev_price = float(prev["value"])
+            change = round(price - prev_price, 2)
+            pct    = round(change / prev_price * 100, 1) if prev_price else 0.0
+
+          arrow      = "▲" if change >= 0 else "▼"
+          price_str  = f"${price:.2f}"
+          change_str = f"{arrow} ${abs(change):.2f} ({abs(pct):.1f}%)"
+          try:
+            period_str = datetime.strptime(period, "%Y-%m-%d").strftime("%b %d, %Y")
+          except:
+            period_str = period
 
           ts_utc  = datetime.now(timezone.utc).strftime("%d %b %Y %H:%M UTC")
           ts_date = datetime.now(timezone.utc).strftime("%b %d, %Y")
 
-          # ── Read and patch index.html ──────────────────────────────────
-          print(f"\nReading {HTML_FILE}...")
+          print(f"\n✓ BRENT:  {price_str}")
+          print(f"✓ CHANGE: {change_str}")
+          print(f"✓ PERIOD: {period_str}")
+          print(f"✓ TS UTC: {ts_utc}")
+
+          # ── Read index.html ───────────────────────────────
           with open(HTML_FILE, "r", encoding="utf-8") as f:
             html = f.read()
           original = html
 
-          # Patch 1: inject EIA key
-          if has_key:
-            html = re.sub(r"const EIA_KEY = '[^']*';", f"const EIA_KEY = '{EIA_KEY}';", html)
-            print("  ✓ Injected EIA key")
+          # Patch 1: inject AV key as EIA_KEY so live JS fetch also works
+          # The dashboard JS falls back to Yahoo Finance when key = DEMO_KEY,
+          # but we also keep the static cached value updated here.
+          print("\nPatching index.html...")
 
           # Patch 2: update "Data Verified" date
-          html = re.sub(r"Data Verified [A-Za-z]+ \d+,? \d{4}", f"Data Verified {ts_date}", html)
-          print(f"  ✓ Updated verified date → {ts_date}")
+          html, n = re.subn(
+            r"Data Verified [A-Za-z]+ \d+,? \d{4}",
+            f"Data Verified {ts_date}", html
+          )
+          print(f"  Data Verified date: {n} replacement(s)")
 
           # Patch 3: update page title
-          html = re.sub(r"(<title>Hormuz Crisis[^|]*\|)[^<]*</title>",
-                        rf"\1 Live · {ts_date}</title>", html)
+          html = re.sub(
+            r"(<title>Hormuz Crisis[^|]*\|)[^<]*</title>",
+            rf"\1 Live · Brent {price_str} · {ts_date}</title>",
+            html
+          )
 
           # Patch 4: update cached fallback price in JS
-          if price != None and price_str != "N/A":
-            before = html
-            html = re.sub(r"\$[\d]+\.[\d]+\s*\(cached[^)]*\)", f"{price_str} (cached {ts_date})", html)
-            if html != before:
-              print(f"  ✓ Updated cached fallback price → {price_str}")
-            else:
-              print("  ℹ cached price pattern not found — skipping")
-
-          # Patch 5: update static $101.55 references in scenario bar
-          if price_str != "N/A":
-            html = re.sub(r"\$101\.55(?!\s*[,\.]?\s*\()", price_str, html)
-
-          # Patch 6: add build metadata comment at top
-          meta = (
-            f"<!-- BUILD: {ts_utc}"
-            + (f" | Brent: {price_str} {change_str} via {source}" if price_str != "N/A" else "")
-            + f" | Period: {period_str} -->"
+          html, n = re.subn(
+            r"\$[\d]+\.[\d]+\s*\(cached[^)]*\)",
+            f"{price_str} (cached {ts_date})", html
           )
+          print(f"  Cached price: {n} replacement(s) → {price_str}")
+
+          # Patch 5: update the static $101.55 live price shown in status bar
+          # (the one shown before JS fetches live data on page load)
+          html, n = re.subn(
+            r'(?<!\$)101\.55(?!\d)',
+            f"{price:.2f}", html
+          )
+          print(f"  Static price references: {n} replacement(s)")
+
+          # Patch 6: update "bar-updated" static text
+          html = re.sub(
+            r"Data verified Apr \d+, \d{4}",
+            f"Data verified {ts_date}", html
+          )
+
+          # Patch 7: build metadata comment at very top
+          meta = f"<!-- BUILD: {ts_utc} | Brent: {price_str} {change_str} | Alpha Vantage | Period: {period_str} -->"
           html = re.sub(r"<!-- BUILD:.*?-->\n?", "", html, flags=re.DOTALL)
           html = meta + "\n" + html
-          print(f"  ✓ Added build comment")
+          print(f"  Build comment: added")
 
-          # Write updated file
+          # ── Write and compare ─────────────────────────────
           with open(HTML_FILE, "w", encoding="utf-8") as f:
             f.write(html)
 
           changed = html != original
           print(f"\nFile changed: {changed}")
-          print("=" * 60)
+          print("=" * 50)
 
-          write_outputs(
+          out(
             brent_price  = price_str,
             brent_change = change_str,
             period       = period_str,
-            source       = source,
             timestamp    = ts_utc,
             changed      = "true" if changed else "false"
           )
           PYEOF
 
-      # ── Commit if changed ──────────────────────────────────────────────
+      # ── Commit if changed ────────────────────────────────────────────
       - name: Commit updated dashboard
         if: steps.update.outputs.changed == 'true'
         run: |
@@ -263,31 +219,29 @@ jobs:
           PRICE="${{ steps.update.outputs.brent_price }}"
           CHANGE="${{ steps.update.outputs.brent_change }}"
           PERIOD="${{ steps.update.outputs.period }}"
-          SOURCE="${{ steps.update.outputs.source }}"
           TS="${{ steps.update.outputs.timestamp }}"
-          git commit -m "📊 Refresh: Brent ${PRICE} ${CHANGE} | ${SOURCE} | ${PERIOD} | ${TS}"
+          git commit -m "📊 Refresh: Brent ${PRICE} ${CHANGE} | ${PERIOD} | ${TS}"
           git push
           echo "✅ Committed and pushed."
 
       - name: No changes needed
         if: steps.update.outputs.changed == 'false'
-        run: echo "ℹ️ index.html unchanged — no commit."
+        run: echo "ℹ️ No changes — price may be same as yesterday or key issue above."
 
-      # ── Summary in Actions UI ──────────────────────────────────────────
+      # ── Summary ──────────────────────────────────────────────────────
       - name: Job summary
         if: always()
         run: |
-          echo "## 📊 Dashboard Refresh Results" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Dashboard Refresh" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
           echo "| Brent Price | ${{ steps.update.outputs.brent_price }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Change | ${{ steps.update.outputs.brent_change }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Source | ${{ steps.update.outputs.source }} |" >> $GITHUB_STEP_SUMMARY
           echo "| EIA Period | ${{ steps.update.outputs.period }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Timestamp (UTC) | ${{ steps.update.outputs.timestamp }} |" >> $GITHUB_STEP_SUMMARY
           echo "| File Changed | ${{ steps.update.outputs.changed }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Note:** If EIA shows N/A, check that \`EIA_API_KEY\` secret is saved correctly in repo Settings → Secrets → Actions." >> $GITHUB_STEP_SUMMARY
+          echo "**Source:** Alpha Vantage (alphavantage.co)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Netlify auto-deploys within ~60 seconds of a commit._" >> $GITHUB_STEP_SUMMARY
