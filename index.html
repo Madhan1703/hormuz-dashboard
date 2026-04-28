@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0066)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/index_2.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hormuz Crisis — Oil Supply Impact Scenarios Q2–Q3 2026 | Live Data</title>
 <style>
@@ -45,7 +45,7 @@
   .pd-cell-val { font-size:11px; font-weight:600; }
   .pd-notes { font-size:10px; color:#9ca3af; line-height:1.55; }
 </style>
-<link href="./index_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     /* Bloomberg-inspired corporate premium palette */
@@ -483,30 +483,36 @@
 <!-- LIVE STATUS BAR -->
 <div id="last-updated-bar" style="background:#0D1B2E;border-bottom:1px solid #1E3A6E;padding:6px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
   <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:#94A3B8;">
       BRENT CRUDE (LIVE)&nbsp;
-      <span id="live-price" style="color:#C8102E;font-weight:700;font-size:13px;">$101.55</span>
-      <span id="live-change" style="font-size: 10px; margin-left: 6px; color: rgb(107, 114, 128);">(cached · Apr 23)</span>
+      <span id="live-price" style="color:#C8102E;font-weight:700;font-size:13px;">—</span>
+      <span id="live-change" style="font-size:10px;margin-left:6px;"></span>
     </span>
-    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#64748B;">|</span>
-    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:#64748B;">|</span>
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:#94A3B8;">
       EIA STEO Q2 AVG&nbsp;<span style="color:#0055A5;font-weight:600;">$115</span>
     </span>
-    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#64748B;">|</span>
-    <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
-      LAST UPDATED&nbsp;<span id="last-updated-ts" style="color:#94A3B8;font-weight:500;">28 Apr 2026, 14:29 GST</span>
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:#64748B;">|</span>
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:#94A3B8;">
+      LAST UPDATED&nbsp;<span id="last-updated-ts" style="color:#94A3B8;font-weight:500;">Checking...</span>
     </span>
-    <span id="eia-status" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 9px; padding: 2px 8px; border-radius: 2px; background: rgba(100, 116, 139, 0.1); color: rgb(107, 114, 128); border: 1px solid rgb(107, 114, 128);">● CACHED</span>
+    <span id="eia-status" style="font-family:'DM Mono',monospace;font-size:9px;padding:2px 8px;border-radius:2px;background:rgba(200,16,46,0.15);color:#FF6B6B;border:1px solid rgba(200,16,46,0.3);">● LOADING</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;">
-    <button id="pdf-btn" onclick="downloadPDF()" style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;padding:5px 14px;border-radius:3px;
+    <button id="pdf-btn" onclick="downloadPDF()"
+      style="font-family:'DM Mono',monospace;font-size:10px;padding:5px 14px;border-radius:3px;
              border:1px solid #334155;background:#1E293B;color:#94A3B8;cursor:pointer;
-             transition:all 0.2s;letter-spacing:0.5px;display:flex;align-items:center;gap:6px;" onmouseover="this.style.borderColor=&#39;#0055A5&#39;;this.style.color=&#39;#4BA3F5&#39;" onmouseout="this.style.borderColor=&#39;#334155&#39;;this.style.color=&#39;#94A3B8&#39;">
+             transition:all 0.2s;letter-spacing:0.5px;display:flex;align-items:center;gap:6px;"
+      onmouseover="this.style.borderColor='#0055A5';this.style.color='#4BA3F5'"
+      onmouseout="this.style.borderColor='#334155';this.style.color='#94A3B8'">
       ⬇ Download PDF
     </button>
-    <button onclick="refreshEIA()" style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;padding:5px 14px;border-radius:3px;
+    <button onclick="refreshEIA()"
+      style="font-family:'DM Mono',monospace;font-size:10px;padding:5px 14px;border-radius:3px;
              border:1px solid #334155;background:#1E293B;color:#94A3B8;cursor:pointer;
-             transition:all 0.2s;letter-spacing:0.5px;" onmouseover="this.style.borderColor=&#39;#007A33&#39;;this.style.color=&#39;#4ADE80&#39;" onmouseout="this.style.borderColor=&#39;#334155&#39;;this.style.color=&#39;#94A3B8&#39;">
+             transition:all 0.2s;letter-spacing:0.5px;"
+      onmouseover="this.style.borderColor='#007A33';this.style.color='#4ADE80'"
+      onmouseout="this.style.borderColor='#334155';this.style.color='#94A3B8'">
       ↻ Refresh
     </button>
   </div>
@@ -523,66 +529,20 @@
 <!-- SCENARIO SELECTOR -->
 <div class="scenario-bar">
   <div class="scenario-label">Scenario</div>
-  <button class="scenario-btn active-base active" id="btn-base" onclick="setScenario(&#39;base&#39;)">Base Case — Gradual Recovery</button>
-  <button class="scenario-btn" id="btn-bull" onclick="setScenario(&#39;bull&#39;)">Bull — Fast Recovery</button>
-  <button class="scenario-btn" id="btn-bear" onclick="setScenario(&#39;bear&#39;)">Bear — Prolonged Crisis</button>
-  <span style="margin-left:auto; font-family:&#39;DM Mono&#39;,monospace; font-size:10px; color:var(--muted)">
-    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent: <span id="bar-live-price">$101.55</span></span> · <span id="bar-updated">Updated 28 Apr 2026, 14:29 GST</span>
+  <button class="scenario-btn active-base active" id="btn-base" onclick="setScenario('base')">Base Case — Gradual Recovery</button>
+  <button class="scenario-btn" id="btn-bull" onclick="setScenario('bull')">Bull — Fast Recovery</button>
+  <button class="scenario-btn" id="btn-bear" onclick="setScenario('bear')">Bear — Prolonged Crisis</button>
+  <span style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted)">
+    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent: <span id="bar-live-price">loading...</span></span> · <span id="bar-updated">Data verified Apr 23, 2026</span>
   </span>
 </div>
 
 <!-- KPIs -->
 <div class="main" style="padding-bottom:0">
   <div class="full">
-    <div class="kpi-grid" id="kpi-grid" style="grid-template-columns: repeat(8, 1fr);">
-    <div class="kpi">
-      <div class="kpi-label">Brent Today (Apr 23)</div>
-      <div class="kpi-value kpi-red">$101.55</div>
-      <div class="kpi-sub kpi-red">Cached · Apr 23 · Add AV key to enable live price</div>
+    <div class="kpi-grid" id="kpi-grid">
+      <!-- filled by JS -->
     </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Brent Q2 Avg (EIA Base)</div>
-      <div class="kpi-value kpi-red">$115</div>
-      <div class="kpi-sub kpi-red">EIA STEO Apr 2026 peak</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Brent Q4 Forecast (EIA)</div>
-      <div class="kpi-value kpi-blue">&lt;$90</div>
-      <div class="kpi-sub kpi-blue">EIA: falls below $90 in Q4</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Prod. Shut-ins Apr '26</div>
-      <div class="kpi-value kpi-red">9.1M bpd</div>
-      <div class="kpi-sub kpi-red">EIA STEO peak estimate</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Global Supply Drop Mar</div>
-      <div class="kpi-value kpi-red">−10.1M</div>
-      <div class="kpi-sub kpi-red">bpd m-o-m · IEA OMR · largest ever</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Hormuz Flow (End Q2)</div>
-      <div class="kpi-value kpi-blue">~55%</div>
-      <div class="kpi-sub kpi-blue">of 20M bpd pre-war · Base case</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">GDP Growth 2026</div>
-      <div class="kpi-value kpi-blue">3.1%</div>
-      <div class="kpi-sub kpi-blue">IMF WEO Apr 14 · down from 3.4%</div>
-    </div>
-  
-    <div class="kpi">
-      <div class="kpi-label">Global Inflation 2026</div>
-      <div class="kpi-value kpi-blue">+4.4%</div>
-      <div class="kpi-sub kpi-blue">IMF WEO · +0.6pp from Jan forecast</div>
-    </div>
-  </div>
   </div>
 </div>
 
@@ -590,35 +550,7 @@
 <div class="section-title" style="padding-top:20px">Recovery Phase Model</div>
 <div class="main" style="padding-top:12px; padding-bottom:0">
   <div class="full">
-    <div class="phase-grid" id="phase-grid">
-    <div class="phase-card p1">
-      <div class="phase-num">1</div>
-      <div class="phase-title" style="color:var(--red)">War &amp; Closure</div>
-      <div class="phase-date">Feb 28 – Apr 8</div>
-      <div class="phase-desc">Strait closed. 20M bpd halted. Brent peaks ~$128 Apr 2 (physical ~$150). Global supply drops 10.1M bpd. 80+ facilities struck. EIA: 7.5M bpd shut-in in March.</div>
-    </div>
-  
-    <div class="phase-card p2">
-      <div class="phase-num">2</div>
-      <div class="phase-title" style="color:var(--blue)">Ceasefire &amp; Tension</div>
-      <div class="phase-date">Apr 8 – May</div>
-      <div class="phase-desc">Ceasefire Apr 8 &amp; 17. Both collapsed within hours. US naval blockade remains. Iran fired on tankers Apr 19. Brent today: $101.55 (Apr 23). EIA shut-ins peak at 9.1M bpd in April.</div>
-    </div>
-  
-    <div class="phase-card p3">
-      <div class="phase-num">3</div>
-      <div class="phase-title" style="color:var(--yellow)">Gradual Resumption</div>
-      <div class="phase-date">May – Jul</div>
-      <div class="phase-desc">IEA base: partial Hormuz flows resume from May. Tanker backlog clears over ~50 days. Saudi/UAE pipelines at max. Iraq/Kuwait ramp cautiously. EIA: Brent averages $115 in Q2.</div>
-    </div>
-  
-    <div class="phase-card p4">
-      <div class="phase-num">4</div>
-      <div class="phase-title" style="color:var(--green)">Partial Recovery</div>
-      <div class="phase-date">Aug – Sep</div>
-      <div class="phase-desc">Output approaching 70–75% of pre-war. EIA: Brent falls below $90 in Q4. Infrastructure repairs ongoing. Morgan Stanley: full export restoration not before Oct 2026.</div>
-    </div>
-  </div>
+    <div class="phase-grid" id="phase-grid"><!-- filled by JS --></div>
   </div>
 </div>
 
@@ -629,358 +561,14 @@
     <div class="panel-header">
       <div class="panel-title">Production Status by Country · Monthly Snapshot</div>
       <div style="display:flex;gap:12px;">
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--red);">■ Critical</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--orange);">■ Severe</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--yellow);">■ Moderate</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--green);">■ Recovery</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--red);">■ Critical</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);">■ Severe</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--yellow);">■ Moderate</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--green);">■ Recovery</span>
       </div>
     </div>
     <div class="panel-body" style="padding:0">
-      <div id="timeline-grid"><table class="tl-table"><thead><tr><th class="col-country">Country</th><th class="col-prewar">Pre-War</th><th class="">Feb</th><th class="">Mar</th><th class="">Apr</th><th class="q2-col">May <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q2-col">Jun <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q2-col">Jul <span style="color:var(--blue);font-size:8px">Q2</span></th><th class="q3-col">Aug <span style="color:var(--green);font-size:8px">Q3</span></th><th class="q3-col">Sep <span style="color:var(--green);font-size:8px">Q3</span></th></tr></thead><tbody><tr><td class="col-country">
-      <div class="tl-country-name">🇮🇷 Iran</div>
-      <div class="tl-country-sub">No bypass · US naval blockade</div>
-    </td><td class="col-prewar">~3.3M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~3.3M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~0M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~0M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~0.05M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-critical">
-          <div class="tl-chip-bpd">~0.1M</div>
-          <div class="tl-chip-lbl">Critical</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~0.2M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~0.25M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~0.3M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇮🇶 Iraq</div>
-      <div class="tl-country-sub">Basra terminal · No bypass</div>
-    </td><td class="col-prewar">4.52M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">4.52M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~1.7M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-critical">
-          <div class="tl-chip-bpd">~1.8M</div>
-          <div class="tl-chip-lbl">Critical</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~2.2M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~2.5M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~2.8M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇸🇦 Saudi Arabia</div>
-      <div class="tl-country-sub">Petroline bypass → Yanbu</div>
-    </td><td class="col-prewar">10.88M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">10.88M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~8.0M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~8.0M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~8.3M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~8.5M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~8.8M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-recovery">
-          <div class="tl-chip-bpd">~9.2M</div>
-          <div class="tl-chip-lbl">Recovery</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-recovery">
-          <div class="tl-chip-bpd">~9.5M</div>
-          <div class="tl-chip-lbl">Recovery</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇰🇼 Kuwait</div>
-      <div class="tl-country-sub">Al-Ahmadi · No bypass</div>
-    </td><td class="col-prewar">2.75M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">2.75M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~2.25M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~2.25M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-critical">
-          <div class="tl-chip-bpd">~1.4M</div>
-          <div class="tl-chip-lbl">Critical</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~1.5M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~1.8M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-recovery">
-          <div class="tl-chip-bpd">~1.9M</div>
-          <div class="tl-chip-lbl">Recovery</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇦🇪 UAE</div>
-      <div class="tl-country-sub">ADCOP → Fujairah bypass</div>
-    </td><td class="col-prewar">4.02M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">4.02M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~3.3M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~3.3M</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~2.8M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~3.0M</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~3.2M</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-recovery">
-          <div class="tl-chip-bpd">~3.4M</div>
-          <div class="tl-chip-lbl">Recovery</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-recovery">
-          <div class="tl-chip-bpd">~3.5M</div>
-          <div class="tl-chip-lbl">Recovery</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇶🇦 Qatar (LNG)</div>
-      <div class="tl-country-sub">Ras Laffan struck Mar 2</div>
-    </td><td class="col-prewar">77 Mtpa LNG</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">77Mt</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~0Mt</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~0Mt</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-war">
-          <div class="tl-chip-bpd">~5Mt</div>
-          <div class="tl-chip-lbl">CONFLICT</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-critical">
-          <div class="tl-chip-bpd">~10Mt</div>
-          <div class="tl-chip-lbl">Critical</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~15Mt</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-severe">
-          <div class="tl-chip-bpd">~20Mt</div>
-          <div class="tl-chip-lbl">Severe</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-moderate">
-          <div class="tl-chip-bpd">~25Mt</div>
-          <div class="tl-chip-lbl">Moderate</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇷🇺 Russia</div>
-      <div class="tl-country-sub">Non-Hormuz · Beneficiary</div>
-    </td><td class="col-prewar">~9.2M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.2M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.2M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.2M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.3M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.4M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.4M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.5M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~9.5M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td></tr><tr><td class="col-country">
-      <div class="tl-country-name">🇳🇬 Nigeria</div>
-      <div class="tl-country-sub">Atlantic basin · Beneficiary</div>
-    </td><td class="col-prewar">~1.5M bpd</td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.5M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.5M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q2-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td><td class="q3-col">
-        <div class="tl-chip bar-normal">
-          <div class="tl-chip-bpd">~1.6M</div>
-          <div class="tl-chip-lbl">Normal</div>
-        </div>
-      </td></tr></tbody></table></div>
+      <div id="timeline-grid"></div>
     </div>
   </div>
 </div>
@@ -994,73 +582,7 @@
       <div class="panel-title">Production Recovery — Q2 vs Pre-War Capacity</div>
     </div>
     <div class="panel-body" style="padding:0">
-      <table class="ctable" id="ctable"><thead><tr>
-    <th>Country</th><th>Pre-War</th><th>Q2 2026</th><th>Q3 2026</th><th>Status</th>
-  </tr></thead><tbody>
-    <tr>
-      <td><span class="country-flag">🇮🇷</span>Iran</td>
-      <td style="color:var(--muted)">~3.3M bpd</td>
-      <td style="color:var(--orange)">~0.1M</td>
-      <td style="color:var(--yellow)">~0.3M</td>
-      <td><span class="status-pill pill-critical">Closed</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇮🇶</span>Iraq</td>
-      <td style="color:var(--muted)">4.52M bpd</td>
-      <td style="color:var(--orange)">~1.8M</td>
-      <td style="color:var(--yellow)">~2.8M</td>
-      <td><span class="status-pill pill-severe">Severe</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇸🇦</span>Saudi Arabia</td>
-      <td style="color:var(--muted)">10.88M bpd</td>
-      <td style="color:var(--orange)">~8.5M</td>
-      <td style="color:var(--yellow)">~9.5M</td>
-      <td><span class="status-pill pill-moderate">Moderate</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇰🇼</span>Kuwait</td>
-      <td style="color:var(--muted)">2.75M bpd</td>
-      <td style="color:var(--orange)">~1.5M</td>
-      <td style="color:var(--yellow)">~1.9M</td>
-      <td><span class="status-pill pill-severe">Severe</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇦🇪</span>UAE</td>
-      <td style="color:var(--muted)">4.02M bpd</td>
-      <td style="color:var(--orange)">~3.0M</td>
-      <td style="color:var(--yellow)">~3.5M</td>
-      <td><span class="status-pill pill-moderate">Moderate</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇶🇦</span>Qatar (LNG)</td>
-      <td style="color:var(--muted)">77Mtpa bpd</td>
-      <td style="color:var(--orange)">~10Mtpa</td>
-      <td style="color:var(--yellow)">~25Mtpa</td>
-      <td><span class="status-pill pill-critical">Critical</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇷🇺</span>Russia</td>
-      <td style="color:var(--muted)">~9.2M bpd</td>
-      <td style="color:var(--orange)">~9.4M</td>
-      <td style="color:var(--yellow)">~9.5M</td>
-      <td><span class="status-pill pill-beneficiary">Beneficiary</span></td>
-    </tr>
-  
-    <tr>
-      <td><span class="country-flag">🇳🇬</span>Nigeria</td>
-      <td style="color:var(--muted)">~1.5M bpd</td>
-      <td style="color:var(--orange)">~1.6M</td>
-      <td style="color:var(--yellow)">~1.6M</td>
-      <td><span class="status-pill pill-beneficiary">Beneficiary</span></td>
-    </tr>
-  </tbody></table>
+      <table class="ctable" id="ctable"><!-- filled by JS --></table>
     </div>
   </div>
 
@@ -1068,59 +590,9 @@
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">% Return to Pre-War Output</div>
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted)">by end Q3 2026</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">by end Q3 2026</div>
     </div>
-    <div class="panel-body" id="recovery-bars">
-    <div class="progress-row">
-      <div class="progress-label">Iran</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:10%;background:#C8102E"></div>
-      </div>
-      <div class="progress-val" style="color:#C8102E">10%</div>
-    </div>
-  
-    <div class="progress-row">
-      <div class="progress-label">Iraq</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:35%;background:#B45309"></div>
-      </div>
-      <div class="progress-val" style="color:#B45309">35%</div>
-    </div>
-  
-    <div class="progress-row">
-      <div class="progress-label">Saudi</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:75%;background:#0055A5"></div>
-      </div>
-      <div class="progress-val" style="color:#0055A5">75%</div>
-    </div>
-  
-    <div class="progress-row">
-      <div class="progress-label">Kuwait</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:65%;background:#B45309"></div>
-      </div>
-      <div class="progress-val" style="color:#B45309">65%</div>
-    </div>
-  
-    <div class="progress-row">
-      <div class="progress-label">UAE</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:80%;background:#007A33"></div>
-      </div>
-      <div class="progress-val" style="color:#007A33">80%</div>
-    </div>
-  
-    <div class="progress-row">
-      <div class="progress-label">Qatar LNG</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:25%;background:#C8102E"></div>
-      </div>
-      <div class="progress-val" style="color:#C8102E">25%</div>
-    </div>
-  <div style="margin-top:12px;font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);line-height:1.6">
-    % of pre-war production volume expected by end Q3 2026. Iran and Qatar face longest recovery due to direct facility strikes. Saudi/UAE benefit from partial pipeline bypass capacity.
-  </div></div>
+    <div class="panel-body" id="recovery-bars"><!-- filled by JS --></div>
   </div>
 </div>
 
@@ -1130,7 +602,7 @@
   <div class="full panel">
     <div class="panel-header">
       <div class="panel-title">Damaged Facilities · Estimated Recovery Duration</div>
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted)">IEA: "more than 80 energy facilities damaged · recovery could take up to 2 years"</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">IEA: "more than 80 energy facilities damaged · recovery could take up to 2 years"</div>
     </div>
     <div class="panel-body" style="padding:0">
       <table class="dtable">
@@ -1144,115 +616,7 @@
             <th>Recovery Progress</th>
           </tr>
         </thead>
-        <tbody id="damage-table">
-  <tr>
-    <td>🇮🇷 Iran</td>
-    <td style="color:var(--white)">Tehran Oil Storage / Mobarakeh Steel</td>
-    <td style="color:var(--muted)">Direct Strike</td>
-    <td style="color:var(--orange)">Power + storage capacity destroyed</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">18–24 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">5% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-red" style="width:5%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇮🇷 Iran</td>
-    <td style="color:var(--white)">Ras Bahregan Terminal</td>
-    <td style="color:var(--muted)">Naval Attack</td>
-    <td style="color:var(--orange)">Crude export terminal offline</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">12–18 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">8% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-red" style="width:8%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇶🇦 Qatar</td>
-    <td style="color:var(--white)">Ras Laffan LNG (world's largest)</td>
-    <td style="color:var(--muted)">Missile Strike Mar 2</td>
-    <td style="color:var(--orange)">Offline since March 2 — 77Mtpa capacity</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">6–12 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">15% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-red" style="width:15%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇸🇦 Saudi Arabia</td>
-    <td style="color:var(--white)">Yanbu / Jizan Refineries</td>
-    <td style="color:var(--muted)">Drone + Missile</td>
-    <td style="color:var(--orange)">~2M bpd refining capacity offline</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">3–6 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">35% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:35%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇦🇪 UAE</td>
-    <td style="color:var(--white)">Emirates Global Aluminum</td>
-    <td style="color:var(--muted)">Missile Strike Mar 28</td>
-    <td style="color:var(--orange)">Aluminum production disrupted</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">2–4 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">55% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:55%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇦🇪 UAE</td>
-    <td style="color:var(--white)">Fujairah Marine Terminal</td>
-    <td style="color:var(--muted)">Indirect Disruption</td>
-    <td style="color:var(--orange)">Tanker throughput restricted</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">1–3 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">70% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-yellow" style="width:70%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇮🇶 Iraq</td>
-    <td style="color:var(--white)">Basra Oil Terminal</td>
-    <td style="color:var(--muted)">No-go zone / mine risk</td>
-    <td style="color:var(--orange)">Cannot load tankers through Hormuz</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">Post-clearance: 2–3 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">30% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:30%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🇰🇼 Kuwait</td>
-    <td style="color:var(--white)">Al-Ahmadi Export Terminal</td>
-    <td style="color:var(--muted)">Hormuz blockade</td>
-    <td style="color:var(--orange)">All exports blocked, no bypass</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">Post-clearance: 1–2 months</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">40% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-orange" style="width:40%"></div></div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>🌐 Gulf-Wide</td>
-    <td style="color:var(--white)">Seabed / Shipping Lanes</td>
-    <td style="color:var(--muted)">Sea Mines (IRGC)</td>
-    <td style="color:var(--orange)">50-day mine clearance lag minimum</td>
-    <td><span style="font-family:&#39;DM Mono&#39;,monospace;color:var(--yellow)">4–8 weeks post-ceasefire</span></td>
-    <td style="min-width:100px">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--muted);margin-bottom:3px">50% repaired</div>
-      <div class="rec-bar"><div class="rec-fill fill-yellow" style="width:50%"></div></div>
-    </td>
-  </tr>
-</tbody>
+        <tbody id="damage-table"><!-- filled by JS --></tbody>
       </table>
     </div>
   </div>
@@ -1266,12 +630,13 @@
       <div class="panel-title">Brent Crude (USD/bbl) · Scenario Comparison</div>
     </div>
     <div class="panel-body">
-      <svg id="price-svg" width="100%" height="200" viewBox="0 0 900 200"><line x1="50" y1="161.1764705882353" x2="880" y2="161.1764705882353" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="165.1764705882353" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$60</text><line x1="50" y1="125.88235294117646" x2="880" y2="125.88235294117646" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="129.88235294117646" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$80</text><line x1="50" y1="90.58823529411765" x2="880" y2="90.58823529411765" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="94.58823529411765" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$100</text><line x1="50" y1="55.294117647058826" x2="880" y2="55.294117647058826" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="59.294117647058826" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$120</text><line x1="50" y1="20" x2="880" y2="20" stroke="#DDE1E7" stroke-width="0.8"></line><text x="44" y="24" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$140</text><text x="50" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Feb</text><text x="168.57142857142856" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Mar</text><line x1="168.57142857142856" y1="20" x2="168.57142857142856" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="287.1428571428571" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Apr</text><line x1="287.1428571428571" y1="20" x2="287.1428571428571" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="405.7142857142857" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">May</text><line x1="405.7142857142857" y1="20" x2="405.7142857142857" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="524.2857142857142" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Jun</text><line x1="524.2857142857142" y1="20" x2="524.2857142857142" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="642.8571428571429" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Jul</text><line x1="642.8571428571429" y1="20" x2="642.8571428571429" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="761.4285714285714" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Aug</text><line x1="761.4285714285714" y1="20" x2="761.4285714285714" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><text x="880" y="194" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Sep</text><line x1="880" y1="20" x2="880" y2="170" stroke="#DDE1E7" stroke-width="0.5"></line><rect x="405.7142857142857" y="20" width="237.14285714285717" height="150" fill="rgba(0,85,165,0.04)"></rect><text x="524.2857142857143" y="32" fill="rgba(0,85,165,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q2 2026</text><rect x="642.8571428571429" y="20" width="237.1428571428571" height="150" fill="rgba(0,122,51,0.04)"></rect><text x="761.4285714285714" y="32" fill="rgba(0,122,51,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q3 2026</text><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,41.176470588235304 L405.7142857142857,46.47058823529413 L524.2857142857142,51.76470588235294 L642.8571428571429,55.294117647058826 L761.4285714285714,58.823529411764696 L880,69.41176470588236" fill="none" stroke="#C8102E" stroke-width="1" opacity="0.3"></path><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,41.176470588235304 L405.7142857142857,64.11764705882352 L524.2857142857142,76.47058823529412 L642.8571428571429,90.58823529411765 L761.4285714285714,102.94117647058823 L880,113.52941176470588" fill="none" stroke="#0055A5" stroke-width="2.5" opacity="1"></path><circle cx="880" cy="113.52941176470588" r="4" fill="#0055A5"></circle><text x="886" y="117.52941176470588" fill="#0055A5" font-size="9" font-family="DM Mono,monospace">$87</text><path d="M50,122.3529411764706 L168.57142857142856,85.29411764705883 L287.1428571428571,55.294117647058826 L405.7142857142857,108.23529411764707 L524.2857142857142,122.3529411764706 L642.8571428571429,132.94117647058823 L761.4285714285714,140 L880,147.05882352941177" fill="none" stroke="#007A33" stroke-width="1" opacity="0.3"></path><line x1="376.07142857142856" y1="20" x2="376.07142857142856" y2="170" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.8"></line><text x="376.07142857142856" y="14" fill="#B45309" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">TODAY · $101.55</text></svg>
-      <div style="display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;">
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--green);">— Bull: Goldman base / fast recovery → ~$68 end Q3</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--blue);">— Base: EIA STEO → Q2 avg $115, end Q3 ~$87</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--red);">— Bear: Goldman $120+ upside / prolonged closure → $112 end Q3</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:var(--cyan);">◆ Live Apr 23: $101.55 (Reuters)</span>
+      <svg id="price-svg" width="100%" height="220" viewBox="0 0 900 220"></svg>
+      <div style="display:flex;gap:20px;margin-top:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#111827;display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2.5px;background:#111827;border-radius:2px;"></span>Actual (live-linked Feb–Apr)</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#C8102E;display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2px;background:#C8102E;border-radius:2px;opacity:0.7;" class="dash-line"></span>Bear → $112 end Q3</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#0055A5;display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2px;background:#0055A5;border-radius:2px;opacity:0.7;"></span>Base → ~$87 end Q3 (EIA)</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#007A33;display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2px;background:#007A33;border-radius:2px;opacity:0.7;"></span>Bull → ~$68 end Q3</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#B45309;display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#B45309;"></span>Live price · All scenarios fork from this point</span>
       </div>
     </div>
   </div>
@@ -1284,11 +649,11 @@
     <div class="panel-header">
       <div class="panel-title">Port Operability · Bypass Routes · Strait of Hormuz Chokepoint · Click any port</div>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2a9d8f"></span>Open</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e9c46a"></span>Partial</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f4a261"></span>Limited</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e63946"></span>Closed</span>
-        <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:5px;height:10px;border-radius:1px;background:#4cc9f0"></span>Pipeline Bypass</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2a9d8f"></span>Open</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e9c46a"></span>Partial</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f4a261"></span>Limited</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e63946"></span>Closed</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:5px;height:10px;border-radius:1px;background:#4cc9f0"></span>Pipeline Bypass</span>
       </div>
     </div>
 
@@ -1297,26 +662,27 @@
 
       <!-- SVG MAP AREA -->
       <div style="position:relative;background:#EBF2FA;border-right:1px solid #DDE1E7;overflow:hidden">
-        <svg id="map-svg" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet" style="width:100%;height:480px;display:block">
+        <svg id="map-svg" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet"
+             style="width:100%;height:480px;display:block">
 
           <!-- Ocean background — Bloomberg light -->
-          <rect width="900" height="520" fill="#EBF2FA"></rect>
+          <rect width="900" height="520" fill="#EBF2FA"/>
 
           <!-- ── LAND MASSES ── -->
-          <polygon points="380,120 420,100 470,95 520,100 560,110 590,130 610,160 620,200 610,240 590,270 570,290 540,300 510,310 480,320 450,330 430,350 400,370 375,360 360,340 350,310 345,280 350,250 360,220 370,180 375,150" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="530,60 570,50 620,55 660,65 690,80 710,100 720,120 710,140 690,150 660,155 630,150 600,140 575,130 555,115 535,100 520,85" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="430,70 470,60 510,65 530,80 535,100 520,120 500,135 475,140 450,135 430,120 420,100 420,80" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="450,135 475,140 480,155 465,165 448,158 445,145" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="610,160 640,155 670,165 690,185 700,210 695,240 680,265 660,280 640,285 620,275 605,255 600,230 600,200 605,175" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="560,340 600,330 640,340 660,360 650,390 620,400 580,395 555,375 550,355" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="540,190 550,180 560,185 558,200 548,205 538,200" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <circle cx="510" cy="178" r="5" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"></circle>
-          <polygon points="180,30 250,25 310,30 350,45 360,65 330,75 290,72 240,65 190,58 170,45" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="375,300 410,290 450,285 490,295 520,310 530,335 510,355 475,360 440,355 405,345 380,330 365,315" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="710,120 760,115 800,125 830,140 840,165 820,170 780,165 740,155 710,140" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="800,140 850,150 880,175 885,210 870,240 840,250 810,240 790,215 785,185 790,160" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="0,200 30,195 60,205 80,230 75,270 55,300 25,310 0,300" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
-          <polygon points="50,250 90,240 120,255 130,285 110,310 80,320 55,305 45,280" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"></polygon>
+          <polygon points="380,120 420,100 470,95 520,100 560,110 590,130 610,160 620,200 610,240 590,270 570,290 540,300 510,310 480,320 450,330 430,350 400,370 375,360 360,340 350,310 345,280 350,250 360,220 370,180 375,150" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="530,60 570,50 620,55 660,65 690,80 710,100 720,120 710,140 690,150 660,155 630,150 600,140 575,130 555,115 535,100 520,85" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="430,70 470,60 510,65 530,80 535,100 520,120 500,135 475,140 450,135 430,120 420,100 420,80" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="450,135 475,140 480,155 465,165 448,158 445,145" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="610,160 640,155 670,165 690,185 700,210 695,240 680,265 660,280 640,285 620,275 605,255 600,230 600,200 605,175" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="560,340 600,330 640,340 660,360 650,390 620,400 580,395 555,375 550,355" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="540,190 550,180 560,185 558,200 548,205 538,200" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"/>
+          <circle cx="510" cy="178" r="5" fill="#CAD8E8" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="180,30 250,25 310,30 350,45 360,65 330,75 290,72 240,65 190,58 170,45" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="375,300 410,290 450,285 490,295 520,310 530,335 510,355 475,360 440,355 405,345 380,330 365,315" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="710,120 760,115 800,125 830,140 840,165 820,170 780,165 740,155 710,140" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="800,140 850,150 880,175 885,210 870,240 840,250 810,240 790,215 785,185 790,160" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="0,200 30,195 60,205 80,230 75,270 55,300 25,310 0,300" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
+          <polygon points="50,250 90,240 120,255 130,285 110,310 80,320 55,305 45,280" fill="#D4E0ED" stroke="#B8C8D8" stroke-width="0.8"/>
 
           <!-- ── WATER LABELS ── -->
           <text x="200" y="200" fill="#8AAAC4" font-size="10" font-family="DM Mono,monospace" opacity="0.9" transform="rotate(-15,200,200)">RED SEA</text>
@@ -1327,121 +693,121 @@
           <text x="95" y="120" fill="#8AAAC4" font-size="9" font-family="DM Mono,monospace" opacity="0.9">MEDITERRANEAN</text>
 
           <!-- ── PIPELINE ROUTES ── -->
-          <line x1="510" y1="170" x2="260" y2="195" stroke="#0055A5" stroke-width="2" stroke-dasharray="7,5" opacity="0.6"></line>
+          <line x1="510" y1="170" x2="260" y2="195" stroke="#0055A5" stroke-width="2" stroke-dasharray="7,5" opacity="0.6"/>
           <text x="362" y="174" fill="#0055A5" font-size="8" font-family="DM Mono,monospace" opacity="0.8" transform="rotate(-3,362,174)">Saudi Petroline → Yanbu</text>
-          <line x1="590" y1="220" x2="650" y2="192" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.6"></line>
+          <line x1="590" y1="220" x2="650" y2="192" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.6"/>
           <text x="600" y="209" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" opacity="0.8">ADCOP</text>
-          <polyline points="490,100 420,75 320,58" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" fill="none" opacity="0.6"></polyline>
+          <polyline points="490,100 420,75 320,58" stroke="#0055A5" stroke-width="1.8" stroke-dasharray="5,4" fill="none" opacity="0.6"/>
           <text x="388" y="68" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" opacity="0.8">Kirkuk→Ceyhan</text>
 
           <!-- ── HORMUZ DANGER ZONE ── -->
-          <ellipse cx="635" cy="182" rx="42" ry="22" fill="rgba(200,16,46,0.08)" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5,3"></ellipse>
+          <ellipse cx="635" cy="182" rx="42" ry="22" fill="rgba(200,16,46,0.08)" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5,3"/>
           <text x="614" y="170" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" font-weight="bold">⚠ HORMUZ</text>
           <text x="614" y="180" fill="#C8102E" font-size="7" font-family="DM Mono,monospace">CLOSED</text>
 
           <!-- ── PORT DOTS ── -->
           <!-- 0: Strait of Hormuz -->
           <g class="map-dot" data-idx="0" onclick="selectPort(0)">
-            <rect x="626" y="158" width="12" height="12" rx="2" fill="#C8102E" stroke="#8B0000" stroke-width="1" opacity="0.95" style="opacity: 1; filter: drop-shadow(rgb(200, 16, 46) 0px 0px 8px);"></rect>
+            <rect x="626" y="158" width="12" height="12" rx="2" fill="#C8102E" stroke="#8B0000" stroke-width="1" opacity="0.95"/>
           </g>
           <!-- 1: Bandar Abbas -->
           <g class="map-dot" data-idx="1" onclick="selectPort(1)">
-            <circle cx="658" cy="165" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="658" cy="165" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="662" y="162" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Bandar Abbas</text>
           <!-- 2: Kharg Island -->
           <g class="map-dot" data-idx="2" onclick="selectPort(2)">
-            <circle cx="535" cy="148" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="535" cy="148" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="539" y="145" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Kharg Is.</text>
           <!-- 3: Basra -->
           <g class="map-dot" data-idx="3" onclick="selectPort(3)">
-            <circle cx="486" cy="152" r="7" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="486" cy="152" r="7" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="490" y="149" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Basra</text>
           <!-- 4: Kuwait Mina Al Ahmadi -->
           <g class="map-dot" data-idx="4" onclick="selectPort(4)">
-            <circle cx="468" cy="160" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="468" cy="160" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="446" y="154" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Kuwait</text>
           <!-- 5: Ras Tanura -->
           <g class="map-dot" data-idx="5" onclick="selectPort(5)">
-            <circle cx="516" cy="172" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="516" cy="172" r="6" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="518" y="169" fill="#B45309" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Ras Tanura</text>
           <!-- 6: Al Jubail -->
           <g class="map-dot" data-idx="6" onclick="selectPort(6)">
-            <circle cx="510" cy="183" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="510" cy="183" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="512" y="180" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Jubail</text>
           <!-- 7: Yanbu BYPASS -->
           <g class="map-dot" data-idx="7" onclick="selectPort(7)">
-            <circle cx="260" cy="196" r="8" fill="#007A33" stroke="#005524" stroke-width="1.5" style="opacity: 0.35;"></circle>
+            <circle cx="260" cy="196" r="8" fill="#007A33" stroke="#005524" stroke-width="1.5"/>
           </g>
           <text x="264" y="208" fill="#007A33" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Yanbu ✓</text>
           <!-- 8: Jeddah -->
           <g class="map-dot" data-idx="8" onclick="selectPort(8)">
-            <circle cx="248" cy="220" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="248" cy="220" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="252" y="232" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Jeddah ✓</text>
           <!-- 9: Fujairah BYPASS -->
           <g class="map-dot" data-idx="9" onclick="selectPort(9)">
-            <circle cx="654" cy="190" r="8" fill="#0055A5" stroke="#003D7A" stroke-width="1.5" style="opacity: 0.35;"></circle>
+            <circle cx="654" cy="190" r="8" fill="#0055A5" stroke="#003D7A" stroke-width="1.5"/>
           </g>
           <text x="658" y="202" fill="#0055A5" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Fujairah →</text>
           <!-- 10: Khor Fakkan -->
           <g class="map-dot" data-idx="10" onclick="selectPort(10)">
-            <circle cx="660" cy="204" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="660" cy="204" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="664" y="202" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Khor Fakkan</text>
           <!-- 11: Jebel Ali -->
           <g class="map-dot" data-idx="11" onclick="selectPort(11)">
-            <circle cx="598" cy="207" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="598" cy="207" r="5" fill="#0055A5" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="578" y="217" fill="#0055A5" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Jebel Ali</text>
           <!-- 12: Ras Laffan -->
           <g class="map-dot" data-idx="12" onclick="selectPort(12)">
-            <circle cx="553" cy="196" r="7" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="553" cy="196" r="7" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="554" y="209" fill="#C8102E" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Ras Laffan</text>
           <!-- 19: Hamad Port Qatar (NEW) -->
           <g class="map-dot" data-idx="19" onclick="selectPort(19)">
-            <circle cx="542" cy="212" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="542" cy="212" r="6" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="526" y="224" fill="#C8102E" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Hamad Port</text>
           <!-- 13: Bahrain -->
           <g class="map-dot" data-idx="13" onclick="selectPort(13)">
-            <circle cx="510" cy="194" r="5" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="510" cy="194" r="5" fill="#C8102E" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="496" y="204" fill="#C8102E" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Bahrain</text>
           <!-- 14: Muscat -->
           <g class="map-dot" data-idx="14" onclick="selectPort(14)">
-            <circle cx="682" cy="230" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="682" cy="230" r="6" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="685" y="243" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Muscat ✓</text>
           <!-- 15: Sohar -->
           <g class="map-dot" data-idx="15" onclick="selectPort(15)">
-            <circle cx="668" cy="218" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="668" cy="218" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="671" y="216" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Sohar</text>
           <!-- 16: Salalah -->
           <g class="map-dot" data-idx="16" onclick="selectPort(16)">
-            <circle cx="600" cy="378" r="7" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="600" cy="378" r="7" fill="#007A33" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="604" y="390" fill="#007A33" font-size="8" font-family="DM Mono,monospace" pointer-events="none">Salalah ✓</text>
           <!-- 17: Duqm -->
           <g class="map-dot" data-idx="17" onclick="selectPort(17)">
-            <circle cx="650" cy="310" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8" style="opacity: 0.35;"></circle>
+            <circle cx="650" cy="310" r="5" fill="#B45309" stroke="#DDE1E7" stroke-width="0.8"/>
           </g>
           <text x="654" y="308" fill="#B45309" font-size="7" font-family="DM Mono,monospace" pointer-events="none">Duqm</text>
           <!-- 18: Ceyhan BYPASS -->
           <g class="map-dot" data-idx="18" onclick="selectPort(18)">
-            <circle cx="320" cy="58" r="7" fill="#007A33" stroke="#005524" stroke-width="1.5" style="opacity: 0.35;"></circle>
+            <circle cx="320" cy="58" r="7" fill="#007A33" stroke="#005524" stroke-width="1.5"/>
           </g>
           <text x="324" y="70" fill="#007A33" font-size="8" font-family="DM Mono,monospace" font-weight="bold" pointer-events="none">Ceyhan ✓</text>
 
           <!-- Stranded tankers label -->
-          <rect x="682" y="252" width="178" height="32" rx="3" fill="rgba(200,16,46,0.07)" stroke="#DDE1E7" stroke-width="0.8"></rect>
+          <rect x="682" y="252" width="178" height="32" rx="3" fill="rgba(200,16,46,0.07)" stroke="#DDE1E7" stroke-width="0.8"/>
           <text x="692" y="264" fill="#C8102E" font-size="8" font-family="DM Mono,monospace">~400 tankers stranded</text>
           <text x="692" y="276" fill="#C8102E" font-size="8" font-family="DM Mono,monospace">in Gulf of Oman</text>
 
@@ -1452,166 +818,39 @@
 
       <!-- SIDEBAR: Port List + Detail -->
       <div style="display:flex;flex-direction:column;height:480px">
-        <div style="flex:1;overflow-y:auto;" id="port-list">
-  <div class="port-list-item active" id="pli-0" onclick="selectPort(0)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Strait of Hormuz</div>
-    <div class="port-list-country">Iran / Oman · CHOKEPOINT</div>
-  </div>
-
-  <div class="port-list-item" id="pli-1" onclick="selectPort(1)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Bandar Abbas Terminal</div>
-    <div class="port-list-country">Iran · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-2" onclick="selectPort(2)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Kharg Island Terminal</div>
-    <div class="port-list-country">Iran · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-3" onclick="selectPort(3)">
-    <span class="port-list-status st-limited">LIMITED</span>
-    <div class="port-list-name">Basra Oil Terminal (ABOT/KAAOT)</div>
-    <div class="port-list-country">Iraq · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-4" onclick="selectPort(4)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Mina Al Ahmadi</div>
-    <div class="port-list-country">Kuwait · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-5" onclick="selectPort(5)">
-    <span class="port-list-status st-limited">LIMITED</span>
-    <div class="port-list-name">Ras Tanura</div>
-    <div class="port-list-country">Saudi Arabia · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-6" onclick="selectPort(6)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Al Jubail</div>
-    <div class="port-list-country">Saudi Arabia · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-7" onclick="selectPort(7)">
-    <span class="port-list-status st-open">OPEN</span>
-    <div class="port-list-name">Yanbu Port</div>
-    <div class="port-list-country">Saudi Arabia · BYPASS ✓</div>
-  </div>
-
-  <div class="port-list-item" id="pli-8" onclick="selectPort(8)">
-    <span class="port-list-status st-open">OPEN</span>
-    <div class="port-list-name">Jeddah Islamic Port</div>
-    <div class="port-list-country">Saudi Arabia · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-9" onclick="selectPort(9)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Fujairah Oil Terminal (FOTT)</div>
-    <div class="port-list-country">UAE · BYPASS →</div>
-  </div>
-
-  <div class="port-list-item" id="pli-10" onclick="selectPort(10)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Khor Fakkan Port</div>
-    <div class="port-list-country">UAE · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-11" onclick="selectPort(11)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Jebel Ali (DP World)</div>
-    <div class="port-list-country">UAE · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-12" onclick="selectPort(12)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Ras Laffan Industrial City</div>
-    <div class="port-list-country">Qatar · LNG</div>
-  </div>
-
-  <div class="port-list-item" id="pli-13" onclick="selectPort(13)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Khalifa Bin Salman Port</div>
-    <div class="port-list-country">Bahrain · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-14" onclick="selectPort(14)">
-    <span class="port-list-status st-open">OPEN</span>
-    <div class="port-list-name">Mina Al Fahal (Muscat)</div>
-    <div class="port-list-country">Oman · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-15" onclick="selectPort(15)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Sohar Port</div>
-    <div class="port-list-country">Oman · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-16" onclick="selectPort(16)">
-    <span class="port-list-status st-open">OPEN</span>
-    <div class="port-list-name">Salalah Port</div>
-    <div class="port-list-country">Oman · GENERAL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-17" onclick="selectPort(17)">
-    <span class="port-list-status st-partial">PARTIAL</span>
-    <div class="port-list-name">Duqm Port</div>
-    <div class="port-list-country">Oman · OIL</div>
-  </div>
-
-  <div class="port-list-item" id="pli-18" onclick="selectPort(18)">
-    <span class="port-list-status st-open">OPEN</span>
-    <div class="port-list-name">Ceyhan Oil Terminal</div>
-    <div class="port-list-country">Turkey · BYPASS ✓</div>
-  </div>
-
-  <div class="port-list-item" id="pli-19" onclick="selectPort(19)">
-    <span class="port-list-status st-closed">CLOSED</span>
-    <div class="port-list-name">Hamad Port (New Doha Port)</div>
-    <div class="port-list-country">Qatar · GENERAL</div>
-  </div>
-</div>
+        <div style="flex:1;overflow-y:auto;" id="port-list"></div>
         <div id="port-detail">
-    <div class="pd-name">Strait of Hormuz</div>
-    <div class="pd-country">Iran / Oman &nbsp;·&nbsp; <span style="color:#C8102E;font-weight:700">CLOSED</span> &nbsp;·&nbsp; CHOKEPOINT</div>
-    <div class="pd-grid">
-      <div class="pd-cell"><div class="pd-cell-label">Export</div><div class="pd-cell-val" style="color:#C8102E">BLOCKED</div></div>
-      <div class="pd-cell"><div class="pd-cell-label">Import</div><div class="pd-cell-val">BLOCKED</div></div>
-      <div class="pd-cell"><div class="pd-cell-label">Capacity</div><div class="pd-cell-val" style="color:#4cc9f0;font-size:9px">20M bpd pre-war</div></div>
-    </div>
-    <div class="pd-notes">Effectively closed since Feb 28. Mines laid by IRGC. Apr 17 ceasefire opening lasted hours before Iran re-closed. US naval blockade of Iranian ports remains in force. ~400 tankers stranded in Gulf of Oman.</div>
-  </div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:#3a4050;text-align:center;padding-top:20px">← Click a port on the map or list</div>
+        </div>
       </div>
     </div>
 
     <!-- BYPASS ROUTES BAR -->
     <div style="border-top:1px solid var(--border);padding:12px 16px;background:#F5F6F8">
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:10px">Alternative Pipeline &amp; Bypass Routes · Capacity vs 20M bpd pre-war Hormuz throughput</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:10px">Alternative Pipeline &amp; Bypass Routes · Capacity vs 20M bpd pre-war Hormuz throughput</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px">
         <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇸🇦 Saudi East-West Pipeline (Petroline)</div>
-          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">5.0M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~4.4M bpd · Abqaiq → Yanbu</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇸🇦 Saudi East-West Pipeline (Petroline)</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--ink)">5.0M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#B45309">Currently: ~4.4M bpd · Abqaiq → Yanbu</div>
         </div>
         <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇦🇪 UAE ADCOP Pipeline (Habshan–Fujairah)</div>
-          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.8M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~1.62M bpd · Habshan → Fujairah</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇦🇪 UAE ADCOP Pipeline (Habshan–Fujairah)</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.8M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#B45309">Currently: ~1.62M bpd · Habshan → Fujairah</div>
         </div>
         <div style="background:#FFFFFF;border:1px solid #DDE1E7;border-radius:4px;padding:10px 12px">
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇮🇶 Iraq Kirkuk–Ceyhan Pipeline (Turkey)</div>
-          <div style="font-family:&#39;DM Sans&#39;,sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.6M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
-          <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#B45309">Currently: ~200K bpd · Kirkuk → Ceyhan, Turkey</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#0055A5;margin-bottom:4px">🇮🇶 Iraq Kirkuk–Ceyhan Pipeline (Turkey)</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--ink)">1.6M <span style="font-size:12px;color:#6B7280">bpd cap.</span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#B45309">Currently: ~200K bpd · Kirkuk → Ceyhan, Turkey</div>
         </div>
       </div>
       <!-- Capacity utilisation bar -->
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#6b7280;margin-bottom:5px">Combined bypass actual utilisation vs pre-war Hormuz (20M bpd = 100%)</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:#6b7280;margin-bottom:5px">Combined bypass actual utilisation vs pre-war Hormuz (20M bpd = 100%)</div>
       <div style="background:#DDE1E7;height:8px;border-radius:2px;overflow:hidden;margin-bottom:5px">
         <div style="width:31%;height:100%;background:#0055A5"></div>
       </div>
-      <div style="font-family:&#39;DM Mono&#39;,monospace;font-size:9px;color:#6B7280">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:#6B7280">
         ~6.2M bpd actual · <span style="color:#C8102E">31% of pre-war Hormuz</span> · Theoretical max 8.4M bpd (42%) but constrained by infrastructure damage &amp; port congestion
       </div>
     </div>
@@ -1619,7 +858,7 @@
 </div>
 
 <div class="footnote">
-  DATA VERIFIED: Apr 23, 2026 · SOURCES: EIA Short-Term Energy Outlook (Apr 2026) · IEA Oil Market Report (Apr 14, 2026) · IMF World Economic Outlook (Apr 14, 2026) · Goldman Sachs Commodity Research (Apr 23, 2026) · Morgan Stanley Research (Apr 13, 2026) · Reuters / Trading Economics (live Brent $101.55 Apr 23) · Bloomberg / IDN Financials (country production cuts) · Wikipedia: 2026 Strait of Hormuz Crisis · GAC Hot Port News · Inchcape Shipping Services Advisory · Al Jazeera · S&amp;P Global · Energy News Beat.
+  DATA VERIFIED: Apr 23, 2026 · SOURCES: EIA Short-Term Energy Outlook (Apr 2026) · IEA Oil Market Report (Apr 14, 2026) · IMF World Economic Outlook (Apr 14, 2026) · Goldman Sachs Commodity Research (Apr 23, 2026) · Morgan Stanley Research (Apr 13, 2026) · Reuters / Trading Economics (live Brent $101.55 Apr 23) · Bloomberg / IDN Financials (country production cuts) · Wikipedia: 2026 Strait of Hormuz Crisis · GAC Hot Port News · Inchcape Shipping Services Advisory · Al Jazeera · S&P Global · Energy News Beat.
   KEY VERIFIED FIGURES: Brent peak ~$128 futures (Apr 2, IEA); physical crude ~$150 (IEA OMR); live $101.55 (Apr 23); EIA STEO Q2 avg $115, falls below $90 in Q4; production shut-ins peaked 9.1M bpd Apr (EIA), 7.5M bpd Mar; global supply drop −10.1M bpd Mar (IEA OMR); inventory draw 5.1M bpd Q2 (EIA); IMF GDP 3.1% (from 3.4%), inflation 4.4%, adverse scenario: 2.5% GDP / 5.4% CPI; bypass actual 31% (~6.2M bpd) of 20M bpd pre-war Hormuz; pre-war outputs: Saudi 10.88M, UAE 4.02M, Iraq 4.52M, Kuwait 2.75M (EIA/IEA 2024). Morgan Stanley: full export restoration not before Oct 2026.
   This dashboard is for analytical and informational purposes only.
 </div>
@@ -1981,65 +1220,188 @@ function renderRecoveryBars(sc) {
   </div>`;
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// PRICE CHART — with live Brent price integration
+//
+// Structure:
+//  · ACTUAL line  — thick charcoal — plots Feb, Mar, Apr using real prices
+//                   Apr point updates to live Brent when fetched
+//  · 3 scenario lines (Bear/Base/Bull) — all start from the live Apr point
+//                   and project forward to Sep
+//  · Live price marker — amber dot + label at today's position on Apr column
+//  · TODAY vertical rule — dashed amber line at current date
+//
+// Historical actuals (verified):
+//  Feb avg: $82  |  Mar avg: $103  |  Apr 2 peak: $128
+//  Apr current (live): fetched from Alpha Vantage → liveBrentPrice
+// ─────────────────────────────────────────────────────────────────────────
+
+// Historical actuals — these don't change
+const HIST_PRICES = {
+  feb: 82,   // Brent Feb 2026 average
+  mar: 103,  // Brent Mar 2026 average (IEA OMR)
+  aprPeak: 128, // Apr 2 peak
+};
+
+// Called once on load AND again when live price arrives
 function renderPriceChart(s) {
   const svg = document.getElementById('price-svg');
-  const W = 900, H = 200, PAD = { t:20, b:30, l:50, r:20 };
+  const W = 900, H = 200, PAD = { t:24, b:30, l:50, r:28 };
   const cw = W - PAD.l - PAD.r;
   const ch = H - PAD.t - PAD.b;
   const months = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
   const N = months.length;
-  const allVals = [...PRICE_DATA.base, ...PRICE_DATA.bull, ...PRICE_DATA.bear];
-  const minV = 55, maxV = 140;
-  const xScale = i => PAD.l + (i/(N-1))*cw;
-  const yScale = v => PAD.t + ch - ((v-minV)/(maxV-minV))*ch;
+  const minV = 50, maxV = 145;
+  const xScale = i => PAD.l + (i / (N-1)) * cw;
+  const yScale = v => PAD.t + ch - ((v - minV) / (maxV - minV)) * ch;
 
-  const paths = {
-    bear: { data: PRICE_DATA.bear, col: "#C8102E" },
-    base: { data: PRICE_DATA.base, col: "#0055A5" },
-    bull: { data: PRICE_DATA.bull, col: "#007A33" },
+  // Live Apr price — use fetched value if available, else Apr peak as proxy
+  const aprLive = liveBrentPrice || HIST_PRICES.aprPeak;
+
+  // ACTUAL line data: Feb, Mar, Apr(live) — null for May onwards
+  const actualData = [HIST_PRICES.feb, HIST_PRICES.mar, aprLive, null, null, null, null, null];
+
+  // Scenario lines all start from the live Apr price and project forward
+  // Each scenario's Apr value is overridden with the live price so all
+  // lines fork cleanly from the same real anchor point
+  const scenarioLines = {
+    bear: { data: [null, null, aprLive, 125, 122, 118, 115, 112], col: "#C8102E", label: "Bear" },
+    base: { data: [null, null, aprLive, 115, 108, 100,  93,  87], col: "#0055A5", label: "Base" },
+    bull: { data: [null, null, aprLive,  90,  82,  76,  72,  68], col: "#007A33", label: "Bull" },
   };
 
   let out = '';
-  // Grid lines
-  [60,80,100,120,140].forEach(v => {
+
+  // ── Background Q2 / Q3 shading ─────────────────────────────────────
+  const q2s = xScale(3), q2e = xScale(5);
+  out += `<rect x="${q2s}" y="${PAD.t}" width="${q2e-q2s}" height="${ch}" fill="rgba(0,85,165,0.04)"/>`;
+  out += `<text x="${(q2s+q2e)/2}" y="${PAD.t+11}" fill="rgba(0,85,165,0.4)" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="500">Q2 2026</text>`;
+  const q3s = xScale(5), q3e = xScale(7);
+  out += `<rect x="${q3s}" y="${PAD.t}" width="${q3e-q3s}" height="${ch}" fill="rgba(0,122,51,0.04)"/>`;
+  out += `<text x="${(q3s+q3e)/2}" y="${PAD.t+11}" fill="rgba(0,122,51,0.4)" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="500">Q3 2026</text>`;
+
+  // ── Grid lines ───────────────────────────────────────────────────────
+  [60, 80, 100, 120, 140].forEach(v => {
     const y = yScale(v);
     out += `<line x1="${PAD.l}" y1="${y}" x2="${W-PAD.r}" y2="${y}" stroke="#DDE1E7" stroke-width="0.8"/>`;
-    out += `<text x="${PAD.l-6}" y="${y+4}" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$${v}</text>`;
+    out += `<text x="${PAD.l-6}" y="${y+4}" fill="#9CA3AF" font-size="9" font-family="DM Mono,monospace" text-anchor="end">$${v}</text>`;
   });
-  // Month labels
-  months.forEach((m,i) => {
-    const x = xScale(i);
-    out += `<text x="${x}" y="${H-6}" fill="#6B7280" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
-    if(i>0) out += `<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${H-PAD.b}" stroke="#DDE1E7" stroke-width="0.5"/>`;
-  });
-  // Q2 shading
-  const q2start = xScale(3), q2end = xScale(5);
-  out += `<rect x="${q2start}" y="${PAD.t}" width="${q2end-q2start}" height="${ch}" fill="rgba(0,85,165,0.04)"/>`;
-  out += `<text x="${(q2start+q2end)/2}" y="${PAD.t+12}" fill="rgba(0,85,165,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q2 2026</text>`;
-  // Q3 shading
-  const q3start = xScale(5), q3end = xScale(7);
-  out += `<rect x="${q3start}" y="${PAD.t}" width="${q3end-q3start}" height="${ch}" fill="rgba(0,122,51,0.04)"/>`;
-  out += `<text x="${(q3start+q3end)/2}" y="${PAD.t+12}" fill="rgba(0,122,51,0.35)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Q3 2026</text>`;
 
-  // Draw all scenario lines
-  Object.entries(paths).forEach(([key, p]) => {
+  // ── Month labels + vertical rules ────────────────────────────────────
+  months.forEach((m, i) => {
+    const x = xScale(i);
+    out += `<text x="${x}" y="${H-6}" fill="#9CA3AF" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
+    if (i > 0) out += `<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${H-PAD.b}" stroke="#EEF0F3" stroke-width="0.8"/>`;
+  });
+
+  // ── SCENARIO lines (projected — dashed after Apr) ────────────────────
+  Object.entries(scenarioLines).forEach(([key, sc]) => {
     const isActive = key === s;
-    const d = p.data.map((v,i) => `${i===0?'M':'L'}${xScale(i)},${yScale(v)}`).join(' ');
-    out += `<path d="${d}" fill="none" stroke="${p.col}" stroke-width="${isActive?2.5:1}" opacity="${isActive?1:0.3}"/>`;
-    // End label
-    const lastX = xScale(N-1), lastY = yScale(p.data[N-1]);
-    if(isActive) {
-      out += `<circle cx="${lastX}" cy="${lastY}" r="4" fill="${p.col}"/>`;
-      out += `<text x="${lastX+6}" y="${lastY+4}" fill="${p.col}" font-size="9" font-family="DM Mono,monospace">$${p.data[N-1]}</text>`;
+    const opacity  = isActive ? 1 : 0.22;
+    const weight   = isActive ? 2 : 1.2;
+
+    // Project portion: Apr → Sep (indices 2–7)
+    const projPoints = sc.data
+      .map((v, i) => v !== null ? `${i === 2 ? 'M' : 'L'}${xScale(i)},${yScale(v)}` : null)
+      .filter(Boolean);
+    if (projPoints.length > 0) {
+      out += `<path d="${projPoints.join(' ')}" fill="none" stroke="${sc.col}"
+        stroke-width="${weight}" stroke-dasharray="${isActive ? '6,3' : '4,3'}"
+        opacity="${opacity}" stroke-linecap="round"/>`;
+    }
+
+    // End-of-range label (active scenario only)
+    if (isActive) {
+      const endV = sc.data[N-1];
+      const ex = xScale(N-1), ey = yScale(endV);
+      out += `<circle cx="${ex}" cy="${ey}" r="3.5" fill="${sc.col}" opacity="0.9"/>`;
+      out += `<text x="${ex+7}" y="${ey+4}" fill="${sc.col}" font-size="9"
+        font-family="DM Mono,monospace" font-weight="600">$${endV}</text>`;
     }
   });
 
-  // NOW line — April 23 (between Apr and May, ~60% across Apr column)
-  const nowX = xScale(2) + (xScale(3)-xScale(2)) * 0.75;
-  out += `<line x1="${nowX}" y1="${PAD.t}" x2="${nowX}" y2="${H-PAD.b}" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.8"/>`;
-  out += `<text x="${nowX}" y="${PAD.t-6}" fill="#B45309" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">TODAY · $101.55</text>`;
+  // ── ACTUAL line (solid, thick charcoal) ──────────────────────────────
+  const actualPoints = actualData
+    .map((v, i) => v !== null ? `${i === 0 ? 'M' : 'L'}${xScale(i)},${yScale(v)}` : null)
+    .filter(Boolean);
+  if (actualPoints.length > 0) {
+    out += `<path d="${actualPoints.join(' ')}" fill="none" stroke="#111827"
+      stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+
+  // Actual data point dots
+  actualData.forEach((v, i) => {
+    if (v === null) return;
+    const isLivePoint = i === 2;
+    const cx = xScale(i), cy = yScale(v);
+    out += `<circle cx="${cx}" cy="${cy}" r="${isLivePoint ? 5 : 3.5}"
+      fill="${isLivePoint ? '#B45309' : '#111827'}"
+      stroke="${isLivePoint ? '#FFFBEB' : '#FFFFFF'}" stroke-width="1.5"/>`;
+  });
+
+  // ── TODAY / LIVE PRICE marker ─────────────────────────────────────────
+  // Positioned at Apr column (index 2) since we're in late April
+  const nowX = xScale(2);
+  const nowY = yScale(aprLive);
+  const priceLabel = liveBrentPrice ? `$${liveBrentPrice.toFixed(2)} LIVE` : `$${aprLive} (cached)`;
+  const labelCol   = liveBrentPrice ? '#B45309' : '#6B7280';
+
+  // Vertical dashed rule
+  out += `<line x1="${nowX}" y1="${PAD.t}" x2="${nowX}" y2="${H-PAD.b}"
+    stroke="${labelCol}" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>`;
+
+  // Pulsing live dot (outer ring + inner dot)
+  out += `<circle cx="${nowX}" cy="${nowY}" r="9" fill="${labelCol}" opacity="0.15"/>`;
+  out += `<circle cx="${nowX}" cy="${nowY}" r="5.5" fill="${labelCol}" opacity="0.9"
+    stroke="#FFFFFF" stroke-width="1.5"/>`;
+
+  // Price label above dot
+  const labelX = nowX;
+  const labelY = nowY - 14;
+  // Label background pill
+  out += `<rect x="${labelX - 38}" y="${labelY - 10}" width="76" height="14"
+    rx="3" fill="${labelCol}" opacity="0.12"/>`;
+  out += `<text x="${labelX}" y="${labelY}" fill="${labelCol}" font-size="8.5"
+    font-family="DM Mono,monospace" text-anchor="middle" font-weight="700">${priceLabel}</text>`;
+
+  // ── Fork annotation — "Scenarios diverge from live price" ────────────
+  const forkX = xScale(2) + 8;
+  const forkY = yScale(aprLive) + 16;
+  out += `<text x="${forkX}" y="${forkY}" fill="#9CA3AF" font-size="7.5"
+    font-family="DM Mono,monospace" font-style="italic">← scenarios fork here</text>`;
+
+  // ── Legend at bottom ─────────────────────────────────────────────────
+  const legY = H - 2;
+  const legItems = [
+    { col:"#111827", label:"Actual (live-linked)", dash:false  },
+    { col:"#C8102E", label:"Bear — Goldman $120+", dash:true   },
+    { col:"#0055A5", label:"Base — EIA STEO",      dash:true   },
+    { col:"#007A33", label:"Bull — Fast recovery", dash:true   },
+    { col:"#B45309", label:"Live price point",     dot:true    },
+  ];
+  let legX = PAD.l;
+  legItems.forEach(li => {
+    if (li.dot) {
+      out += `<circle cx="${legX+5}" cy="${legY-4}" r="4" fill="${li.col}"/>`;
+    } else if (li.dash) {
+      out += `<line x1="${legX}" y1="${legY-4}" x2="${legX+14}" y2="${legY-4}"
+        stroke="${li.col}" stroke-width="2" stroke-dasharray="5,3"/>`;
+    } else {
+      out += `<line x1="${legX}" y1="${legY-4}" x2="${legX+14}" y2="${legY-4}"
+        stroke="${li.col}" stroke-width="2.5"/>`;
+    }
+    out += `<text x="${legX+18}" y="${legY}" fill="#6B7280" font-size="8"
+      font-family="DM Mono,monospace">${li.label}</text>`;
+    legX += li.label.length * 5.2 + 28;
+  });
 
   svg.innerHTML = out;
+}
+
+// Called by applyPrice() after live price arrives — re-renders chart with real Apr value
+function updateChartWithLivePrice() {
+  const activeScenario = document.querySelector('.scenario-btn.active')?.id?.replace('btn-','') || 'base';
+  renderPriceChart(activeScenario);
 }
 
 // DAMAGE TABLE (static)
@@ -2171,7 +1533,7 @@ selectPort(0);
 // Replace YOUR_KEY_HERE with your actual Alpha Vantage key.
 // ═══════════════════════════════════════════════════════════════════════════
 
-const AV_KEY = 'PT2A14O151ABBKPU'; // ← Paste your Alpha Vantage key here
+const AV_KEY = 'YOUR_KEY_HERE'; // ← Paste your Alpha Vantage key here
 
 let liveBrentPrice  = null;
 let liveBrentChange = null;
@@ -2202,6 +1564,9 @@ function applyPrice(priceStr, changeStr, changeCol, subText, statusText, statusB
       if (sub) sub.textContent = subText;
     }
   });
+
+  // Re-render price chart with live Apr anchor point
+  if (typeof updateChartWithLivePrice === 'function') updateChartWithLivePrice();
 }
 
 // ── Primary: Alpha Vantage BRENT endpoint ─────────────────────────────
@@ -2376,6 +1741,5 @@ function downloadPDF() {
   setInterval(updateTimestamp, 60 * 1000);
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>
