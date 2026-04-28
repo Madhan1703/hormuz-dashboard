@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0064)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/index.html -->
+<!-- saved from url=(0066)file:///C:/Users/SPECTRE%20%20X360%20%20-14/Downloads/index_2.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -494,9 +494,9 @@
     </span>
     <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#64748B;">|</span>
     <span style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;color:#94A3B8;">
-      LAST UPDATED&nbsp;<span id="last-updated-ts" style="color:#94A3B8;font-weight:500;">24 Apr 2026, 10:25 GST</span>
+      LAST UPDATED&nbsp;<span id="last-updated-ts" style="color:#94A3B8;font-weight:500;">28 Apr 2026, 14:29 GST</span>
     </span>
-    <span id="eia-status" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 9px; padding: 2px 8px; border-radius: 2px; background: rgba(100, 116, 139, 0.12); color: rgb(107, 114, 128); border: 1px solid rgba(100, 116, 139, 0.3);">● OFFLINE · CACHED</span>
+    <span id="eia-status" style="font-family: &quot;DM Mono&quot;, monospace; font-size: 9px; padding: 2px 8px; border-radius: 2px; background: rgba(100, 116, 139, 0.1); color: rgb(107, 114, 128); border: 1px solid rgb(107, 114, 128);">● CACHED</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;">
     <button id="pdf-btn" onclick="downloadPDF()" style="font-family:&#39;DM Mono&#39;,monospace;font-size:10px;padding:5px 14px;border-radius:3px;
@@ -527,7 +527,7 @@
   <button class="scenario-btn" id="btn-bull" onclick="setScenario(&#39;bull&#39;)">Bull — Fast Recovery</button>
   <button class="scenario-btn" id="btn-bear" onclick="setScenario(&#39;bear&#39;)">Bear — Prolonged Crisis</button>
   <span style="margin-left:auto; font-family:&#39;DM Mono&#39;,monospace; font-size:10px; color:var(--muted)">
-    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent: <span id="bar-live-price">$101.55</span></span> · <span id="bar-updated">Updated 24 Apr 2026, 10:25 GST</span>
+    Ceasefire extended · Strait re-closed · <span style="color:var(--red);font-weight:600">Brent: <span id="bar-live-price">$101.55</span></span> · <span id="bar-updated">Updated 28 Apr 2026, 14:29 GST</span>
   </span>
 </div>
 
@@ -538,7 +538,7 @@
     <div class="kpi">
       <div class="kpi-label">Brent Today (Apr 23)</div>
       <div class="kpi-value kpi-red">$101.55</div>
-      <div class="kpi-sub kpi-red">Cached · Apr 23, 2026 · API unavailable</div>
+      <div class="kpi-sub kpi-red">Cached · Apr 23 · Add AV key to enable live price</div>
     </div>
   
     <div class="kpi">
@@ -2164,178 +2164,149 @@ function selectPort(i) {
 selectPort(0);
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LIVE EIA BRENT PRICE FETCH
-// Phase 2 — auto-updates on page load, refreshes every 5 min
+// LIVE BRENT PRICE — Alpha Vantage (browser-compatible, CORS-enabled)
 // ─────────────────────────────────────────────────────────────────────────
-// EIA Open Data API (free, register at eia.gov/opendata/register.php)
-// Series: PET.RBRTE.D — Brent crude daily spot price (USD/bbl)
-// Endpoint: https://api.eia.gov/v2/petroleum/pri/spt/data/
-//
-// The EIA_KEY below is replaced automatically each weekday by the
-// GitHub Action (update-dashboard.yml). If you are running locally,
-// replace DEMO_KEY with your own key or leave it — the Yahoo Finance
-// fallback will activate automatically.
-// ─────────────────────────────────────────────────────────────────────────
-const EIA_KEY = 'DEMO_KEY'; // ← Auto-injected by GitHub Action
+// Free key: alphavantage.co/support/#api-key  (instant, no credit card)
+// This fetch runs in the browser — no server needed.
+// Replace YOUR_KEY_HERE with your actual Alpha Vantage key.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const AV_KEY = 'PT2A14O151ABBKPU'; // ← Paste your Alpha Vantage key here
 
 let liveBrentPrice  = null;
 let liveBrentChange = null;
-let liveBrentDate   = null;
 
-// ── Helper: update ALL price elements on page ──────────────────────────
-function applyLivePrice(priceStr, changeStr, changeCol, subText, statusText, statusBg, statusColor, statusBorder) {
-  const el = (id) => document.getElementById(id);
+// ── Update every price element on the page ─────────────────────────────
+function applyPrice(priceStr, changeStr, changeCol, subText, statusText, statusBg, statusColor) {
+  const $ = id => document.getElementById(id);
 
-  // Top bar elements
-  if (el('live-price'))    { el('live-price').textContent = priceStr; el('live-price').style.color = '#C8102E'; }
-  if (el('live-change'))   { el('live-change').textContent = changeStr; el('live-change').style.color = changeCol; }
-  if (el('bar-live-price')) el('bar-live-price').textContent = priceStr;
+  if ($('live-price'))     { $('live-price').textContent = priceStr; $('live-price').style.color = '#C8102E'; }
+  if ($('live-change'))    { $('live-change').textContent = changeStr; $('live-change').style.color = changeCol; }
+  if ($('bar-live-price'))   $('bar-live-price').textContent = priceStr;
 
-  // Status badge
-  const s = el('eia-status');
-  if (s) {
-    s.textContent = statusText;
-    s.style.background   = statusBg;
-    s.style.color        = statusColor;
-    s.style.borderColor  = statusBorder;
+  const badge = $('eia-status');
+  if (badge) {
+    badge.textContent        = statusText;
+    badge.style.background   = statusBg;
+    badge.style.color        = statusColor;
+    badge.style.borderColor  = statusColor.replace('1)', '0.4)');
   }
 
-  // KPI tile — find the tile whose label contains "today"
+  // KPI tile with "today" in its label
   document.querySelectorAll('.kpi').forEach(tile => {
     const lbl = tile.querySelector('.kpi-label');
     if (lbl && lbl.textContent.toLowerCase().includes('today')) {
-      const v = tile.querySelector('.kpi-value');
+      const v   = tile.querySelector('.kpi-value');
       const sub = tile.querySelector('.kpi-sub');
-      if (v) v.textContent = priceStr;
+      if (v)   v.textContent   = priceStr;
       if (sub) sub.textContent = subText;
     }
   });
 }
 
-// ── Primary: EIA Open API v2 ───────────────────────────────────────────
-async function fetchEIABrent() {
-  const hasKey = EIA_KEY && EIA_KEY !== 'DEMO_KEY' && EIA_KEY.length > 8;
+// ── Primary: Alpha Vantage BRENT endpoint ─────────────────────────────
+async function fetchBrent() {
+  const hasKey = AV_KEY && AV_KEY !== 'YOUR_KEY_HERE' && AV_KEY.length > 5;
 
-  if (!hasKey) {
-    console.info('[EIA] No API key — using Yahoo Finance fallback');
-    return fetchYahooFallback();
+  if (hasKey) {
+    try {
+      const url = `https://www.alphavantage.co/query?function=BRENT&interval=daily&apikey=${AV_KEY}`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(12000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const json = await res.json();
+
+      // Rate limit check
+      if (json.Information) throw new Error('Rate limit: ' + json.Information.slice(0, 60));
+      if (!json.data || json.data.length === 0) throw new Error('Empty data array');
+
+      const latest = json.data[0];
+      const prev   = json.data[1] || null;
+      const price  = parseFloat(latest.value);
+      if (isNaN(price)) throw new Error('Non-numeric price: ' + latest.value);
+
+      liveBrentPrice = price;
+      const change   = prev ? price - parseFloat(prev.value) : 0;
+      liveBrentChange = change;
+      const pct      = prev ? (change / parseFloat(prev.value) * 100) : 0;
+      const arrow    = change >= 0 ? '▲' : '▼';
+      const col      = change >= 0 ? '#C8102E' : '#007A33';
+
+      const priceStr  = `$${price.toFixed(2)}`;
+      const changeStr = prev ? `${arrow} $${Math.abs(change).toFixed(2)} (${Math.abs(pct).toFixed(1)}%)` : '';
+      const subText   = `Live · Alpha Vantage · ${latest.date}`;
+
+      applyPrice(priceStr, changeStr, col, subText,
+        '● LIVE · AV', 'rgba(0,122,51,0.1)', 'rgba(0,122,51,1)');
+
+      console.info(`[AV] ✓ Brent ${priceStr} ${changeStr} (${latest.date})`);
+      return;
+
+    } catch (err) {
+      console.warn(`[AV] Failed: ${err.message} — trying CORS proxy`);
+    }
   }
 
+  // ── Fallback: Alpha Vantage via public CORS proxy ──────────────────
+  // allorigins.win is a reliable free CORS proxy — wraps any URL
   try {
-    const url = [
-      'https://api.eia.gov/v2/petroleum/pri/spt/data/',
-      `?api_key=${EIA_KEY}`,
-      '&frequency=daily',
-      '&data[0]=value',
-      '&facets[product][]=RBRTE',
-      '&sort[0][column]=period',
-      '&sort[0][direction]=desc',
-      '&length=3',
-      '&offset=0'
-    ].join('');
+    const target = encodeURIComponent(
+      `https://www.alphavantage.co/query?function=BRENT&interval=daily&apikey=${hasKey ? AV_KEY : 'demo'}`
+    );
+    const url = `https://api.allorigins.win/get?url=${target}`;
+    const res  = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(`Proxy HTTP ${res.status}`);
 
-    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!res.ok) throw new Error(`EIA HTTP ${res.status}`);
+    const wrapper = await res.json();
+    const json    = JSON.parse(wrapper.contents);
 
-    const json = await res.json();
-    const rows = json?.response?.data;
-    if (!rows || rows.length < 1) throw new Error('EIA: empty data');
+    if (!json.data || json.data.length === 0) throw new Error('No data via proxy');
 
-    const latest   = rows[0];
-    const prev     = rows[1] || null;
-    const price    = parseFloat(latest.value);
-    const period   = latest.period; // "2026-04-23"
-
-    if (isNaN(price)) throw new Error('EIA: non-numeric price');
+    const latest = json.data[0];
+    const prev   = json.data[1] || null;
+    const price  = parseFloat(latest.value);
+    if (isNaN(price)) throw new Error('Non-numeric via proxy');
 
     liveBrentPrice = price;
-    liveBrentDate  = period;
-
     const change   = prev ? price - parseFloat(prev.value) : 0;
     liveBrentChange = change;
-
     const pct      = prev ? (change / parseFloat(prev.value) * 100) : 0;
-    const arrow    = change >= 0 ? '▲' : '▼';
-    const col      = change >= 0 ? '#C8102E' : '#007A33'; // red up, green down (oil convention)
-
-    const priceStr  = `$${price.toFixed(2)}`;
-    const changeStr = prev ? `${arrow} ${Math.abs(change).toFixed(2)} (${Math.abs(pct).toFixed(1)}%)` : '';
-    const subText   = `Live · EIA API · ${period}`;
-
-    applyLivePrice(
-      priceStr, changeStr, col, subText,
-      '● LIVE · EIA',
-      'rgba(0,122,51,0.12)', '#166534', 'rgba(0,122,51,0.35)'
-    );
-
-    console.info(`[EIA] ✓ Brent ${priceStr} ${changeStr} (${period})`);
-
-  } catch (err) {
-    console.warn(`[EIA] Primary failed: ${err.message} — trying Yahoo Finance`);
-    await fetchYahooFallback();
-  }
-}
-
-// ── Fallback: Yahoo Finance BZ=F (Brent futures) ──────────────────────
-async function fetchYahooFallback() {
-  try {
-    // Use a CORS-friendly Yahoo Finance endpoint
-    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/BZ=F?interval=1d&range=5d';
-    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!res.ok) throw new Error(`Yahoo HTTP ${res.status}`);
-
-    const json = await res.json();
-    const meta = json?.chart?.result?.[0]?.meta;
-    if (!meta?.regularMarketPrice) throw new Error('Yahoo: no price in response');
-
-    const price    = parseFloat(meta.regularMarketPrice);
-    const prev     = parseFloat(meta.previousClose) || price;
-    const change   = price - prev;
-    const pct      = (change / prev) * 100;
     const arrow    = change >= 0 ? '▲' : '▼';
     const col      = change >= 0 ? '#C8102E' : '#007A33';
 
-    liveBrentPrice  = price;
-    liveBrentChange = change;
-
     const priceStr  = `$${price.toFixed(2)}`;
-    const changeStr = `${arrow} ${Math.abs(change).toFixed(2)} (${Math.abs(pct).toFixed(1)}%)`;
-    const subText   = 'Live · Yahoo Finance (BZ=F futures)';
+    const changeStr = prev ? `${arrow} $${Math.abs(change).toFixed(2)} (${Math.abs(pct).toFixed(1)}%)` : '';
+    const subText   = `Live · Alpha Vantage (proxy) · ${latest.date}`;
 
-    applyLivePrice(
-      priceStr, changeStr, col, subText,
-      '● LIVE · YAHOO',
-      'rgba(180,83,9,0.12)', '#92400E', 'rgba(180,83,9,0.35)'
-    );
+    applyPrice(priceStr, changeStr, col, subText,
+      '● LIVE · PROXY', 'rgba(180,83,9,0.1)', 'rgba(180,83,9,1)');
 
-    console.info(`[Yahoo] ✓ Brent ${priceStr} ${changeStr}`);
+    console.info(`[Proxy] ✓ Brent ${priceStr} ${changeStr}`);
+    return;
 
   } catch (err) {
-    console.warn(`[Yahoo] Fallback failed: ${err.message} — showing cached price`);
-    showCachedPrice();
+    console.warn(`[Proxy] Failed: ${err.message} — showing cached price`);
   }
-}
 
-// ── Last resort: static cached price ──────────────────────────────────
-function showCachedPrice() {
-  applyLivePrice(
+  // ── Last resort: show cached static price ─────────────────────────
+  applyPrice(
     '$101.55', '(cached · Apr 23)', '#6B7280',
-    'Cached · Apr 23, 2026 · API unavailable',
-    '● OFFLINE · CACHED',
-    'rgba(100,116,139,0.12)', '#6B7280', 'rgba(100,116,139,0.3)'
+    'Cached · Apr 23 · Add AV key to enable live price',
+    '● CACHED',
+    'rgba(100,116,139,0.1)', '#6B7280'
   );
-  console.info('[Price] Using static cached price $101.55');
 }
 
-// ── Manual refresh triggered by ↻ button ──────────────────────────────
+// ── Manual refresh button ──────────────────────────────────────────────
 function refreshEIA() {
-  const s = document.getElementById('eia-status');
-  const p = document.getElementById('live-price');
-  if (s) { s.textContent = '● REFRESHING...'; s.style.background = 'rgba(0,85,165,0.12)'; s.style.color = '#0055A5'; s.style.borderColor = 'rgba(0,85,165,0.3)'; }
-  if (p) { p.textContent = '—'; }
-  document.getElementById('bar-live-price').textContent = '...';
+  const badge = document.getElementById('eia-status');
+  const price = document.getElementById('live-price');
+  const bar   = document.getElementById('bar-live-price');
+  if (badge) { badge.textContent = '● FETCHING...'; badge.style.background = 'rgba(0,85,165,0.1)'; badge.style.color = '#0055A5'; }
+  if (price) price.textContent = '—';
+  if (bar)   bar.textContent   = '...';
   updateTimestamp();
-  fetchEIABrent();
+  fetchBrent();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -2399,16 +2370,9 @@ function downloadPDF() {
 // INIT — runs on page load
 // ═══════════════════════════════════════════════════════════════════════════
 (async function init() {
-  // 1. Set timestamp immediately
   updateTimestamp();
-
-  // 2. Fetch live Brent price (EIA → Yahoo → cached fallback)
-  await fetchEIABrent();
-
-  // 3. Auto-refresh price every 5 minutes while tab is open
-  setInterval(fetchEIABrent, 5 * 60 * 1000);
-
-  // 4. Refresh timestamp every minute
+  await fetchBrent();
+  setInterval(fetchBrent, 5 * 60 * 1000);
   setInterval(updateTimestamp, 60 * 1000);
 })();
 </script>
