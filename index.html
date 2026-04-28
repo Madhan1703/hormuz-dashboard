@@ -1246,7 +1246,7 @@ const HIST_PRICES = {
 // Called once on load AND again when live price arrives
 function renderPriceChart(s) {
   const svg = document.getElementById('price-svg');
-  const W = 900, H = 200, PAD = { t:24, b:30, l:50, r:28 };
+  const W = 900, H = 220, PAD = { t:28, b:36, l:52, r:28 };
   const cw = W - PAD.l - PAD.r;
   const ch = H - PAD.t - PAD.b;
   const months = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
@@ -1340,7 +1340,6 @@ function renderPriceChart(s) {
   });
 
   // ── TODAY / LIVE PRICE marker ─────────────────────────────────────────
-  // Positioned at Apr column (index 2) since we're in late April
   const nowX = xScale(2);
   const nowY = yScale(aprLive);
   const priceLabel = liveBrentPrice ? `$${liveBrentPrice.toFixed(2)} LIVE` : `$${aprLive} (cached)`;
@@ -1350,49 +1349,43 @@ function renderPriceChart(s) {
   out += `<line x1="${nowX}" y1="${PAD.t}" x2="${nowX}" y2="${H-PAD.b}"
     stroke="${labelCol}" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>`;
 
-  // Pulsing live dot (outer ring + inner dot)
-  out += `<circle cx="${nowX}" cy="${nowY}" r="9" fill="${labelCol}" opacity="0.15"/>`;
-  out += `<circle cx="${nowX}" cy="${nowY}" r="5.5" fill="${labelCol}" opacity="0.9"
+  // Pulsing live dot
+  out += `<circle cx="${nowX}" cy="${nowY}" r="9" fill="${labelCol}" opacity="0.12"/>`;
+  out += `<circle cx="${nowX}" cy="${nowY}" r="5.5" fill="${labelCol}"
     stroke="#FFFFFF" stroke-width="1.5"/>`;
 
-  // Price label above dot
-  const labelX = nowX;
-  const labelY = nowY - 14;
-  // Label background pill
-  out += `<rect x="${labelX - 38}" y="${labelY - 10}" width="76" height="14"
+  // Price label — place BELOW dot if price is very high (dot near top edge)
+  const labelAbove = nowY > PAD.t + 22;
+  const labelY = labelAbove ? nowY - 12 : nowY + 22;
+  const labelAnchor = "middle";
+  out += `<rect x="${nowX-38}" y="${labelY-11}" width="76" height="14"
     rx="3" fill="${labelCol}" opacity="0.12"/>`;
-  out += `<text x="${labelX}" y="${labelY}" fill="${labelCol}" font-size="8.5"
-    font-family="DM Mono,monospace" text-anchor="middle" font-weight="700">${priceLabel}</text>`;
+  out += `<text x="${nowX}" y="${labelY}" fill="${labelCol}" font-size="8.5"
+    font-family="DM Mono,monospace" text-anchor="${labelAnchor}" font-weight="700">${priceLabel}</text>`;
 
-  // ── Fork annotation — "Scenarios diverge from live price" ────────────
-  const forkX = xScale(2) + 8;
-  const forkY = yScale(aprLive) + 16;
-  out += `<text x="${forkX}" y="${forkY}" fill="#9CA3AF" font-size="7.5"
+  // Fork annotation
+  const forkY = Math.min(nowY + 20, H - PAD.b - 8);
+  out += `<text x="${nowX + 10}" y="${forkY}" fill="#9CA3AF" font-size="7.5"
     font-family="DM Mono,monospace" font-style="italic">← scenarios fork here</text>`;
 
-  // ── Legend at bottom ─────────────────────────────────────────────────
-  const legY = H - 2;
+  // ── Legend — fixed positions inside SVG bottom strip ─────────────────
+  const legY = H - 4;
   const legItems = [
-    { col:"#111827", label:"Actual (live-linked)", dash:false  },
-    { col:"#C8102E", label:"Bear — Goldman $120+", dash:true   },
-    { col:"#0055A5", label:"Base — EIA STEO",      dash:true   },
-    { col:"#007A33", label:"Bull — Fast recovery", dash:true   },
-    { col:"#B45309", label:"Live price point",     dot:true    },
+    { x:PAD.l,      col:"#111827", label:"Actual (live)",      dash:false, dot:false },
+    { x:PAD.l+130,  col:"#C8102E", label:"Bear → $112",        dash:true,  dot:false },
+    { x:PAD.l+248,  col:"#0055A5", label:"Base → ~$87 (EIA)",  dash:true,  dot:false },
+    { x:PAD.l+390,  col:"#007A33", label:"Bull → ~$68",        dash:true,  dot:false },
+    { x:PAD.l+508,  col:"#B45309", label:"Live price anchor",  dash:false, dot:true  },
   ];
-  let legX = PAD.l;
   legItems.forEach(li => {
     if (li.dot) {
-      out += `<circle cx="${legX+5}" cy="${legY-4}" r="4" fill="${li.col}"/>`;
+      out += `<circle cx="${li.x+5}" cy="${legY-4}" r="4" fill="${li.col}"/>`;
     } else if (li.dash) {
-      out += `<line x1="${legX}" y1="${legY-4}" x2="${legX+14}" y2="${legY-4}"
-        stroke="${li.col}" stroke-width="2" stroke-dasharray="5,3"/>`;
+      out += `<line x1="${li.x}" y1="${legY-4}" x2="${li.x+14}" y2="${legY-4}" stroke="${li.col}" stroke-width="2" stroke-dasharray="5,3"/>`;
     } else {
-      out += `<line x1="${legX}" y1="${legY-4}" x2="${legX+14}" y2="${legY-4}"
-        stroke="${li.col}" stroke-width="2.5"/>`;
+      out += `<line x1="${li.x}" y1="${legY-4}" x2="${li.x+14}" y2="${legY-4}" stroke="${li.col}" stroke-width="2.5"/>`;
     }
-    out += `<text x="${legX+18}" y="${legY}" fill="#6B7280" font-size="8"
-      font-family="DM Mono,monospace">${li.label}</text>`;
-    legX += li.label.length * 5.2 + 28;
+    out += `<text x="${li.x+18}" y="${legY}" fill="#6B7280" font-size="8.5" font-family="DM Mono,monospace">${li.label}</text>`;
   });
 
   svg.innerHTML = out;
@@ -1418,6 +1411,12 @@ document.getElementById('damage-table').innerHTML = DAMAGE_DATA.map(d => `
     </td>
   </tr>
 `).join('');
+
+// ── Declare live price vars early so renderPriceChart can safely reference them ──
+// These are set properly by the fetch functions after page load
+let liveBrentPrice  = null;
+let liveBrentChange = null;
+const AV_KEY_PLACEHOLDER = 'YOUR_KEY_HERE'; // actual key set below in fetch block
 
 renderAll('base');
 
@@ -1535,8 +1534,7 @@ selectPort(0);
 
 const AV_KEY = 'YOUR_KEY_HERE'; // ← Paste your Alpha Vantage key here
 
-let liveBrentPrice  = null;
-let liveBrentChange = null;
+// liveBrentPrice and liveBrentChange already declared above renderAll()
 
 // ── Update every price element on the page ─────────────────────────────
 function applyPrice(priceStr, changeStr, changeCol, subText, statusText, statusBg, statusColor) {
